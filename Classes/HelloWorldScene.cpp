@@ -16,7 +16,7 @@ Scene* HelloWorld::createScene()
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
     
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+//	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
     // add layer as a child to scene
@@ -66,7 +66,7 @@ bool HelloWorld::init()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 	_monster = Monster::create();
 	addChild(_monster, 1);
-	_monster->setPosition(480, 320);
+	_monster->setPosition(800, 320);
 
 	addBackGround("map.tmx");
 	addPhysics();
@@ -77,6 +77,7 @@ bool HelloWorld::init()
 void HelloWorld::update(float dt)
 {
 	_monster->update(dt);
+	setViewPointCenter(_monster->getPosition());
 }
 
 bool HelloWorld::onContactBegin(PhysicsContact& contact)
@@ -129,5 +130,21 @@ void HelloWorld::addPhysics()
 		sprite->setPhysicsBody(body);
 		this->addChild(sprite);
 	}
+}
 
+void HelloWorld::setViewPointCenter(Point position) {
+	auto winSize = Director::getInstance()->getWinSize();
+
+	int x = MAX(position.x, winSize.width / 2);
+	int y = MAX(position.y, winSize.height / 2);
+	x = MIN(x, (_tileMap->getMapSize().width * this->_tileMap->getTileSize().width) - winSize.width / 2);
+	y = MIN(y, (_tileMap->getMapSize().height * _tileMap->getTileSize().height) - winSize.height / 2);
+	auto actualPosition = Point(x, y);
+
+	auto centerOfView = Point(winSize.width / 2, winSize.height / 2);
+	auto viewPoint = centerOfView - actualPosition;
+	CCLOG("viewP = %f %f", viewPoint.x, viewPoint.y);
+
+	this->setPosition(viewPoint);
+	//timeLabel->setPosition(actualPosition.x, actualPosition.y + winSize.height / 2 - 50);
 }

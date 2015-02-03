@@ -31,7 +31,7 @@ void Monster::addPhysics()
 	body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
 	body->setDynamic(true);
 	body->setLinearDamping(0.0f);
-	
+	body->setRotationEnable(false);
 	body->setGravityEnable(true);
 	this->setPhysicsBody(body);
 }

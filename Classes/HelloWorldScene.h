@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "Monster.h"
 USING_NS_CC;
-class HelloWorld : public Scene  //test file
+class HelloWorld :  public Layer  //test file
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -21,8 +21,10 @@ public:
 	void addBackGround(char *tmxName);
 
 	void addPhysics();
+	void setViewPointCenter(Point position);
 private:
 	Monster* _monster;
+	Layer* _layer;
 	TMXTiledMap* _tileMap;
 };
 
