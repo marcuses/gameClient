@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "Monster.h"
 USING_NS_CC;
-class HelloWorld : public Scene
+class HelloWorld : public Scene  //test file
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -17,8 +17,13 @@ public:
     CREATE_FUNC(HelloWorld);
 	void update(float dt);
 	bool onContactBegin(PhysicsContact& contact);
+
+	void addBackGround(char *tmxName);
+
+	void addPhysics();
 private:
 	Monster* _monster;
+	TMXTiledMap* _tileMap;
 };
 
 

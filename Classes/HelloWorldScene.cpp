@@ -36,7 +36,7 @@ bool HelloWorld::init()
 	searchPath.push_back("GameOver");
 	searchPath.push_back("WinScene");
 	searchPath.push_back("NextScene");
-
+	searchPath.push_back("Map");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	//this->getPhysicsWorld()->setGravity(Vec2(0, -900));
@@ -60,31 +60,16 @@ bool HelloWorld::init()
 	groundNode->setTag(TYPE::BRICK);
 	addChild(groundNode);
 
-//	auto brickNode1 = Node::create();
-	auto brickNode2 = Node::create();
-
-	auto brickBody = PhysicsBody::create();
-	brickBody->addShape(PhysicsShapeBox::create(Size(20, 640)));
-	brickBody->setDynamic(false);
-	brickBody->setLinearDamping(0.0f);
-	brickBody->setGravityEnable(false);
-	brickBody->setCategoryBitmask(TYPE::BRICK);
-	brickBody->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
-	brickBody->setContactTestBitmask(TYPE::BRICK | TYPE::MONSTER);
-	//brickNode1->setPhysicsBody(brickBody);
-	brickNode2->setPhysicsBody(brickBody);
-	//brickNode1->setPosition(20, 320);
-	brickNode2->setPosition(950, 320);
-//	addChild(brickNode1, 1);
-	addChild(brickNode2, 1);
-//	brickNode1->setTag(TYPE::BRICK);
-	brickNode2->setTag(TYPE::BRICK);
+	
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::onContactBegin, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 	_monster = Monster::create();
 	addChild(_monster, 1);
 	_monster->setPosition(480, 320);
+
+	addBackGround("map.tmx");
+	addPhysics();
 	scheduleUpdate();
     return true;
 }
@@ -112,4 +97,37 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact)
 
 	log("onContactBegin");
 	return true;
+}
+
+void HelloWorld::addBackGround(char *tmxName)
+{
+	String * csFilePath = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(tmxName));
+	_tileMap = TMXTiledMap::createWithXML(csFilePath->getCString(),"");
+	addChild(_tileMap, 0);
+}
+
+void HelloWorld::addPhysics()
+{
+	auto objectGroup = _tileMap ->objectGroupNamed("Objects")->getObjects();
+	for (auto& obj : objectGroup) 
+	{
+		ValueMap& dict = obj.asValueMap();
+		float x = dict["x"].asFloat();
+		float y = dict["y"].asFloat();
+		float width = dict["width"].asFloat();
+		float height = dict["height"].asFloat();
+		auto body = PhysicsBody::createBox(Size(width, height), PHYSICSBODY_MATERIAL_DEFAULT);
+		body->setCategoryBitmask(TYPE::BRICK);
+		body->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
+		//body->setContactTestBitmask(3);
+		body->setLinearDamping(0.0f);
+		body->setDynamic(false);
+		Sprite* sprite;
+		sprite = Sprite::create();
+		body->setPositionOffset(Point(width/2,height/2));
+		sprite->setPosition(Point(x , y));
+		sprite->setPhysicsBody(body);
+		this->addChild(sprite);
+	}
+
 }
