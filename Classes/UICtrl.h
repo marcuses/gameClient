@@ -8,10 +8,17 @@ public:
 	virtual bool init();
 	CREATE_FUNC(UICtrl);
 private:
-	cocos2d::Sprite* stop;
-	cocos2d::Sprite* back;
-	cocos2d::Sprite* quit;
-	cocos2d::Layer* _myCtrlLayer;
+
+	cocos2d::Layer*  playLayer;
+	cocos2d::Sprite* leftButton;
+	cocos2d::Sprite* rightButton;
+	cocos2d::Sprite* jumpButton;
+	cocos2d::Sprite* stopButton;
+
+	cocos2d::Layer* stopLayer;
+	cocos2d::Sprite* backButton;
+	cocos2d::Sprite* quitButton;
+	
 	void showLayer();
 	void hideLayer();
 };

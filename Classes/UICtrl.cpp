@@ -1,55 +1,79 @@
 #include "UICtrl.h"
+#include "Headfile.h"
 USING_NS_CC;
 
 bool UICtrl::init(){
 	if(!Layer::init())	return false;
 	auto vSize = Director::getInstance()->getVisibleSize();
-	stop = Sprite::create("UI/stop.png");
-	stop->setPosition(vSize);
-	stop->setAnchorPoint(Vec2(1.0f,1.0f));
-	this->addChild(stop,0);
 	
-	_myCtrlLayer = Layer::create();
-	back = Sprite::create("UI/back.png");
-	back->setPosition(2*vSize.width/5,vSize.height/4);
-	_myCtrlLayer->addChild(back);
+	//添加游戏逻辑按钮和暂停按钮和对应的响应函数
+	
+	playLayer = Layer::create();
+	leftButton = Sprite::create("left.png");
+	leftButton->setPosition(Vec2(50,leftButton->getContentSize().height));
+	playLayer->addChild(leftButton);
+	rightButton = Sprite::create("right.png");
+	rightButton->setPosition(Vec2(120,rightButton->getContentSize().height));
+	playLayer->addChild(rightButton);
+	jumpButton = Sprite::create("jump.png");
+	jumpButton->setPosition(Vec2(vSize.width-jumpButton->getContentSize().width,jumpButton->getContentSize().height));
+	playLayer->addChild(jumpButton);
+	stopButton = Sprite::create("stop.png");
+	stopButton->setPosition(vSize);
+	stopButton->setAnchorPoint(Vec2(1.0f,1.0f));
+	playLayer->addChild(stopButton);
+	this->addChild(playLayer,1);
 
-	quit = Sprite::create("UI/quit.png");
-	quit->setPosition(3*vSize.width/5,vSize.height/4);
-	_myCtrlLayer->addChild(quit);
-	this->addChild(_myCtrlLayer,1);
-	_myCtrlLayer->setVisible(false);
-
+	//最好改成 EventListenerTouchAllAtOnce
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch, Event* e){
-		if( stop->getBoundingBox().containsPoint(touch->getLocation())){
+		if( stopButton->getBoundingBox().containsPoint(touch->getLocation())){
 			showLayer();
+		}else if( leftButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strGoLeft);
+		}else if( rightButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strGoRight);
+		}else if( jumpButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strJump);
 		}
 		return false;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 
-	auto listener2 = EventListenerTouchOneByOne::create();
-	listener2->onTouchBegan = [=](Touch* touch, Event* e){
-		if(	!_myCtrlLayer->isVisible() )	return false;
-		if( back->getBoundingBox().containsPoint(touch->getLocation())){
+	//暂停按钮按下后出现的控制层
+	stopLayer = Layer::create();
+	backButton = Sprite::create("UI/back.png");
+	backButton->setPosition(Vec2(vSize.width/2-backButton->getContentSize().width,backButton->getContentSize().height));
+	stopLayer->addChild(backButton);
+	quitButton = Sprite::create("UI/quit.png");
+	quitButton->setPosition(Vec2(vSize.width/2+quitButton->getContentSize().width,quitButton->getContentSize().height));
+	stopLayer->addChild(quitButton);
+	this->addChild(stopLayer,2);
+	stopLayer->setVisible(false);			//初始不可见
+
+	auto listenerStop = EventListenerTouchOneByOne::create();		
+	listenerStop->onTouchBegan = [=](Touch* touch, Event* e){
+		if(	!stopLayer->isVisible() )	return false;
+		if( backButton->getBoundingBox().containsPoint(touch->getLocation())){
 			hideLayer();
-		}else if( quit->getBoundingBox().containsPoint(touch->getLocation())){
+		}else if( quitButton->getBoundingBox().containsPoint(touch->getLocation())){
 			Director::getInstance()->end();
 		}
 		return false;
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener2,_myCtrlLayer);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerStop,stopLayer);
 
 	return true;
 }
 
 void UICtrl::showLayer(){
-	_myCtrlLayer->setVisible(true);
+	stopLayer->setVisible(true);
+	playLayer->setVisible(false);
 	Director::getInstance()->pause();
 
 }
 void UICtrl::hideLayer(){
-	_myCtrlLayer->setVisible(false);
+	stopLayer->setVisible(false);
+	playLayer->setVisible(true);
 	Director::getInstance()->resume();
 }

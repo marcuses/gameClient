@@ -49,6 +49,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("GameOver");
 	searchPath.push_back("WinScene");
 	searchPath.push_back("NextScene");
+	searchPath.push_back("UI");
 	searchPath.push_back("Map");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 
