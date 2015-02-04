@@ -22,6 +22,10 @@ Scene* HelloWorld::createScene()
     // add layer as a child to scene
     scene->addChild(layer);
 	scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
+
+	auto uiCtrl = UICtrl::create();
+	scene->addChild(uiCtrl,10);
+
     // return the scene
     return scene;
 }

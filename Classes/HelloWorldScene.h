@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Monster.h"
+#include "UICtrl.h"
 USING_NS_CC;
 class HelloWorld :  public Layer  //test file
 {
