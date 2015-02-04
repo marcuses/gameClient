@@ -17,7 +17,7 @@ bool Hero::init()
 	return false;
 	}
 	//key_cnt = 0;
-	setType(TYPE::HERO);
+	setTag(TYPE::HERO);
 	Person::init();
 	idle();
 	addObserver();
