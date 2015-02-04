@@ -24,8 +24,8 @@ void Monster::addPhysics()
 {
 	auto size = this->getContentSize();
 	PhysicsBody *body = PhysicsBody::create();
-	auto mater = PhysicsMaterial(100.0f, 0.0f, 0.0f);
-	body->addShape(PhysicsShapeBox::create(size));
+	auto mater = PhysicsMaterial(100.0f, 0.0f, 0.4f);
+	body->addShape(PhysicsShapeBox::create(size,mater));
 	body->setCategoryBitmask(TYPE::MONSTER);
 	body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
 	body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);

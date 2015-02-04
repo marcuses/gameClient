@@ -16,7 +16,7 @@ Scene* HelloWorld::createScene()
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
     
-//	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
     // add layer as a child to scene
@@ -113,7 +113,8 @@ void HelloWorld::addBackGround(char *tmxName)
 
 void HelloWorld::addPhysics()
 {
-	auto objectGroup = _tileMap ->objectGroupNamed("Objects")->getObjects();
+	auto objectGroup = _tileMap ->objectGroupNamed("ObjectsBox")->getObjects();
+	auto mater = PhysicsMaterial(100.0f, 0.0f, 0.4f);
 	for (auto& obj : objectGroup) 
 	{
 		ValueMap& dict = obj.asValueMap();
@@ -121,7 +122,7 @@ void HelloWorld::addPhysics()
 		float y = dict["y"].asFloat();
 		float width = dict["width"].asFloat();
 		float height = dict["height"].asFloat();
-		auto body = PhysicsBody::createBox(Size(width, height), PHYSICSBODY_MATERIAL_DEFAULT);
+		auto body = PhysicsBody::createBox(Size(width, height), mater);
 		body->setCategoryBitmask(TYPE::BRICK);
 		body->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
 		//body->setContactTestBitmask(3);
@@ -134,6 +135,46 @@ void HelloWorld::addPhysics()
 		sprite->setPhysicsBody(body);
 		this->addChild(sprite);
 	}
+
+	auto objectGroup1 = _tileMap ->objectGroupNamed("ObjectsPolygon")->getObjects();
+	for (auto& obj : objectGroup1) 
+	{
+		auto dic= obj.asValueMap();
+		float x = dic.at("x").asFloat();
+		float y = dic.at("y").asFloat();
+
+		//auto drawNode= DrawNode::create();
+		auto pointsVector = dic.at("points").asValueVector();
+		auto size = pointsVector.size();
+		//获取点
+		if (size>0)
+		{
+			Vec2* points= new Vec2[size];
+			int cnt =0 ;
+			for (auto pointValue:pointsVector)
+			{
+				auto dicp = pointValue.asValueMap();
+				auto x  = dicp.at("x").asFloat();
+				auto y  = -dicp.at("y").asFloat();//y取负值
+				points[cnt]= Vec2( x , y );
+				cnt++;
+			}
+			//绘制折线
+			auto body = PhysicsBody::createEdgePolygon(points, cnt, mater);
+			body->setCategoryBitmask(TYPE::BRICK);
+			body->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
+			//body->setContactTestBitmask(3);
+			body->setLinearDamping(0.0f);
+			body->setDynamic(false);
+			Sprite* sprite;
+			sprite = Sprite::create();
+			//body->setPositionOffset(Point(width/2,height/2));
+			sprite->setPosition(Point(x , y));
+			sprite->setPhysicsBody(body);
+			this->addChild(sprite);
+       }
+	}
+
 }
 
 void HelloWorld::setViewPointCenter(Point position) {
