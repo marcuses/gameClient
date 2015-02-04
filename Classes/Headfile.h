@@ -11,3 +11,4 @@ const static enum TYPE
 const static char strGoLeft[] = "goLeft";
 const static char strGoRight[] = "goRight";
 const static char strJump[] = "Jump";
+const static char strStop[] = "Stop";

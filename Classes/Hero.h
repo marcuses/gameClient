@@ -33,7 +33,7 @@ public:
 	void goLeft(Object * object);
 	void goRight(Object * object);
 	void Jump(Object * object);
-
+	void StopAction(Object * object);
 	/*bool isRunLeft(){ return runLeft;}
 	bool isRunRight(){ return runRight;}
 	bool isRunUp(){ return runUp;}
@@ -42,17 +42,17 @@ public:
 	bool getBuff(){ return hasBuff; }
 	void setBuff(){hasBuff = true;}
 	bool isDead; // «∑ÒÀ¿Õˆ
+	void setJump(bool isJump){ _isJump = isJump;}
 private:
-	bool isLeft;
+	bool _isRunning;
 	//int key_cnt;
 	/*bool runLeft;
 	bool runRight;
 	bool runUp;
 	bool runDown;*/
-	bool isJump;
+	bool _isJump;
 	bool hasBuff;
 	Animation* runAni;
-	Sprite *sp;
 	EventListenerKeyboard* _listen_key;
 };
 

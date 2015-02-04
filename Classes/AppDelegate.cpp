@@ -54,7 +54,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 
 	//auto scene = HelloWorld::createScene();
-	auto scene = Splash::createScene();
+	auto scene = HelloWorld::createScene();
 	// run
 	director->runWithScene(scene);
 	return true;

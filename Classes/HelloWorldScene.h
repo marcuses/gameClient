@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Monster.h"
 #include "UICtrl.h"
+#include "Hero.h"
 USING_NS_CC;
 class HelloWorld :  public Layer  //test file
 {
@@ -17,16 +18,17 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 	void update(float dt);
+
 	bool onContactBegin(PhysicsContact& contact);
-
 	void addBackGround(char *tmxName);
-
+	void addListener();
 	void addPhysics();
 	void setViewPointCenter(Point position);
 private:
 	Monster* _monster;
 	Layer* _layer;
 	TMXTiledMap* _tileMap;
+	Hero* _hero;
 };
 
 

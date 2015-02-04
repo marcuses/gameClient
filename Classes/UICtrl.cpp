@@ -36,8 +36,13 @@ bool UICtrl::init(){
 		}else if( jumpButton->getBoundingBox().containsPoint(touch->getLocation())){
 			NotificationCenter::getInstance()->postNotification(strJump);
 		}
-		return false;
+		return true;
 	};
+	listener->onTouchEnded = [=](Touch* touch, Event* e)
+	{
+		NotificationCenter::getInstance()->postNotification(strStop);
+	};
+	listener->setSwallowTouches(true);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 
 	//暂停按钮按下后出现的控制层

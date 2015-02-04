@@ -31,36 +31,14 @@ Scene* HelloWorld::createScene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	//this->getPhysicsWorld()->setGravity(Vec2(0, -900));
 	auto size = Director::getInstance()->getWinSize();
-	/*auto btn_skill=SkillButton::create("skill_fore.png","skill_back.png");  
-	btn_skill->setPosition(Vec2(size.width-150,60));  
-	this->addChild(btn_skill,2);*/
-
-	auto groundNode = Node::create();
-	float landHeight = 117.0f;
-	auto groundBody = PhysicsBody::create();
-	groundBody->addShape(PhysicsShapeBox::create(Size(960, landHeight)));
-	groundBody->setDynamic(false);
-	groundBody->setLinearDamping(0.0f);
-	groundBody->setGravityEnable(false);
-	groundBody->setCategoryBitmask(TYPE::BRICK);
-	groundBody->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
-	//groundBody->setContactTestBitmask(0x01);
-	groundNode->setPhysicsBody(groundBody);
-	groundNode->setPosition(480, landHeight/2);
-	groundNode->setTag(TYPE::BRICK);
-	addChild(groundNode);
-
 	
-	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::onContactBegin, this);
-	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 	_monster = Monster::create();
-	addChild(_monster, 1);
-	_monster->setPosition(1600, 320);
-
+	//addChild(_monster, 1);
+	//_monster->setPosition(200, 320);
+	_hero = Hero::create();
+	addChild(_hero, 1);
+	_hero->setPosition(500, 320);
 	addBackGround("map.tmx");
 	addPhysics();
 	scheduleUpdate();
@@ -70,29 +48,51 @@ bool HelloWorld::init()
 void HelloWorld::update(float dt)
 {
 	_monster->update(dt);
-	setViewPointCenter(_monster->getPosition());
+	_hero->update(dt);
+	setViewPointCenter(_hero->getPosition());
 }
+
+void HelloWorld::addListener()
+{
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::onContactBegin, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+}
+
 
 bool HelloWorld::onContactBegin(PhysicsContact& contact)
 {
 	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();				
 	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();				
-	if (spriteA && spriteA->getTag() == TYPE::MONSTER)
+	if ((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() == TYPE::GROUND)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->setJump(false);
+	}
+
+	else if((spriteB && spriteB->getTag() == TYPE::HERO)
+		&& spriteA && spriteA->getTag() == TYPE::GROUND)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->setJump(false);
+	}
+
+	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
+		&& spriteB && spriteB->getTag() == TYPE::BRICK)
 	{
 		_monster = (Monster*)spriteA;
 		_monster->changeDir();
 	}
-
-	else if(spriteB && spriteB->getTag() == TYPE::MONSTER)
+	else if((spriteB && spriteB->getTag() == TYPE::MONSTER)
+		&& spriteA && spriteA->getTag() == TYPE::BRICK)
 	{
 		_monster = (Monster*)spriteB;
 		_monster->changeDir();
 	}
-
 	log("onContactBegin");
 	return true;
 }
-
 void HelloWorld::addBackGround(char *tmxName)
 {
 	String * csFilePath = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(tmxName));
@@ -114,12 +114,13 @@ void HelloWorld::addPhysics()
 		auto body = PhysicsBody::createBox(Size(width, height), mater);
 		body->setCategoryBitmask(TYPE::GROUND);
 		body->setCollisionBitmask(TYPE::GROUND | TYPE::MONSTER | TYPE::HERO);
-		//body->setContactTestBitmask(3);
+		body->setContactTestBitmask(TYPE::GROUND | TYPE::HERO);
 		body->setLinearDamping(0.0f);
 		body->setDynamic(false);
 		Sprite* sprite;
 		sprite = Sprite::create();
-		body->setPositionOffset(Point(width/2,height/2));
+	//	body->setPositionOffset(Point(width/2,height/2));
+		sprite->setTag(TYPE::GROUND);
 		sprite->setPosition(Point(x , y));
 		sprite->setPhysicsBody(body);
 		this->addChild(sprite);

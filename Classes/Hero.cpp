@@ -3,22 +3,24 @@
 using namespace std;
 bool Hero::init()
 {
-	isLeft = false;
 	isDead = false;
-	isJump = false;
+	_isJump = false;
+	_isRunning = false;
 	/*runLeft = false;
 	runRight = false;
 	runUp = false;
 	runDown = false;*/
 //	hasBuff = false;
 	string txt = ("player_1_4.png");
+	//Sprite::create(txt);
 	if (!Sprite::initWithFile(txt)) {
-		return false;
+	return false;
 	}
 	//key_cnt = 0;
 	setType(TYPE::HERO);
 	Person::init();
 	idle();
+	addObserver();
 	//addListener();
 	return true;
 }
@@ -57,95 +59,48 @@ void Hero::addObserver()
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::goLeft), strGoLeft, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::goRight), strGoRight, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::Jump), strJump, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::StopAction), strStop, NULL);
 }
 
 void Hero::goLeft(Object * object)
 {
 	setDir(-1);
-	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+	_isRunning = true;
+	runAnimation();
+	//getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 }
 
 void Hero::goRight(Object * object)
 {
 	setDir(1);
-	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+	_isRunning = true;
+	runAnimation();
+	//getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 }
 
 void Hero::Jump(Object * object)
 {
-	if(!isJump)
+	if(!_isJump)
 	{
-		isJump = true;
-		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 100.0));
+		_isJump = true;
+		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 500.0));
 	}
 }
 
-
-//void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt)
-//{
-//	switch(keyCode)
-//	{
-//	case EventKeyboard::KeyCode::KEY_A:
-//		isLeft = true;
-//		runLeft = true;
-//		key_cnt++;
-//		if(key_cnt == 1)
-//			runAnimation();
-//		break;
-//	case EventKeyboard::KeyCode::KEY_D: 
-//		runRight = true;
-//		isLeft = false;
-//		key_cnt++;
-//		if(key_cnt == 1)
-//			runAnimation();
-//		break;
-//	case EventKeyboard::KeyCode::KEY_W:
-//		runUp = true;
-//		key_cnt++;	
-//		if(key_cnt == 1)
-//			runAnimation();
-//		break;
-//	case EventKeyboard::KeyCode::KEY_S: 
-//		runDown = true;
-//		key_cnt++;	
-//		if(key_cnt == 1)
-//			runAnimation();
-//		break;
-//	default: break;
-//	}
-//	CCLOG("keycnt = %d",key_cnt);
-//}
-//
-//void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt)
-//{
-//	switch(keyCode)
-//	{
-//	case EventKeyboard::KeyCode::KEY_A:	
-//		runLeft = false;
-//		key_cnt--;
-//		break;
-//	case EventKeyboard::KeyCode::KEY_D: 
-//		runRight = false;	
-//		key_cnt--;		
-//		break;
-//	case EventKeyboard::KeyCode::KEY_W:
-//		runUp = false;	
-//		key_cnt--;		
-//		break;
-//	case EventKeyboard::KeyCode::KEY_S: 
-//		runDown = false;
-//		key_cnt--;		
-//		break;
-//	default: break;
-//	}
-//	if(key_cnt == 0)
-//	{
-//		idle();
-//	}
-//}
-
+void Hero::StopAction(Object* object)
+{
+	_isRunning = false;
+}
 void Hero::update(float dt)
 {
+	if(_isRunning)
+	{
+		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+	}
+	else
+	{
+		stopAllActions();
+	}
 	setScaleX(getDir() == 1 ? 1 : -1);
 }
 

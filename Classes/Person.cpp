@@ -30,7 +30,7 @@ void Person::addPhysics()
 	else
 	{
 		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND);
 	}
 	body->setDynamic(true);
 	body->setLinearDamping(0.0f);
