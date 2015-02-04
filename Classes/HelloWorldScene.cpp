@@ -41,6 +41,7 @@ bool HelloWorld::init()
 	_hero->setPosition(500, 320);
 	addBackGround("map.tmx");
 	addPhysics();
+	addListener();
 	scheduleUpdate();
     return true;
 }
@@ -62,8 +63,10 @@ void HelloWorld::addListener()
 
 bool HelloWorld::onContactBegin(PhysicsContact& contact)
 {
+	log("onContactBegin");
 	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();				
-	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();				
+	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();	
+	log("%d %d",spriteA->getTag(), spriteB->getTag());
 	if ((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::GROUND)
 	{
@@ -90,8 +93,7 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact)
 		_monster = (Monster*)spriteB;
 		_monster->changeDir();
 	}
-	log("onContactBegin");
-	return true;
+	return contact.getContactData()->normal.y > 0;;
 }
 void HelloWorld::addBackGround(char *tmxName)
 {
@@ -119,7 +121,7 @@ void HelloWorld::addPhysics()
 		body->setDynamic(false);
 		Sprite* sprite;
 		sprite = Sprite::create();
-	//	body->setPositionOffset(Point(width/2,height/2));
+		body->setPositionOffset(Point(width/2,height/2));
 		sprite->setTag(TYPE::GROUND);
 		sprite->setPosition(Point(x , y));
 		sprite->setPhysicsBody(body);
@@ -153,11 +155,12 @@ void HelloWorld::addPhysics()
 			auto body = PhysicsBody::createEdgePolygon(points, cnt, mater);
 			body->setCategoryBitmask(TYPE::GROUND);
 			body->setCollisionBitmask(TYPE::GROUND | TYPE::MONSTER | TYPE::HERO);
-			//body->setContactTestBitmask(3);
+			body->setContactTestBitmask(TYPE::GROUND | TYPE::HERO);
 			body->setLinearDamping(0.0f);
 			body->setDynamic(false);
 			Sprite* sprite;
 			sprite = Sprite::create();
+			sprite->setTag(TYPE::GROUND);
 			//body->setPositionOffset(Point(width/2,height/2));
 			sprite->setPosition(Point(x , y));
 			sprite->setPhysicsBody(body);
@@ -178,7 +181,7 @@ void HelloWorld::setViewPointCenter(Point position) {
 
 	auto centerOfView = Point(winSize.width / 2, winSize.height / 2);
 	auto viewPoint = centerOfView - actualPosition;
-	CCLOG("viewP = %f %f", viewPoint.x, viewPoint.y);
+	//CCLOG("viewP = %f %f", viewPoint.x, viewPoint.y);
 
 	this->setPosition(viewPoint);
 	//timeLabel->setPosition(actualPosition.x, actualPosition.y + winSize.height / 2 - 50);
