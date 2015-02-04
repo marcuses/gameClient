@@ -4,7 +4,8 @@ using namespace std;
 bool Hero::init()
 {
 	isDead = false;
-	_isJump = false;
+	_isJump = true;
+	//_isJump = false;
 	_isRunning = false;
 	/*runLeft = false;
 	runRight = false;
@@ -21,7 +22,7 @@ bool Hero::init()
 	Person::init();
 	idle();
 	addObserver();
-	//addListener();
+	addListener();
 	return true;
 }
 
@@ -33,13 +34,37 @@ void Hero::idle()
 	//key_cnt = 0;
 }
 
-//void Hero::addListener()
-//{
-//	_listen_key = EventListenerKeyboard::create();
-//	_listen_key->onKeyPressed = CC_CALLBACK_2(Hero::onKeyPressed, this);
-//	_listen_key->onKeyReleased = CC_CALLBACK_2(Hero::onKeyReleased, this);
-//	_eventDispatcher->addEventListenerWithSceneGraphPriority(_listen_key, this);
-//}
+void Hero::addListener()
+{
+	_listen_key = EventListenerKeyboard::create();
+	_listen_key->onKeyPressed = CC_CALLBACK_2(Hero::onKeyPressed, this);
+	_listen_key->onKeyReleased = CC_CALLBACK_2(Hero::onKeyReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_listen_key, this);
+}
+void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
+	switch(keyCode){
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+		goLeft(NULL);
+		break;
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW :
+		goRight(NULL);
+		break;
+	case EventKeyboard::KeyCode::KEY_SPACE :
+		Jump(NULL);
+		break;
+	
+	}
+}
+	
+void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt){
+	switch(keyCode){
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW :
+	case EventKeyboard::KeyCode::KEY_SPACE :
+		_isRunning = false;
+		break;
+	}
+}
 void Hero::runAnimation()
 {
 	Vector<SpriteFrame*> allFrames;

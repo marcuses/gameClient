@@ -20,7 +20,7 @@ void Person::addPhysics()
 	auto size = this->getContentSize();
 	PhysicsBody *body = PhysicsBody::create();
 	auto material = PhysicsMaterial(100.0f, 0.0f, 0.4f);
-	body->addShape(PhysicsShapeBox::create(size,material));
+	body->addShape(PhysicsShapeBox::create(Size(size.width/2,size.height),material));
 	body->setCategoryBitmask(_type);
 	if(_type == TYPE::MONSTER) 
 	{

@@ -21,11 +21,11 @@ public:
 	void idle();
 
 	void addObserver();
-	//void addListener();
+	void addListener();
 
-	//void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt);
+	void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt);
 	
-	//void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt);
+	void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt);
 
 	void runAnimation();
 	void dead();
