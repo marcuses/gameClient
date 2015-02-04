@@ -9,8 +9,6 @@ using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
 
-
-
 Scene* HelloWorld::createScene()
 {
     // 'scene' is an autorelease object
@@ -33,15 +31,6 @@ Scene* HelloWorld::createScene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-
-	vector<string> searchPath; 
-	searchPath.push_back("StartScene"); 
-	searchPath.push_back("Role"); 
-	searchPath.push_back("GameOver");
-	searchPath.push_back("WinScene");
-	searchPath.push_back("NextScene");
-	searchPath.push_back("Map");
-	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 	//this->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	//this->getPhysicsWorld()->setGravity(Vec2(0, -900));
 	auto size = Director::getInstance()->getWinSize();

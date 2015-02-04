@@ -1,5 +1,7 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "Splash.h"
+#include <vector>
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -41,10 +43,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// create a scene. it's an autorelease object
 	//auto scene = HelloWorld::createScene();
 	srand(time(0)); //seed of rand
-	auto scene = HelloWorld::createScene();
+	std::vector<std::string> searchPath; 
+	searchPath.push_back("StartScene"); 
+	searchPath.push_back("Role"); 
+	searchPath.push_back("GameOver");
+	searchPath.push_back("WinScene");
+	searchPath.push_back("NextScene");
+	searchPath.push_back("Map");
+	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
+
+	//auto scene = HelloWorld::createScene();
+	auto scene = Splash::createScene();
 	// run
 	director->runWithScene(scene);
-
 	return true;
 }
 
