@@ -9,11 +9,17 @@ class Person : public Sprite
 public:
 	CREATE_FUNC(Person);
 	virtual bool init();
-	void addRunAnimation();
-	void addPhysics();
+	virtual void addRunAnimation();
+	virtual void addPhysics();
 	//	void addObserver();
-	void setSpeed(float speed){ _speed = speed; }
-	float getSpeed(){ return _speed;}
+
+	void setSpeed(float speed);
+	float getSpeed();
+	void setType(TYPE type);
+	TYPE getType();
+	int getDir();
+	void setDir(int dir);
+
 	void deadAnimation();
 	void changeDir(); // 改变方向
 	//float getHealth(){ return health; }

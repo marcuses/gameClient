@@ -70,7 +70,7 @@ bool HelloWorld::init()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 	_monster = Monster::create();
 	addChild(_monster, 1);
-	_monster->setPosition(800, 320);
+	_monster->setPosition(1600, 320);
 
 	addBackGround("map.tmx");
 	addPhysics();
@@ -123,8 +123,8 @@ void HelloWorld::addPhysics()
 		float width = dict["width"].asFloat();
 		float height = dict["height"].asFloat();
 		auto body = PhysicsBody::createBox(Size(width, height), mater);
-		body->setCategoryBitmask(TYPE::BRICK);
-		body->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
+		body->setCategoryBitmask(TYPE::GROUND);
+		body->setCollisionBitmask(TYPE::GROUND | TYPE::MONSTER | TYPE::HERO);
 		//body->setContactTestBitmask(3);
 		body->setLinearDamping(0.0f);
 		body->setDynamic(false);
@@ -161,8 +161,8 @@ void HelloWorld::addPhysics()
 			}
 			//»æÖÆÕÛÏß
 			auto body = PhysicsBody::createEdgePolygon(points, cnt, mater);
-			body->setCategoryBitmask(TYPE::BRICK);
-			body->setCollisionBitmask(TYPE::BRICK | TYPE::MONSTER | TYPE::HERO);
+			body->setCategoryBitmask(TYPE::GROUND);
+			body->setCollisionBitmask(TYPE::GROUND | TYPE::MONSTER | TYPE::HERO);
 			//body->setContactTestBitmask(3);
 			body->setLinearDamping(0.0f);
 			body->setDynamic(false);

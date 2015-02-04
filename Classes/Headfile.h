@@ -8,3 +8,6 @@ const static enum TYPE
 	GROUND = 0x08
 };
 
+const static char strGoLeft[] = "goLeft";
+const static char strGoRight[] = "goRight";
+const static char strJump[] = "Jump";

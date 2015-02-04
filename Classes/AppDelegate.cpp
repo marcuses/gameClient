@@ -40,6 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	// create a scene. it's an autorelease object
 	//auto scene = HelloWorld::createScene();
+	srand(time(0)); //seed of rand
 	auto scene = HelloWorld::createScene();
 	// run
 	director->runWithScene(scene);
