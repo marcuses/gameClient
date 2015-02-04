@@ -8,7 +8,7 @@ bool Monster::init()
 	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
-	_speed = 100;
+	_speed = 200;
 	_dir = 1;
 	auto size = this->getContentSize();
 	//_progress = Progress::create("small-enemy-progress-bg.png","small-enemy-progress-fill.png");
