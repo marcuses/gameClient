@@ -4,7 +4,7 @@ bool Person::init() //note : this init should used after son create
 {
 	//Sprite::create();
 	_dir = 1;
-	_speed = 100.0f;
+	_speed = 180.0f;
 	addRunAnimation();
 	addPhysics();
 	return true;
@@ -19,18 +19,18 @@ void Person::addPhysics()
 {
 	auto size = this->getContentSize();
 	PhysicsBody *body = PhysicsBody::create();
-	auto material = PhysicsMaterial(100.0f, 0.0f, 0.4f);
+	auto material = PhysicsMaterial(100.0f, 0.01f, 1.0f);
 	body->addShape(PhysicsShapeBox::create(Size(size.width/2,size.height),material));
 	body->setCategoryBitmask(_type);
 	if(_type == TYPE::MONSTER) 
 	{
-		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
+		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::TANGH);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::TANGH);
 	}
 	else
 	{
-		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND);
+		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH);
 	}
 	body->setDynamic(true);
 	body->setLinearDamping(0.0f);

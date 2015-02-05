@@ -15,8 +15,7 @@
   </data>
  </layer>
  <objectgroup name="ObjectsBox" width="375" height="46">
-  <object x="72" y="608" width="5864" height="132"/>
-  <object x="70" y="596" width="5866" height="12"/>
+  <object x="0" y="588" width="6000" height="140"/>
  </objectgroup>
  <objectgroup name="ObjectsPolygon" width="375" height="46">
   <object x="2095" y="585">
@@ -37,8 +36,22 @@
   <object x="2372" y="391">
    <polygon points="0,0 385,8 385,16 133,9 46,7 8,6 4,9 1,10 1,8"/>
   </object>
-  <object x="2237" y="485">
+  <object x="2238" y="487">
    <polygon points="0,0 518,-6 518,3 125,3 26,4 6,3 4,4"/>
+  </object>
+  <object x="2096" y="587">
+   <polygon points="0,0 -15,17 -21,12"/>
+  </object>
+  <object x="2922" y="238">
+   <polygon points="0,0 336,12 337,21 171,15 67,9 -1,7"/>
+  </object>
+  <object x="2241" y="489">
+   <polygon points="0,0 45,5 64,4 3,4"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="ObjectsTanhuang" width="375" height="46">
+  <object x="3273" y="288">
+   <polygon points="0,0 274,23 273,68"/>
   </object>
  </objectgroup>
 </map>

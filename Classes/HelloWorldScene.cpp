@@ -38,7 +38,7 @@ bool HelloWorld::init()
 	//_monster->setPosition(200, 320);
 	_hero = Hero::create();
 	addChild(_hero, 1);
-	_hero->setPosition(500, 320);
+	_hero->setPosition(2500, 320);
 	addBackGround("map.tmx");
 	addPhysics();
 	addListener();
@@ -93,6 +93,18 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact)
 		_monster = (Monster*)spriteB;
 		_monster->changeDir();
 	}
+	else if(spriteA && spriteA->getTag() == TYPE::TANGH)
+	{
+		auto phBody =  spriteB->getPhysicsBody();
+		Vec2 v = phBody->getVelocity();
+		phBody->setVelocity(Vec2(v.x, -v.y + 200));
+	}
+	else if(spriteB && spriteB->getTag() == TYPE::TANGH)
+	{
+		auto phBody =  spriteA->getPhysicsBody();
+		Vec2 v = phBody->getVelocity();
+		phBody->setVelocity(Vec2(v.x, -v.y + 200));
+	}
 	return contact.getContactData()->normal.y > 0;;
 }
 void HelloWorld::addBackGround(char *tmxName)
@@ -105,7 +117,7 @@ void HelloWorld::addBackGround(char *tmxName)
 void HelloWorld::addPhysics()
 {
 	auto objectGroup = _tileMap ->objectGroupNamed("ObjectsBox")->getObjects();
-	auto mater = PhysicsMaterial(100.0f, 0.0f, 0.4f);
+	auto mater = PhysicsMaterial(100.0f, 0.0f, 1.0f);
 	for (auto& obj : objectGroup) 
 	{
 		ValueMap& dict = obj.asValueMap();
@@ -168,6 +180,46 @@ void HelloWorld::addPhysics()
        }
 	}
 
+	//添加弹簧
+	auto objectGroup2 = _tileMap ->objectGroupNamed("ObjectsTanhuang")->getObjects();
+	for (auto& obj : objectGroup2) 
+	{
+		auto dic= obj.asValueMap();
+		float x = dic.at("x").asFloat();
+		float y = dic.at("y").asFloat();
+
+		//auto drawNode= DrawNode::create();
+		auto pointsVector = dic.at("points").asValueVector();
+		auto size = pointsVector.size();
+		//获取点
+		if (size>0)
+		{
+			Vec2* points= new Vec2[size];
+			int cnt =0 ;
+			for (auto pointValue:pointsVector)
+			{
+				auto dicp = pointValue.asValueMap();
+				auto x  = dicp.at("x").asFloat();
+				auto y  = -dicp.at("y").asFloat();//y取负值
+				points[cnt]= Vec2( x , y );
+				cnt++;
+			}
+			//绘制折线
+			auto body = PhysicsBody::createEdgePolygon(points, cnt, PhysicsMaterial(100.0f, 5.0f, 0.4f));
+			body->setCategoryBitmask(TYPE::TANGH);
+			body->setCollisionBitmask(TYPE::TANGH | TYPE::MONSTER | TYPE::HERO);
+			body->setContactTestBitmask(TYPE::TANGH | TYPE::MONSTER | TYPE::HERO);
+			body->setLinearDamping(0.0f);
+			body->setDynamic(false);
+			Sprite* sprite;
+			sprite = Sprite::create();
+			sprite->setTag(TYPE::TANGH);
+			//body->setPositionOffset(Point(width/2,height/2));
+			sprite->setPosition(Point(x , y));
+			sprite->setPhysicsBody(body);
+			this->addChild(sprite);
+		}
+	}
 }
 
 void HelloWorld::setViewPointCenter(Point position) {
