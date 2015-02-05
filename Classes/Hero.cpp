@@ -108,7 +108,7 @@ void Hero::Jump(Object * object)
 	if(!_isJump)
 	{
 		_isJump = true;
-		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 500.0));
+		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 1200.0));
 	}
 }
 

@@ -7,7 +7,7 @@
   <image source="BalanceBoard.png" width="819" height="98"/>
  </tileset>
  <tileset firstgid="17557" name="Swing" tilewidth="16" tileheight="16">
-  <image source="Swing.png" width="376" height="195"/>
+  <image source="Swing.png" width="271" height="153"/>
  </tileset>
  <layer name="Layer" width="375" height="46">
   <data encoding="base64" compression="zlib">
@@ -53,5 +53,14 @@
   <object x="3273" y="288">
    <polygon points="0,0 274,23 273,68"/>
   </object>
+ </objectgroup>
+ <objectgroup name="ObjectsSwing" width="375" height="46">
+  <object name="Swing" x="4135" y="162">
+   <polygon points="0,0 1,141 -27,143 -24,159 244,157 241,145 223,140 222,1 209,-1 214,145 11,141 10,-2 -1,-1 -1,-3"/>
+  </object>
+  <object name="P1" x="4140" y="45" width="3" height="2"/>
+  <object name="P2" x="4349" y="45" width="5" height="3"/>
+  <object name="C1" x="4125" y="32" width="26" height="20"/>
+  <object name="C2" x="4338" y="33" width="26" height="20"/>
  </objectgroup>
 </map>

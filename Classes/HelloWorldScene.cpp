@@ -97,13 +97,13 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact)
 	{
 		auto phBody =  spriteB->getPhysicsBody();
 		Vec2 v = phBody->getVelocity();
-		phBody->setVelocity(Vec2(v.x, -v.y + 200));
+		phBody->setVelocity(Vec2(v.x + 50, -v.y + 200));
 	}
 	else if(spriteB && spriteB->getTag() == TYPE::TANGH)
 	{
 		auto phBody =  spriteA->getPhysicsBody();
 		Vec2 v = phBody->getVelocity();
-		phBody->setVelocity(Vec2(v.x, -v.y + 200));
+		phBody->setVelocity(Vec2(v.x + 50, -v.y + 200));
 	}
 	return contact.getContactData()->normal.y > 0;;
 }

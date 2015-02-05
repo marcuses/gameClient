@@ -2,6 +2,7 @@
 
 const static enum TYPE
 {
+	NOTHING = 0x00,
 	MONSTER = 0x01,
 	HERO = 0x02,
 	BRICK = 0x04,
