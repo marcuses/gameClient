@@ -30,17 +30,23 @@ bool UICtrl::init(){
 		if( stopButton->getBoundingBox().containsPoint(touch->getLocation())){
 			showLayer();
 		}else if( leftButton->getBoundingBox().containsPoint(touch->getLocation())){
-			NotificationCenter::getInstance()->postNotification(strGoLeft);
+			NotificationCenter::getInstance()->postNotification(strLeftButtonDown);
 		}else if( rightButton->getBoundingBox().containsPoint(touch->getLocation())){
-			NotificationCenter::getInstance()->postNotification(strGoRight);
+			NotificationCenter::getInstance()->postNotification(strRightButtonDown);
 		}else if( jumpButton->getBoundingBox().containsPoint(touch->getLocation())){
-			NotificationCenter::getInstance()->postNotification(strJump);
+			NotificationCenter::getInstance()->postNotification(strJumpButtonDown);
 		}
 		return true;
 	};
 	listener->onTouchEnded = [=](Touch* touch, Event* e)
 	{
-		NotificationCenter::getInstance()->postNotification(strStop);
+		if( leftButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strLeftButtonUp);
+		}else if( rightButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strRightButtonUp);
+		}else if( jumpButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strJumpButtonUp);
+		}
 	};
 	listener->setSwallowTouches(true);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);

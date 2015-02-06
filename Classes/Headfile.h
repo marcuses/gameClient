@@ -10,7 +10,10 @@ const static enum TYPE
 	TANGH = 0x10
 };
 
-const static char strGoLeft[] = "goLeft";
-const static char strGoRight[] = "goRight";
-const static char strJump[] = "Jump";
-const static char strStop[] = "Stop";
+const static char strLeftButtonDown[] = "leftButtonDown";
+const static char strRightButtonDown[] = "rightButtonDown";
+const static char strJumpButtonDown[] = "jumpButtonDown";
+
+const static char strLeftButtonUp[] = "leftButtonUp";
+const static char strRightButtonUp[] = "rightButtonUp";
+const static char strJumpButtonUp[] = "jumpButtonUp";

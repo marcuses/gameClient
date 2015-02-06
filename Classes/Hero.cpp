@@ -5,19 +5,11 @@ bool Hero::init()
 {
 	isDead = false;
 	_isJump = true;
-	//_isJump = false;
-	_isRunning = false;
-	/*runLeft = false;
-	runRight = false;
-	runUp = false;
-	runDown = false;*/
-//	hasBuff = false;
+	_leftDown  = false;
+	_rightDown = false;
+	_moveState = 0;
 	string txt = ("player_1_4.png");
-	//Sprite::create(txt);
-	if (!Sprite::initWithFile(txt)) {
-	return false;
-	}
-	//key_cnt = 0;
+	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
 	Person::init();
 	idle();
@@ -31,7 +23,6 @@ void Hero::idle()
 	//removeAllChildren();
 	stopAllActions();
 	setSpriteFrame(SpriteFrame::create("player_1_4.png", Rect(0, 0, 57, 63)));
-	//key_cnt = 0;
 }
 
 void Hero::addListener()
@@ -44,29 +35,57 @@ void Hero::addListener()
 void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
 	switch(keyCode){
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
-		goLeft(NULL);
+		leftButtonDown(NULL);
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW :
-		goRight(NULL);
+		rightButtonDown(NULL);
 		break;
 	case EventKeyboard::KeyCode::KEY_SPACE :
-		Jump(NULL);
+		jumpButtonDown(NULL);	
 		break;
-	
 	}
 }
-	
+void Hero::leftButtonDown(Object * object){
+	setDir(-1);
+	_leftDown = true;
+}
+void Hero::rightButtonDown(Object * object){
+	setDir(1);
+	_rightDown = true;
+}
+void Hero::jumpButtonDown(Object * object){
+	if(!_isJump){
+		_isJump = true;
+		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 520.0));
+	}
+}
 void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt){
 	switch(keyCode){
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+		leftButtonUp(NULL);
+		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW :
-	case EventKeyboard::KeyCode::KEY_SPACE :
-		_isRunning = false;
+		rightButtonUp(NULL);
+		break;
+	case EventKeyboard::KeyCode::KEY_SPACE :  //never have this function!!!!
+		//jumpButtonUp();
 		break;
 	}
 }
+void Hero::leftButtonUp(Object * object){
+	_leftDown = false;
+	setDir(_rightDown?1:-1);
+}
+void Hero::rightButtonUp(Object * object){
+	_rightDown = false;
+	setDir(_leftDown?-1:1);
+}
+void Hero::jumpButtonUp(Object * object){
+	_isJump = false;
+}
 void Hero::runAnimation()
 {
+	log("hehe");
 	Vector<SpriteFrame*> allFrames;
 	char txt[100];
 	for(int i = 1;i <= 6; i++)
@@ -76,59 +95,39 @@ void Hero::runAnimation()
 		allFrames.pushBack(sf);
 	}
 	runAni = Animation::createWithSpriteFrames(allFrames, 0.1f);
+	stopAllActions();
 	runAction(RepeatForever::create(Animate::create(runAni)));
 }
 
 void Hero::addObserver()
 {
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::goLeft), strGoLeft, NULL);
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::goRight), strGoRight, NULL);
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::Jump), strJump, NULL);
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::StopAction), strStop, NULL);
-}
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::leftButtonDown), strLeftButtonDown, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::rightButtonDown), strRightButtonDown, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::jumpButtonDown), strJumpButtonDown, NULL);
 
-void Hero::goLeft(Object * object)
-{
-	setDir(-1);
-	_isRunning = true;
-	runAnimation();
-	//getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-}
-
-void Hero::goRight(Object * object)
-{
-	setDir(1);
-	_isRunning = true;
-	runAnimation();
-	//getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-}
-
-void Hero::Jump(Object * object)
-{
-	if(!_isJump)
-	{
-		_isJump = true;
-		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 1200.0));
-	}
-}
-
-void Hero::StopAction(Object* object)
-{
-	_isRunning = false;
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::leftButtonUp), strLeftButtonUp, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::rightButtonUp), strRightButtonUp, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::jumpButtonUp), strJumpButtonUp, NULL);
 }
 void Hero::update(float dt)
 {
-	if(_isRunning)
-	{
+	updateMoveState();	//ÐÎÌ¬¸üÐÂ
+	if(_moveState&1){
 		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	}
-	else
-	{
-		stopAllActions();
-	}
-	setScaleX(getDir() == 1 ? 1 : -1);
 }
 
+void Hero::updateMoveState(){
+	int tmpState = 0;
+	if(_leftDown)	tmpState ^= 1;
+	if(_rightDown)	tmpState ^= 3;
+	if(_isJump)		tmpState ^= 4;
+	if(_moveState == tmpState)	return;
+	_moveState = tmpState;
+	idle();
+	if( (_moveState&1) && (!(_moveState&4)))	runAnimation();
+	setScaleX(getDir() == 1 ? 1 : -1);
+}
 void Hero::dead()
 {
 	stopAllActions();
