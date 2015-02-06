@@ -1,8 +1,9 @@
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
 #include "MainScene.h"
+#include "LogInScene.h"
 #include "Splash.h"
 #include <vector>
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -54,8 +55,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("Map");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 
-	//auto scene = HelloWorld::createScene();
-	auto scene = MainScene::createScene();
+	//auto scene = LogInScene::createScene();
+	//auto scene = MainScene::createScene();
+	auto scene = Splash::createScene();
+
 	// run
 	director->runWithScene(scene);
 	return true;

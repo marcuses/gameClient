@@ -1,5 +1,5 @@
 #include "Splash.h"
-#include "HelloWorldScene.h"
+#include "LogInScene.h"
 USING_NS_CC;
 
 Scene* Splash::createScene(){
@@ -22,7 +22,7 @@ bool Splash::init(){
 }
 
 void Splash::updateOnce(float dt){
-	auto scene = HelloWorld::createScene();
+	auto scene = LogInScene::createScene();
 	//auto sceneTrasition = TransitionJumpZoom::create(0.3f,scene);
 	auto sceneTrasition = TransitionFade::create(0.3f,scene);
 	Director::getInstance()->replaceScene(sceneTrasition);
