@@ -5,7 +5,9 @@
 #include "Monster.h"
 #include "UICtrl.h"
 #include "Hero.h"
+#include "MoveBody.h"
 USING_NS_CC;
+
 class MainScene :  public Layer  //test file
 {
 public:
@@ -34,6 +36,8 @@ private:
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;
 	Hero* _hero;
+	MoveBody* _moveBody;
+	static Scene* _scene;
 };
 
 

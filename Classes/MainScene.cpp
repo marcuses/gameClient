@@ -2,29 +2,31 @@
 #include "SimpleAudioEngine.h"
 #include "buttonSkill.h"
 #include "Headfile.h"
+
 #include <vector>
 #include <string>
 #include "Monster.h"
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
+Scene* MainScene::_scene = nullptr;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
-	auto scene = Scene::createWithPhysics();
+	_scene = Scene::createWithPhysics();
 
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
 	// add layer as a child to scene
-	scene->addChild(layer);
-	scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
+	_scene->addChild(layer);
+	_scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
 
 	auto uiCtrl = UICtrl::create();
-	scene->addChild(uiCtrl,10);
+	_scene->addChild(uiCtrl,10);
 
 	// return the scene
-	return scene;
+	return _scene;
 }
 
 // on "init" you need to initialize your instance
@@ -48,6 +50,7 @@ void MainScene::onEnter()
 	addBackGround("map.tmx");
 	addPhysics();
 	addListener();
+	 _scene->getPhysicsWorld()->setAutoStep(false);
 }
 
 void MainScene::update(float dt)
@@ -55,6 +58,11 @@ void MainScene::update(float dt)
 	_monster->update(dt);
 	_hero->update(dt);
 	setViewPointCenter(_hero->getPosition());
+	_moveBody->update(dt);
+	for (int i = 0; i < 3; ++i)
+	{
+		_scene->getPhysicsWorld()->step(1/180.0f);
+	}
 }
 
 void MainScene::addListener()
@@ -99,6 +107,18 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_monster = (Monster*)spriteB;
 		_monster->changeDir();
 	}
+	else if((spriteA && spriteA->getTag() == TYPE::GROUND)
+		&& spriteB && spriteB->getTag() == TYPE::BRICK)
+	{
+		_moveBody = (MoveBody*)spriteA;
+		_moveBody->changeDir();
+	}
+	else if((spriteB && spriteB->getTag() == TYPE::GROUND)
+		&& spriteA && spriteA->getTag() == TYPE::BRICK)
+	{
+		_moveBody = (MoveBody*)spriteB;
+		_moveBody->changeDir();
+	}
 	else if(spriteA && spriteA->getTag() == TYPE::TANGH)
 	{
 		auto phBody =  spriteB->getPhysicsBody();
@@ -129,11 +149,11 @@ Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool 
 	float height = dict["height"].asFloat();
 	auto body = PhysicsBody::createBox(Size(width, height), mater);
 	body->setCategoryBitmask(type);
-	body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO);
-	body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER);
+	body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND);
+	body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK | TYPE::GROUND);
 	body->setLinearDamping(0.0f);
 	body->setDynamic(false);
-	Sprite* sprite;
+	Sprite* sprite = nullptr;
 	if(hasImg)
 		sprite = Sprite::create(imgName);
 	else
@@ -151,7 +171,6 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 	auto mater = PhysicsMaterial(100.0f, 0.0f, 1.0f);
 	float x = dict.at("x").asFloat();
 	float y = dict.at("y").asFloat();
-	//auto drawNode= DrawNode::create();
 	auto pointsVector = dict.at("points").asValueVector();
 	auto size = pointsVector.size();
 	//获取点
@@ -170,11 +189,12 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 		//绘制折线
 		auto body = PhysicsBody::createEdgePolygon(points, cnt, mater);
 		body->setCategoryBitmask(type);
-		body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO);
-		body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER);
+		body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
+		body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK);
 		body->setLinearDamping(0.0f);
+
 		body->setDynamic(dynamic);
-		Sprite* sprite;
+		Sprite* sprite = nullptr;
 		if(hasImg)
 			sprite = Sprite::create(imgName);
 		else
@@ -184,10 +204,10 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 		{
 			body->setPositionOffset(Point( -115, 75));
 			sprite->setPosition(Point(x + 115, y - 75));
+			body->setGravityEnable(false);
 		}
 		else
 			sprite->setPosition(Point(x , y));
-	//	sprite->setAnchorPoint(Vec2(0.5, 0.5));
 		sprite->setPhysicsBody(body);
 	//	this->addChild(sprite);
 		return sprite;
@@ -223,30 +243,28 @@ void MainScene::addPhysics()
 
 	//添加秋千
 	auto objects = _tileMap ->objectGroupNamed("ObjectsSwing");
-	auto C1 = objects->getObject("C1");
-	auto C2 = objects->getObject("C2");
+	auto B1 = objects->getObject("b1");
+	auto B2 = objects->getObject("b2");
 	auto Swing = objects->getObject("Swing");
-	auto P1 = objects->getObject("P1");
-	auto P2 = objects->getObject("P2");
-	float x1 = P1["x"].asFloat();
-	float y1 = P1["y"].asFloat();
-	float x2 = P2["x"].asFloat();
-	float y2 = P2["y"].asFloat();
-	auto sp1 = makeBox(C1, TYPE::NOTHING, "", false);
-	auto sp2 = makeBox(C2, TYPE::NOTHING, "", false);
-	auto spw = makePolygon(Swing, TYPE::GROUND, "Swing.png", true, false);
-	auto world = this->getScene()->getPhysicsWorld();
+	char name[100];
+	for(int i = 1;i <= 2; i++)
+	{
+		sprintf(name, "b%d", i);
+		auto vMap = objects->getObject(name);
+		auto sp = makeBox(vMap, TYPE::BRICK, "", false);
+		sp->getPhysicsBody()->setCollisionBitmask(0xff);
+		sp->getPhysicsBody()->setContactTestBitmask(0xff);
+		sp->getPhysicsBody()->setCategoryBitmask(0xff);
+		sp->setTag(TYPE::BRICK);
+		addChild(sp);
+	}
 	
-	PhysicsJointDistance* joint = PhysicsJointDistance::construct(sp1->getPhysicsBody(), spw->getPhysicsBody(), Vec2(0, 0), Point::ZERO);
-	
-//	world->addJoint(joint);
-
-//	PhysicsJointPin* joint1 = PhysicsJointPin::construct(sp2->getPhysicsBody(), spw->getPhysicsBody(), Vec2(0, 0));
-//	world->addJoint(joint1);
-	addChild(sp1);
-	addChild(sp2);
-	
-	addChild(spw);
+	auto spw = makePolygon(Swing, TYPE::GROUND, "Swing.png", true, true);
+	_moveBody = MoveBody::create("Swing.png", spw, 100, 2);
+	_moveBody->getPhysicsBody()->setCollisionBitmask(0xff);
+	_moveBody->getPhysicsBody()->setContactTestBitmask(0xff);
+	_moveBody->getPhysicsBody()->setCategoryBitmask(0xff);
+	addChild(_moveBody);
 }
 
 

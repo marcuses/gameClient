@@ -37,7 +37,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
 	
 	// turn on display FPS
-//	director->setDisplayStats(true);
+	director->setDisplayStats(true);
 
 	// set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0 / 60);
@@ -56,8 +56,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 
 	//auto scene = LogInScene::createScene();
-	//auto scene = MainScene::createScene();
-	auto scene = Splash::createScene();
+	auto scene = MainScene::createScene();
+	//auto scene = Splash::createScene(); 
 
 	// run
 	director->runWithScene(scene);

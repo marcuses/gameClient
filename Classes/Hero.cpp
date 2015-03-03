@@ -56,7 +56,7 @@ void Hero::rightButtonDown(Object * object){
 void Hero::jumpButtonDown(Object * object){
 	if(!_isJump){
 		_isJump = true;
-		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 520.0));
+		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 803.0));
 	}
 }
 void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt){
