@@ -1,11 +1,11 @@
 #include "MoveBody.h"
 
-MoveBody* MoveBody::create(const char* imgname,Sprite* sp,  float speed, int type){  
+MoveBody* MoveBody::create(const char* imgname,Sprite* sp,  float speed, int type, float mFloor, float mCeil){  
 
 	MoveBody* ret = new MoveBody();  
 
 
-	if(ret&&ret->init(imgname, sp, speed, type)){  
+	if(ret&&ret->init(imgname, sp, speed, type, mFloor, mCeil)){  
 		ret->autorelease();  
 		return ret;  
 	}  
@@ -14,12 +14,17 @@ MoveBody* MoveBody::create(const char* imgname,Sprite* sp,  float speed, int typ
 	return nullptr;  
 }  
 
-bool MoveBody::init(const char* imgname, Sprite* sp, float speed, int type)  
+bool MoveBody::init(const char* imgname, Sprite* sp, float speed, int type, float mFloor, float mCeil)  
 {  
 	if(!Sprite::initWithFile(imgname)) return false;
 	this->setPhysicsBody(sp->getPhysicsBody());
+	getPhysicsBody()->setGravityEnable(false);
+	_floor = mFloor;
+	_ceil = mCeil;
 	setTag(sp->getTag());
 	setPosition(sp->getPosition());
+	ox = getPositionX();
+	oy = getPositionY();
 	_speed = speed; 
 	_type = type;
 	if(type == 1) dir = Vec2(0, 1);
@@ -32,58 +37,33 @@ void MoveBody::update(float dt)
 {
 	//setPosition(getPosition() + dir * _speed * dt);
 	getPhysicsBody()->setVelocity( dir * _speed);
-	/*if(_type == 1)
+	if(_type == 1)
 	{
-	if(getPositionY() <= 3000)
-	{
-	setPositionY(3000);
-	dir = -dir;
-	}
-	else if(getPositionY() >= 5000)
-	{
-	setPositionY(5000);
-	dir = -dir;
-	}
+		setPositionX(ox);
+		if(getPositionY() <= _floor)
+		{
+			setPositionY(_floor + 10);
+			dir = -dir;
+		}
+		else if(getPositionY() >= _ceil)
+		{
+			setPositionY(_ceil - 10);
+			dir = -dir;
+		}
 	}
 	else
 	{
-	if(getPositionX() <= 3000)
-	{
-	setPositionX(3000);
-	dir = -dir;
+		setPositionY(oy);
+		if(getPositionX() <= _floor)
+		{
+			setPositionX(_floor + 10);
+			dir = -dir;
+		}
+		else if(getPositionX() >= _ceil)
+		{
+			CCLOG("%f", getPositionX());
+			setPositionX(_ceil - 10);
+			dir = -dir;
+		}
 	}
-	else if(getPositionX() >= 5000)
-	{
-	setPositionX(5000);
-	dir = -dir;
-	}
-	}*/
-	//if(_type == 1)
-	//{
-	//	getPhysicsBody()->setVelocity( dir * _speed);
-	//	/*if(getPositionY() <= _floor)
-	//	{
-	//		setPositionY(_floor);
-	//		dir = -dir;
-	//	}
-	//	else if(getPositionY() >= _ceil)
-	//	{
-	//		setPositionY(_ceil);
-	//		dir = -dir;
-	//	}*/
-	//}
-	//else
-	//{
-	//	getPhysicsBody()->setVelocity(dir * _speed );
-	//	/*if(getPositionX() <= _floor)
-	//	{
-	//	setPositionX(_floor);
-	//	dir = -dir;
-	//	}
-	//	else if(getPositionX() >= _ceil)
-	//	{
-	//	setPositionX(_ceil);
-	//	dir = -dir;
-	//	}*/
-	//}
 }

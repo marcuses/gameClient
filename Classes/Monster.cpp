@@ -31,6 +31,6 @@ void Monster::addRunAnimation()
 
 void Monster::update(float dt)
 {
-	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+//	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	setScaleX(getDir() == 1 ? 1 : -1);
 }

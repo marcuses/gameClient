@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include "UICtrl.h"
 #include "Hero.h"
+#include "Bullet.h"
 #include "MoveBody.h"
 USING_NS_CC;
 
@@ -25,18 +26,21 @@ public:
 	void addBackGround(char *tmxName);
 	void addListener();
 	void addPhysics();
+	void addObserver();
 	//通过tilemap添加矩形
-	Sprite* makeBox(ValueMap& dict, TYPE type,  const char* imgName, bool hasImg); 
+	Sprite* makeBox(ValueMap& dict, TYPE type,  const char* imgName, bool hasImg, float aDensity, float aRes, float aFriction); 
 	//通过tilemap添加多边形
-	Sprite* makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic);
+	Sprite* makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic, float aDensity, float aRes, float aFriction);
 	void setViewPointCenter(Point position);
-	
+	void heroShoot(Object * object);
 private:
 	Monster* _monster;
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;
 	Hero* _hero;
-	MoveBody* _moveBody;
+	Vector<MoveBody*> _vMoveBody;
+	Vector<Monster*> _vMonster;
+	Vector<Bullet*> _vBullet;
 	static Scene* _scene;
 };
 

@@ -43,6 +43,10 @@ void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
 	case EventKeyboard::KeyCode::KEY_SPACE :
 		jumpButtonDown(NULL);	
 		break;
+	case EventKeyboard::KeyCode::KEY_J :
+		NotificationCenter::getInstance()->postNotification(strHeroShoot);
+		break;
+	default: break;
 	}
 }
 void Hero::leftButtonDown(Object * object){

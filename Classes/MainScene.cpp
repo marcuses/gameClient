@@ -48,9 +48,10 @@ void MainScene::onEnter()
 	Layer::onEnter();
 	auto size = Director::getInstance()->getWinSize();
 	addBackGround("map.tmx");
+	_scene->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
-	 _scene->getPhysicsWorld()->setAutoStep(false);
+	addObserver();
 }
 
 void MainScene::update(float dt)
@@ -58,7 +59,12 @@ void MainScene::update(float dt)
 	_monster->update(dt);
 	_hero->update(dt);
 	setViewPointCenter(_hero->getPosition());
-	_moveBody->update(dt);
+	for(auto moveBody : _vMoveBody)
+		moveBody->update(dt);
+	for(auto monster : _vMonster)
+		monster->update(dt);
+	for(auto bullet : _vBullet)
+		bullet->update(dt);
 	for (int i = 0; i < 3; ++i)
 	{
 		_scene->getPhysicsWorld()->step(1/180.0f);
@@ -72,7 +78,29 @@ void MainScene::addListener()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
 
+void MainScene::addObserver()
+{
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::heroShoot), strHeroShoot, NULL);
+}
 
+void MainScene::heroShoot(Object * object)
+{
+	Point pos = _hero->getPosition();
+	auto bullet = Bullet::create();
+	if(_hero->getDir() == 1)
+	{
+		bullet->setPosition(pos.x + 10, pos.y);
+		bullet->setDir(Vec2(1, 0));
+	}
+	else
+	{
+		bullet->setPosition(pos.x - 10, pos.y);
+		bullet->setDir(Vec2(-1, 0));
+	}
+	bullet->setSpeed(200);
+	_vBullet.pushBack(bullet);
+	addChild(bullet);
+}
 bool MainScene::onContactBegin(PhysicsContact& contact)
 {
 	log("onContactBegin");
@@ -95,6 +123,26 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		return contact.getContactData()->normal.y > 0;;
 	}
 
+	else if((spriteB && spriteB->getTag() == TYPE::MONSTER)
+		&& spriteA && spriteA->getTag() == TYPE::BULLET)
+	{
+		auto monster = (Monster*)spriteB;
+		auto bullet = (Bullet*)spriteA;
+		_vMonster.eraseObject(monster);
+		_vBullet.eraseObject(bullet);
+		removeChild(monster);
+		removeChild(bullet);
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
+		&& spriteB && spriteB->getTag() == TYPE::BULLET)
+	{
+		auto monster = (Monster*)spriteA;
+		auto bullet = (Bullet*)spriteB;
+		_vMonster.eraseObject(monster);
+		_vBullet.eraseObject(bullet);
+		removeChild(monster);
+		removeChild(bullet);
+	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::BRICK)
 	{
@@ -106,18 +154,6 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_monster = (Monster*)spriteB;
 		_monster->changeDir();
-	}
-	else if((spriteA && spriteA->getTag() == TYPE::GROUND)
-		&& spriteB && spriteB->getTag() == TYPE::BRICK)
-	{
-		_moveBody = (MoveBody*)spriteA;
-		_moveBody->changeDir();
-	}
-	else if((spriteB && spriteB->getTag() == TYPE::GROUND)
-		&& spriteA && spriteA->getTag() == TYPE::BRICK)
-	{
-		_moveBody = (MoveBody*)spriteB;
-		_moveBody->changeDir();
 	}
 	else if(spriteA && spriteA->getTag() == TYPE::TANGH)
 	{
@@ -140,9 +176,9 @@ void MainScene::addBackGround(char *tmxName)
 	addChild(_tileMap, 0);
 }
 
-Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool hasImg )
+Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, float aDensity, float aRes, float aFriction )
 {
-	auto mater = PhysicsMaterial(100.0f, 0.0f, 1.0f);
+	auto mater = PhysicsMaterial(aDensity, aRes, aFriction);
 	float x = dict["x"].asFloat();
 	float y = dict["y"].asFloat();
 	float width = dict["width"].asFloat();
@@ -166,9 +202,9 @@ Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool 
 	return sprite;
 }
 
-Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic)
+Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic, float aDensity, float aRes, float aFriction)
 {
-	auto mater = PhysicsMaterial(100.0f, 0.0f, 1.0f);
+	auto mater = PhysicsMaterial(aDensity, aRes, aFriction);
 	float x = dict.at("x").asFloat();
 	float y = dict.at("y").asFloat();
 	auto pointsVector = dict.at("points").asValueVector();
@@ -192,7 +228,6 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 		body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
 		body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK);
 		body->setLinearDamping(0.0f);
-
 		body->setDynamic(dynamic);
 		Sprite* sprite = nullptr;
 		if(hasImg)
@@ -204,6 +239,12 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 		{
 			body->setPositionOffset(Point( -115, 75));
 			sprite->setPosition(Point(x + 115, y - 75));
+			body->setGravityEnable(false);
+		}
+		else if(imgName == "BalanceBoard.png")
+		{
+			body->setPositionOffset(Point(-340, 0));
+			sprite->setPosition(Point(x + 340, y ));
 			body->setGravityEnable(false);
 		}
 		else
@@ -220,7 +261,7 @@ void MainScene::addPhysics()
 	for (auto& obj : objectGroup) //添加矩形地面
 	{
 		ValueMap& dict = obj.asValueMap();
-		auto sprite = makeBox(dict, TYPE::GROUND, "", false);
+		auto sprite = makeBox(dict, TYPE::GROUND, "", false, 100, 0, 1);
 		addChild(sprite);
 	}
 
@@ -228,7 +269,7 @@ void MainScene::addPhysics()
 	for (auto& obj : objectGroup1)  //添加多边形地面
 	{
 		auto dic= obj.asValueMap();
-		auto sprite = makePolygon(dic, TYPE::GROUND, "", false, false);
+		auto sprite = makePolygon(dic, TYPE::GROUND, "", false, false, 100, 0, 1);
 		addChild(sprite);
 	}
 
@@ -237,34 +278,43 @@ void MainScene::addPhysics()
 	for (auto& obj : objectGroup2) //添加弹簧
 	{
 		auto dic= obj.asValueMap();
-		auto sprite = makePolygon(dic, TYPE::TANGH, "", false, false);
+		auto sprite = makePolygon(dic, TYPE::TANGH, "", false, false,100, 0, 1);
 		addChild(sprite);
 	}
 
-	//添加秋千
+	//添加移动台
 	auto objects = _tileMap ->objectGroupNamed("ObjectsSwing");
-	auto B1 = objects->getObject("b1");
-	auto B2 = objects->getObject("b2");
 	auto Swing = objects->getObject("Swing");
-	char name[100];
-	for(int i = 1;i <= 2; i++)
-	{
-		sprintf(name, "b%d", i);
-		auto vMap = objects->getObject(name);
-		auto sp = makeBox(vMap, TYPE::BRICK, "", false);
-		sp->getPhysicsBody()->setCollisionBitmask(0xff);
-		sp->getPhysicsBody()->setContactTestBitmask(0xff);
-		sp->getPhysicsBody()->setCategoryBitmask(0xff);
-		sp->setTag(TYPE::BRICK);
-		addChild(sp);
-	}
+	auto spw = makePolygon(Swing, TYPE::GROUND, "Swing.png", true, true, 0, 0, 1);
+	auto moveBody1 = MoveBody::create("Swing.png", spw, 100, 2, 4000, 4500);
+	addChild(moveBody1);
+	_vMoveBody.pushBack(moveBody1);
 	
-	auto spw = makePolygon(Swing, TYPE::GROUND, "Swing.png", true, true);
-	_moveBody = MoveBody::create("Swing.png", spw, 100, 2);
-	_moveBody->getPhysicsBody()->setCollisionBitmask(0xff);
-	_moveBody->getPhysicsBody()->setContactTestBitmask(0xff);
-	_moveBody->getPhysicsBody()->setCategoryBitmask(0xff);
-	addChild(_moveBody);
+	auto vBmap = objects->getObject("BalanceBoard");
+	auto balanceBoard = makePolygon(vBmap, TYPE::GROUND, "BalanceBoard.png", true, true, 0, 0.0f, 1.0f );
+	auto moveBody2 = MoveBody::create("BalanceBoard.png", balanceBoard, 100, 1, 400, 600);
+	_vMoveBody.pushBack(moveBody2);
+	addChild(moveBody2);
+
+	auto objectGroupEnemy = _tileMap ->objectGroupNamed("Enemy")->getObjects();
+	for (auto& obj : objectGroupEnemy) //添加小怪
+	{
+		auto dic= obj.asValueMap();
+		float x = dic["x"].asFloat();
+		float y = dic["y"].asFloat();
+		auto ememy = Monster::create();
+		ememy->setPosition(x, y);
+		_vMonster.pushBack(ememy);
+		addChild(ememy);
+	}
+	/*PhysicsBody* box = PhysicsBody::create();
+	box->setDynamic(false);
+	box->addShape(PhysicsShapeEdgeBox::create(Size(10, 10), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, balanceBoard->getPosition() - Vec2(0, 20)));*/
+	/*PhysicsBody* box1 = PhysicsBody::create();
+	box1->setDynamic(false);
+	box1->addShape(PhysicsShapeEdgeBox::create(Size(20, 20), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, Vec2(0, 0)));*/
+	// _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(balanceBoard->getPhysicsBody(), box, balanceBoard->getPosition()));
+	
 }
 
 
