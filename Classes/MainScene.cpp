@@ -64,7 +64,15 @@ void MainScene::update(float dt)
 	for(auto monster : _vMonster)
 		monster->update(dt);
 	for(auto bullet : _vBullet)
+	{
 		bullet->update(dt);
+		if(bullet->getTime() >= 300)
+		{
+			_vBullet.eraseObject(bullet);
+			removeChild(bullet);
+			break;
+		}
+	}
 	for (int i = 0; i < 3; ++i)
 	{
 		_scene->getPhysicsWorld()->step(1/180.0f);

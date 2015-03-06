@@ -4,6 +4,7 @@ bool Bullet::init() //note : this init should used after son create
 {
 	if (!Sprite::initWithFile("skill_fore.png"))	return false;
 	addPhysics();
+	_time = 0;
 	this->setTag(TYPE::BULLET);
 	return true;
 }
@@ -24,6 +25,7 @@ void Bullet::addPhysics()
 void Bullet::update(float dt)
 {
 	this->getPhysicsBody()->setVelocity(_dir * _speed);
+	_time++;
 	//setPosition(getPosition() + _dir * _speed);
 	//Point o = getPosition();
 }
