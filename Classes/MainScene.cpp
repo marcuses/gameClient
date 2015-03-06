@@ -149,7 +149,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_vMonster.eraseObject(monster);
 		_vBullet.eraseObject(bullet);
 		removeChild(monster);
-		removeChild(bullet);
+		removeChild(bullet); //
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::BRICK)
