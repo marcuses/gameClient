@@ -10,7 +10,9 @@ public:
     CREATE_FUNC(NewLogIn);
 private:
 	void logIn();
+	void signUp();
 	void logInSuccess();
+	void logInFail();
 	cocos2d::TextFieldTTF* TextFieldPID;
 	cocos2d::TextFieldTTF* TextFieldPSW;
 	//Rect rectPID;

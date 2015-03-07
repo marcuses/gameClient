@@ -6,6 +6,7 @@
 using namespace cocostudio;
 USING_NS_CC;
 
+
 Scene* NewLogIn::createScene(){
 	auto scene = Scene::create();
 	auto layer = NewLogIn::create();
@@ -75,13 +76,17 @@ bool NewLogIn::init(){
 	return true;
 }
 void NewLogIn::logIn(){
-	if(TextFieldPID->getString()=="123"&&TextFieldPSW->getString()=="456")	logInSuccess();
-	else{
-		TextFieldPID->setString("");
-		TextFieldPSW->setString("");
-	}
+	//if(LoginSendData(TextFieldPID->getString(),TextFieldPID->getString(),2)) logInSuccess();
+	if(1)	logInSuccess();
+	else	logInFail();
 }
 void NewLogIn::logInSuccess(){
 	auto scene = MainScene::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
+void NewLogIn::logInFail(){
+	TextFieldPID->setString("");
+	TextFieldPSW->setString("");
+}
+
+
