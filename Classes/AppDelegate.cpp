@@ -57,8 +57,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 
 	//auto scene = LogInScene::createScene();
-	auto scene = NewLogIn::createScene();
-	//auto scene = MainScene::createScene();
+	//auto scene = NewLogIn::createScene();
+	auto scene = MainScene::createScene();
 	//auto scene = Splash::createScene(); 
 
 	// run
