@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "MainScene.h"
 #include "LogInScene.h"
+#include "NewLogIn.h"
 #include "Splash.h"
 #include <vector>
 
@@ -56,7 +57,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 
 	//auto scene = LogInScene::createScene();
-	auto scene = MainScene::createScene();
+	auto scene = NewLogIn::createScene();
+	//auto scene = MainScene::createScene();
 	//auto scene = Splash::createScene(); 
 
 	// run
