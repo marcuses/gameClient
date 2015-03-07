@@ -71,4 +71,12 @@
   <object x="899" y="327" width="13" height="11"/>
   <object x="875" y="465" width="15" height="14"/>
  </objectgroup>
+ <layer name="ci" width="375" height="46">
+  <data encoding="base64" compression="zlib">
+   eJzt1EEJACAAwEBLGMn+lewgijDuEuy1MQAAAAB4aa7fBQDc5u0APd4O0OPtAD3eDtDj7QA93g7Q4+0APd4O0OPtAD3eDtDj7QA93g7Q4+0APd4O0OPtAD3eDtDj7QA93g7Q4+0APd4O0OPtAD3eDtDj7QA93g7Q4+0APd4O0OPtAD3eDtDj7QA93g7Q4+0APd4O0OPtAAAAAAAAAAAAAAAAAACc2mEEC/U=
+  </data>
+ </layer>
+ <objectgroup name="trap" width="375" height="46">
+  <object x="5921" y="34" width="16" height="554"/>
+ </objectgroup>
 </map>

@@ -115,12 +115,21 @@ void Hero::addObserver()
 }
 void Hero::update(float dt)
 {
+	if(isDead) return;
 	updateMoveState();	//ÐÎÌ¬¸üÐÂ
 	if(_moveState&1){
 		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	}
 }
 
+void Hero::dead()
+{
+	stopAllActions();
+	//	removeAllChildren();
+	isDead = true;
+	_eventDispatcher->removeEventListener(_listen_key);
+	setSpriteFrame(SpriteFrame::create("player_2.png", Rect(0, 0, 63, 63)));
+}
 void Hero::updateMoveState(){
 	int tmpState = 0;
 	if(_leftDown)	tmpState ^= 1;
@@ -131,12 +140,4 @@ void Hero::updateMoveState(){
 	idle();
 	if( (_moveState&1) && (!(_moveState&4)))	runAnimation();
 	setScaleX(getDir() == 1 ? 1 : -1);
-}
-void Hero::dead()
-{
-	stopAllActions();
-//	removeAllChildren();
-	isDead = true;
-	_eventDispatcher->removeEventListener(_listen_key);
-	setSpriteFrame(SpriteFrame::create("player_2.png", Rect(0, 0, 63, 63)));
 }

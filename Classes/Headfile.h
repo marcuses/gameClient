@@ -8,7 +8,8 @@ const static enum TYPE
 	BRICK = 1 << 2,
 	GROUND = 1 << 3,
 	TANGH = 1 << 4,
-	BULLET = 1 << 5
+	BULLET = 1 << 5,
+	TRAP = 1 << 6
 };
 
 const static char strLeftButtonDown[] = "leftButtonDown";

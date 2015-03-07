@@ -15,7 +15,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 	_scene = Scene::createWithPhysics();
 
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
 	// add layer as a child to scene
@@ -37,7 +37,7 @@ bool MainScene::init()
 	//_monster->setPosition(200, 320);
 	_hero = Hero::create();
 	addChild(_hero, 1);
-	_hero->setPosition(4500, 320);
+	_hero->setPosition(5500, 320);
 	
 	scheduleUpdate();
 	return true;
@@ -174,6 +174,18 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		auto phBody =  spriteA->getPhysicsBody();
 		Vec2 v = phBody->getVelocity();
 		phBody->setVelocity(Vec2(v.x + 50, -v.y + 200));
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() == TYPE::TRAP)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->dead();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::TRAP)
+		&& spriteB && spriteB->getTag() == TYPE::HERO)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->dead();
 	}
 	return true;
 }
@@ -314,6 +326,17 @@ void MainScene::addPhysics()
 		ememy->setPosition(x, y);
 		_vMonster.pushBack(ememy);
 		addChild(ememy);
+	}
+
+	auto objectGroupTrap = _tileMap ->objectGroupNamed("trap")->getObjects();
+	for (auto& obj : objectGroupTrap) //Ìí¼Óµ¯»É
+	{
+		auto dic= obj.asValueMap();
+		auto sprite = makeBox(dic, TYPE::TRAP, "", false,100, 0, 1);
+		sprite->getPhysicsBody()->setCollisionBitmask(0xff);
+		sprite->getPhysicsBody()->setContactTestBitmask(0xff);
+		addChild(sprite);
+		
 	}
 	/*PhysicsBody* box = PhysicsBody::create();
 	box->setDynamic(false);
