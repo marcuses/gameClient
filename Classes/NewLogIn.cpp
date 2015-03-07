@@ -3,6 +3,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIButton.h"
 #include "ui/UITextField.h"
+#include "socketClient.h"
 using namespace cocostudio;
 USING_NS_CC;
 
@@ -76,8 +77,9 @@ bool NewLogIn::init(){
 	return true;
 }
 void NewLogIn::logIn(){
-	//if(LoginSendData(TextFieldPID->getString(),TextFieldPID->getString(),2)) logInSuccess();
-	if(1)	logInSuccess();
+	socketClient test;
+	if(test.LoginSendData(TextFieldPID->getString(),TextFieldPSW->getString(),2)) logInSuccess();
+	//if(1)	logInSuccess();
 	else	logInFail();
 }
 void NewLogIn::logInSuccess(){
