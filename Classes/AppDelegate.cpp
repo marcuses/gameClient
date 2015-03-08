@@ -55,6 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("NextScene");
 	searchPath.push_back("UI");
 	searchPath.push_back("Map");
+	searchPath.push_back("Bullet");
 	searchPath.push_back("monsterAnimation\\Export\\NewAnimation");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 

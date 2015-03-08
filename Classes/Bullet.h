@@ -15,6 +15,7 @@ public:
 	inline void setSpeed(float speed){ _speed = speed;}
 	inline int getTime(){ return _time; }
 	void addPhysics();
+	void addAction();
 private:
 	Vec2 _dir;
 	float _speed;

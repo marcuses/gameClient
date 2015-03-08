@@ -17,10 +17,9 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 	_scene = Scene::createWithPhysics();
 
-	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
-	layer->setPosition(0, -50);
 	// add layer as a child to scene
 	_scene->addChild(layer);
 	_scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
@@ -117,7 +116,7 @@ void MainScene::heroShoot(Object * object)
 		bullet->setPosition(pos.x - 10, pos.y);
 		bullet->setDir(Vec2(-1, 0));
 	}
-	bullet->setSpeed(200);
+	bullet->setSpeed(361);
 	_vBullet.pushBack(bullet);
 	addChild(bullet, 2);
 }
@@ -199,7 +198,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_hero = (Hero*)spriteB;
 		_hero->dead();
 	}
-	else if((spriteA && spriteA->getTag() == TYPE::HERO)
+	/*else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::MONSTER)
 	{
 		_hero = (Hero*)spriteA;
@@ -210,7 +209,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->dead();
-	}
+	}*/
 	return true;
 }
 void MainScene::addBackGround(char *tmxName)

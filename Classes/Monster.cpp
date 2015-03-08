@@ -8,7 +8,6 @@ bool Monster::init()
 	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
-	this->removeAllChildren();
 	addRunAnimation();
 //	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::MONSTER);
