@@ -1,23 +1,28 @@
-#include "Monster.h"
+#include "ArmMonster.h"
 #include "Headfile.h"
-bool Monster::init()
+bool ArmMonster::init()
 {
-	_monsterType = 2;
+	/*_monsterType = 2;
 	char txt[100];
 	sprintf_s(txt, "boy%d_1_1.png", _monsterType + 1);
 	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
-	this->removeAllChildren();
+	this->removeAllChildren();*/
+	_monsterType = 2;
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
+
+	if(!Armature::create("NewAnimation")) return false;
+	this->setScale(100 / 671.0);
 	addRunAnimation();
-//	if(_monsterType >= 2) this->setScale(0.25);
+	//	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::MONSTER);
 	setType(TYPE::MONSTER);
-	Person::init();
+	ArmPerson::init();
 	return true;
 }
 
-void Monster::addRunAnimation()
+void ArmMonster::addRunAnimation()
 {
 	if(_monsterType < 2)
 	{
@@ -34,21 +39,12 @@ void Monster::addRunAnimation()
 	}
 	else
 	{
-		ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
-
-		Armature *armature = Armature::create("NewAnimation");
-
-		armature->setScale(100 / 671.0);
-		//armature->setPositionOffset
-	//	armature->setPosition(Point(5700, 320));
-		
-		this->addChild(armature);
 		//²¥·Å¶¯»­
-		armature->getAnimation()->play("walk");
+		this->getAnimation()->play("walk");
 	}
 }
 
-void Monster::update(float dt)
+void ArmMonster::update(float dt)
 {
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	setScaleX(getDir() == 1 ? 1 : -1);

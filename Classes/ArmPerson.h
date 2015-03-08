@@ -7,10 +7,10 @@
 using namespace cocostudio;
 USING_NS_CC;
 
-class Person : public Sprite
+class ArmPerson : public Armature
 {
 public:
-	CREATE_FUNC(Person);
+	CREATE_FUNC(ArmPerson);
 	virtual bool init();
 	virtual void addRunAnimation();
 	virtual void addPhysics();

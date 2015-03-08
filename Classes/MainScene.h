@@ -5,6 +5,7 @@
 #include "Monster.h"
 #include "UICtrl.h"
 #include "Hero.h"
+#include "ArmMonster.h"
 #include "Bullet.h"
 #include "MoveBody.h"
 USING_NS_CC;
@@ -31,7 +32,7 @@ public:
 	Sprite* makeBox(ValueMap& dict, TYPE type,  const char* imgName, bool hasImg, float aDensity, float aRes, float aFriction); 
 	//通过tilemap添加多边形
 	Sprite* makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic, float aDensity, float aRes, float aFriction);
-	void setViewPointCenter(Point position);
+	void setViewPointCenter(Point position); 
 	void heroShoot(Object * object);
 private:
 	Monster* _monster;

@@ -45,7 +45,7 @@ bool UICtrl::init(){
 		}else if( rightButton->getBoundingBox().containsPoint(touch->getLocation())){
 			NotificationCenter::getInstance()->postNotification(strRightButtonUp);
 		}else if( jumpButton->getBoundingBox().containsPoint(touch->getLocation())){
-			NotificationCenter::getInstance()->postNotification(strJumpButtonUp);
+			//NotificationCenter::getInstance()->postNotification(strJumpButtonUp);
 		}
 	};
 	listener->setSwallowTouches(true);
