@@ -2,7 +2,7 @@
 #include "Headfile.h"
 bool Monster::init()
 {
-	_monsterType = 2;
+	_monsterType = rand() % 3;
 	char txt[100];
 	sprintf_s(txt, "boy%d_1_1.png", _monsterType + 1);
 	if (!Sprite::initWithFile(txt)) {
@@ -39,7 +39,7 @@ void Monster::addRunAnimation()
 		Armature *armature = Armature::create("NewAnimation");
 
 		armature->setScale(100 / 671.0);
-		//armature->setPositionOffset
+		armature->setAnchorPoint(Point(0,0));
 	//	armature->setPosition(Point(5700, 320));
 		
 		this->addChild(armature);
@@ -51,5 +51,6 @@ void Monster::addRunAnimation()
 void Monster::update(float dt)
 {
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-	setScaleX(getDir() == 1 ? 1 : -1);
+	if(_monsterType < 2)setScaleX(getDir() == 1 ? 1 : -1);
+	else setScaleX(getDir() == 1 ? -1 : 1);
 }

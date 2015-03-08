@@ -5,7 +5,6 @@
 #include "Monster.h"
 #include "UICtrl.h"
 #include "Hero.h"
-#include "ArmMonster.h"
 #include "Bullet.h"
 #include "MoveBody.h"
 USING_NS_CC;
@@ -35,7 +34,6 @@ public:
 	void setViewPointCenter(Point position); 
 	void heroShoot(Object * object);
 private:
-	Monster* _monster;
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;
 	Hero* _hero;

@@ -4,6 +4,7 @@
 #include "Headfile.h"
 #include <vector>
 #include <string>
+#include "Monster.h"
 #include"cocostudio/CocoStudio.h"
 
 using namespace cocostudio;
@@ -16,9 +17,10 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 	_scene = Scene::createWithPhysics();
 
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
+	layer->setPosition(0, -50);
 	// add layer as a child to scene
 	_scene->addChild(layer);
 	_scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
@@ -33,7 +35,7 @@ Scene* MainScene::createScene()
 // on "init" you need to initialize your instance
 bool MainScene::init()
 {
-	_monster = Monster::create();
+	//_monster = Monster::create();
 	//addChild(_monster, 1);
 	//_monster->setPosition(200, 320);
 	_hero = Hero::create();
@@ -72,7 +74,7 @@ void MainScene::update(float dt)
 	for(auto moveBody : _vMoveBody)
 		moveBody->update(dt);
 	for(auto monster : _vMonster)
-		monster->update(dt);
+	monster->update(dt);
 	for(auto bullet : _vBullet)
 	{
 		bullet->update(dt);
@@ -164,13 +166,13 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::BRICK)
 	{
-		_monster = (Monster*)spriteA;
+		auto _monster = (Monster*)spriteA;
 		_monster->changeDir();
 	}
 	else if((spriteB && spriteB->getTag() == TYPE::MONSTER)
 		&& spriteA && spriteA->getTag() == TYPE::BRICK)
 	{
-		_monster = (Monster*)spriteB;
+		auto _monster = (Monster*)spriteB;
 		_monster->changeDir();
 	}
 	else if(spriteA && spriteA->getTag() == TYPE::TANGH)
@@ -197,7 +199,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_hero = (Hero*)spriteB;
 		_hero->dead();
 	}
-	/*else if((spriteA && spriteA->getTag() == TYPE::HERO)
+	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::MONSTER)
 	{
 		_hero = (Hero*)spriteA;
@@ -208,7 +210,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->dead();
-	}*/
+	}
 	return true;
 }
 void MainScene::addBackGround(char *tmxName)
