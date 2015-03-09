@@ -78,7 +78,6 @@ void LogInScene::logInSuccess(){
 	Director::getInstance()->replaceScene(scene);
 }
 void LogInScene::logInFail(){
-	TextFieldPID->setString("");
 	TextFieldPSW->setString("");
 	hintMsg->setString("Incorrect ID or password");
 }

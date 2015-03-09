@@ -115,6 +115,7 @@ void MainScene::addObserver()
 
 void MainScene::heroShoot(Object * object)
 {
+	if(_hero->isDead)	return;
 	Point pos = _hero->getPosition();
 	auto bullet = Bullet::create(BULLET);
 	if(_hero->getDir() == 1)
@@ -235,8 +236,6 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_hero = (Hero*)spriteB;
 		_hero->dead();
 	}
-<<<<<<< 78b866661c1aad8ee56048190d3609a49e284442
-=======
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::BOSS)
 	{
@@ -261,7 +260,6 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_hero = (Hero*)spriteB;
 		_hero->dead();
 	}
->>>>>>> a2fb35c03953a2022953f6005edcf46475d8585f
 	return true;
 }
 void MainScene::addBackGround(char *tmxName)

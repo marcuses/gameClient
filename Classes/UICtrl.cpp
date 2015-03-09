@@ -18,6 +18,10 @@ bool UICtrl::init(){
 	jumpButton = Sprite::create("jump.png");
 	jumpButton->setPosition(Vec2(vSize.width-jumpButton->getContentSize().width,jumpButton->getContentSize().height));
 	playLayer->addChild(jumpButton);
+	fireButton = Sprite::create("fire.png");
+	fireButton->setPosition(Vec2(jumpButton->getPositionX()-fireButton->getContentSize().width,fireButton->getContentSize().height));
+	playLayer->addChild(fireButton);
+	
 	stopButton = Sprite::create("stop.png");
 	stopButton->setPosition(vSize);
 	stopButton->setAnchorPoint(Vec2(1.0f,1.0f));
@@ -35,6 +39,8 @@ bool UICtrl::init(){
 			NotificationCenter::getInstance()->postNotification(strRightButtonDown);
 		}else if( jumpButton->getBoundingBox().containsPoint(touch->getLocation())){
 			NotificationCenter::getInstance()->postNotification(strJumpButtonDown);
+		}else if( fireButton->getBoundingBox().containsPoint(touch->getLocation())){
+			NotificationCenter::getInstance()->postNotification(strHeroShoot);
 		}
 		return true;
 	};

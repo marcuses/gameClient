@@ -13,6 +13,7 @@ private:
 	cocos2d::Sprite* leftButton;
 	cocos2d::Sprite* rightButton;
 	cocos2d::Sprite* jumpButton;
+	cocos2d::Sprite* fireButton;
 	cocos2d::Sprite* stopButton;
 
 	cocos2d::Layer* stopLayer;
