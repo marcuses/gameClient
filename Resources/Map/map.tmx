@@ -54,8 +54,6 @@
   </object>
  </objectgroup>
  <objectgroup name="Enemy" width="375" height="46">
-  <object x="4591" y="287" width="11" height="13"/>
-  <object x="5165" y="282" width="17" height="15"/>
   <object x="2472" y="457" width="14" height="10"/>
   <object x="2534" y="353" width="10" height="10"/>
   <object x="861" y="197" width="14" height="10"/>
@@ -64,6 +62,8 @@
   <object x="3047" y="195" width="17" height="13"/>
   <object x="3067" y="326" width="15" height="16"/>
   <object x="2363" y="573" width="13" height="13"/>
+  <object x="5202" y="214" width="12" height="15"/>
+  <object x="4584" y="206" width="11" height="11"/>
  </objectgroup>
  <layer name="ci" width="375" height="46">
   <data encoding="base64" compression="zlib">

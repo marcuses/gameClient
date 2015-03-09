@@ -15,6 +15,19 @@ bool Boss::init()
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
+	_life = 20;
+	_isdead = false;
+	_spWeak = Sprite::create();
+	auto body = PhysicsBody::createCircle(36, PhysicsMaterial(0, 0, 0));
+	body->setCategoryBitmask(TYPE::BOSSWEAKNESS);
+	body->setCollisionBitmask(TYPE::BOSSWEAKNESS | TYPE::BULLET);
+	body->setContactTestBitmask(TYPE::BOSSWEAKNESS | TYPE::BULLET);
+	body->setLinearDamping(0.0f);
+	body->setDynamic(false);
+	
+	_spWeak->setPhysicsBody(body);
+	_spWeak->setTag(TYPE::BOSSWEAKNESS);
+	addChild(_spWeak);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
 	scheduleUpdate();
 	return true;
@@ -51,8 +64,20 @@ void Boss::addRunAnimation()
 	}
 }
 
+void Boss::beHit()
+{
+	_life--;
+	if(_life <= 0)
+	{
+		_isdead = true;
+		getParent()->removeChild(this, true);
+		NotificationCenter::getInstance()->postNotification(strWin);
+
+	}
+}
 void Boss::shoot(Object * object)
 {
+	if(_isdead) return;
 	Point pos1 = this->getParent()->getChildByTag(TYPE::HERO)->getPosition();
 	Point pos2 = this->getPosition();
 	Vec2 dire = pos1 - pos2;
@@ -63,10 +88,15 @@ void Boss::shoot(Object * object)
 }
 void Boss::update(float dt)
 {
+	if(_isdead) return;
+	Point pos1 = this->getParent()->getChildByTag(TYPE::HERO)->getPosition();
+	Point pos2 = this->getPosition();
+	if(fabs(pos2.x - pos1.x) <= 480 ) setSpeed(100);
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	if(_monsterType < 2)setScaleX(getDir() == 1 ? 1 : -1);
 	else setScaleX(getDir() == 1 ? -1 : 1);
 	_time = (_time + 1) % 180;
 	if(_time == 0) 
 		NotificationCenter::getInstance()->postNotification(strEnemyShoot);
+	_spWeak->setPosition(Vec2(260, 410) );
 }

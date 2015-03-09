@@ -41,7 +41,7 @@ bool MainScene::init()
 	_hero = Hero::create();
 	//_hero1 = Hero::create();
 	addChild(_hero, 2);
-	_hero->setPosition(5200, 320); 
+	_hero->setPosition(5000, 680); 
 	
 
 	/*ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
@@ -54,6 +54,10 @@ bool MainScene::init()
 	_boss = Boss::create();
 	_boss->setPosition(5700, 640);
 	addChild(_boss, 2);
+	_door = Sprite::create("door.png");
+	_door->setPosition(Point(5500, 500));
+	addChild(_door, 1);
+	_door->setVisible(false);
 	//armature->getAnimation()->play("walk");
 	//this->addChild(armature, 1);
 	scheduleUpdate();
@@ -71,12 +75,12 @@ void MainScene::onEnter()
 	addObserver();
 }
 
-//void MainScene::onExit()
-//{
-////	removeAllChildrenWithCleanup(true);
-////	_scene->removeAllChildrenWithCleanup(true);
-////	removeAllComponents();
-//}
+void MainScene::onExit()
+{
+	
+	NotificationCenter::getInstance()->removeAllObservers(this);
+	Layer::onExit();
+}
 void MainScene::update(float dt)
 {
 	setViewPointCenter(_hero->getPosition());
@@ -84,11 +88,11 @@ void MainScene::update(float dt)
 	{
 		getScene()->getPhysicsWorld()->step(1/180.0f);
 	}
-	if(fabs(_hero->getPositionX() - _boss->getPositionX()) <= 480)
+	if(_door->isVisible() && _door->getBoundingBox().containsPoint(_hero->getPosition()))
 	{
-		_boss->setSpeed(50);
+		MessageBox("you win","win");
+		unscheduleUpdate();
 	}
-
 }
 
 void MainScene::addListener()
@@ -100,18 +104,12 @@ void MainScene::addListener()
 
 void MainScene::addObserver()
 {
-	//NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::heroShoot), strHeroShoot, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::doorVisiable), strWin, NULL);
 	//NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::enemyShoot), strEnemyShoot, NULL);
 }
-void MainScene::enemyShoot(Object * object)
+void MainScene::doorVisiable(Object * object)
 {
-	Point pos1 = _hero->getPosition();
-	Point pos2 = _boss->getPosition();
-	Vec2 dire = pos1 - pos2;
-	dire.normalize();
-	auto bullet = Bullet::create(BULLETENEMY, dire, 180);
-	bullet->setPosition(pos2);
-	addChild(bullet, 2);
+	_door->setVisible(true);
 }
 bool MainScene::onContactBegin(PhysicsContact& contact)
 {
@@ -222,6 +220,20 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->dead();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::BULLET)
+		&& spriteB && spriteB->getTag() == TYPE::BOSSWEAKNESS)
+	{
+		removeChild(spriteA);
+	//	((Boss*)spriteB->getParent())->beHit();
+		_boss->beHit();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::BOSSWEAKNESS)
+		&& spriteB && spriteB->getTag() == TYPE::BULLET)
+	{
+		removeChild(spriteB);
+	//	((Boss*)spriteA->getParent())->beHit();
+		_boss->beHit();
 	}
 	return true;
 }

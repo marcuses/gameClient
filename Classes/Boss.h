@@ -16,8 +16,13 @@ public:
 	//void deadAnimation();
 	void update(float dt);
 	void shoot(Object * object);
+	void beHit();
 private:
+	int _life;
+	Sprite* _spHit;
+	bool _isdead;
 	STATE _curState;
+	Sprite* _spWeak;
 	ArmatureAnimation* _animation;
 	int _monsterType;
 	int _time;

@@ -61,7 +61,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
-//	auto scene = NewLogIn::createScene();
+	//auto scene = NewLogIn::createScene();
 	auto scene = MainScene::createScene();
 	//auto scene = Splash::createScene(); 
 

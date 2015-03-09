@@ -25,3 +25,4 @@ const static char strJumpButtonUp[] = "jumpButtonUp";
 
 const static char strHeroShoot[] = "heroShoot";
 const static char strEnemyShoot[] = "enemyShoot";
+const static char strWin[] = "win";

@@ -26,7 +26,10 @@ bool Bullet::init(TYPE type,Vec2 dir, float speed) //note : this init should use
 	this->getPhysicsBody()->setVelocity(_dir * _speed);
 	float anc = atan2(_dir.y, _dir.x);
 	this->setRotation(- anc * 180.0 / 3.1415);
-	scheduleOnce(schedule_selector(Bullet::del), 5);
+	float delTime = 1;
+	if(type == BULLET) delTime = 1.2;
+	else delTime = 5;
+ 	scheduleOnce(schedule_selector(Bullet::del), delTime);
 	scheduleUpdate();
 	return true;
 }
@@ -36,8 +39,8 @@ void Bullet::addPhysics()
 	auto body = PhysicsBody::create();
 	body->addShape(PhysicsShapeBox::create(this->getContentSize() ,PhysicsMaterial(100.0f, 0.01f, 1.0f)));
 	body->setCategoryBitmask(_type);
-	body->setCollisionBitmask(_type | TYPE::MONSTER | TYPE::HERO);
-	body->setContactTestBitmask(_type | TYPE::MONSTER | TYPE::HERO);
+	body->setCollisionBitmask(_type | TYPE::MONSTER | TYPE::HERO | BOSSWEAKNESS);
+	body->setContactTestBitmask(_type | TYPE::MONSTER | TYPE::HERO | BOSSWEAKNESS);
 	body->setLinearDamping(0.0f);
 	body->setDynamic(true);
 	body->setGravityEnable(false);
