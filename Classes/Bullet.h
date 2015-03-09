@@ -8,8 +8,8 @@ class Bullet : public Sprite
 {
 public:
 
-	CREATE_FUNC(Bullet);
-	bool init();
+	static Bullet* create(TYPE type);
+	bool init(TYPE type);
 	void update(float dt);
 	inline void setDir(Vec2 dir) { _dir = dir; }
 	inline void setSpeed(float speed){ _speed = speed;}
@@ -20,4 +20,5 @@ private:
 	Vec2 _dir;
 	float _speed;
 	int _time;
+	TYPE _type;
 };

@@ -38,9 +38,11 @@ bool MainScene::init()
 	//addChild(_monster, 1);
 	//_monster->setPosition(200, 320);
 	_hero = Hero::create();
+	//_hero1 = Hero::create();
 	addChild(_hero, 2);
-	_hero->setPosition(200, 320);
+	_hero->setPosition(5200, 320); 
 	
+
 	/*ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
 
 	Armature *armature = Armature::create("NewAnimation");
@@ -48,7 +50,9 @@ bool MainScene::init()
 	armature->setPosition(Point(5700, 320));*/
 
 	//²¥·Å¶¯»­
-
+	_boss = Boss::create();
+	_boss->setPosition(5700, 640);
+	addChild(_boss, 2);
 	//armature->getAnimation()->play("walk");
 	//this->addChild(armature, 1);
 	scheduleUpdate();
@@ -69,6 +73,7 @@ void MainScene::onEnter()
 void MainScene::update(float dt)
 {
 	_hero->update(dt);
+	_boss->update(dt);
 	setViewPointCenter(_hero->getPosition());
 	for(auto moveBody : _vMoveBody)
 		moveBody->update(dt);
@@ -88,6 +93,11 @@ void MainScene::update(float dt)
 	{
 		_scene->getPhysicsWorld()->step(1/180.0f);
 	}
+	if(fabs(_hero->getPositionX() - _boss->getPositionX()) <= 480)
+	{
+		_boss->setSpeed(50);
+	}
+
 }
 
 void MainScene::addListener()
@@ -100,12 +110,13 @@ void MainScene::addListener()
 void MainScene::addObserver()
 {
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::heroShoot), strHeroShoot, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::enemyShoot), strEnemyShoot, NULL);
 }
 
 void MainScene::heroShoot(Object * object)
 {
 	Point pos = _hero->getPosition();
-	auto bullet = Bullet::create();
+	auto bullet = Bullet::create(BULLET);
 	if(_hero->getDir() == 1)
 	{
 		bullet->setPosition(pos.x + 10, pos.y);
@@ -116,6 +127,20 @@ void MainScene::heroShoot(Object * object)
 		bullet->setPosition(pos.x - 10, pos.y);
 		bullet->setDir(Vec2(-1, 0));
 	}
+	bullet->setSpeed(361);
+	_vBullet.pushBack(bullet);
+	addChild(bullet, 2);
+}
+
+void MainScene::enemyShoot(Object * object)
+{
+	Point pos1 = _hero->getPosition();
+	Point pos2 = _boss->getPosition();
+	Vec2 dire = pos1 - pos2;
+	dire.normalize();
+	auto bullet = Bullet::create(BULLETENEMY);
+	bullet->setPosition(pos2);
+	bullet->setDir(dire);
 	bullet->setSpeed(361);
 	_vBullet.pushBack(bullet);
 	addChild(bullet, 2);
@@ -210,6 +235,33 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_hero = (Hero*)spriteB;
 		_hero->dead();
 	}
+<<<<<<< 78b866661c1aad8ee56048190d3609a49e284442
+=======
+	else if((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() == TYPE::BOSS)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->dead();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::BOSS)
+		&& spriteB && spriteB->getTag() == TYPE::HERO)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->dead();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() == TYPE::BULLETENEMY)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->dead();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::BULLETENEMY)
+		&& spriteB && spriteB->getTag() == TYPE::HERO)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->dead();
+	}
+>>>>>>> a2fb35c03953a2022953f6005edcf46475d8585f
 	return true;
 }
 void MainScene::addBackGround(char *tmxName)
@@ -228,8 +280,8 @@ Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool 
 	float height = dict["height"].asFloat();
 	auto body = PhysicsBody::createBox(Size(width, height), mater);
 	body->setCategoryBitmask(type);
-	body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND);
-	body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK | TYPE::GROUND);
+	body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::BOSS);
+	body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK | TYPE::GROUND | TYPE::BOSS);
 	body->setLinearDamping(0.0f);
 	body->setDynamic(false);
 	Sprite* sprite = nullptr;

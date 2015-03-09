@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Person.h"
+#include "string.h"
 USING_NS_CC;
 
 class Hero : public Person
@@ -32,8 +33,10 @@ public:
 	bool isDead; // «∑ÒÀ¿Õˆ
 	void setJump(bool isJump){ _isJump = isJump;}
 private:
+
 	void updateMoveState();
 	int _moveState;
+	std::string userName;
 	bool _leftDown;
 	bool _rightDown;
 	bool _isJump;

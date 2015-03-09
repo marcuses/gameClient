@@ -27,10 +27,15 @@ void Person::addPhysics()
 		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET );
 		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::TANGH | TYPE::BULLET );
 	}
-	else
+	else if(_type == TYPE::HERO)
 	{
-		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP);
+		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY);
+	}
+	else if(_type == TYPE::BOSS)
+	{
+		body->setCollisionBitmask( TYPE::HERO | TYPE::GROUND | TYPE::BOSS );
+		body->setContactTestBitmask( TYPE::HERO | TYPE::GROUND | TYPE::BOSS);
 	}
 	body->setDynamic(true);
 	body->setLinearDamping(0.0f);

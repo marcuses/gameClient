@@ -9,7 +9,10 @@ const static enum TYPE
 	GROUND = 1 << 3,
 	TANGH = 1 << 4,
 	BULLET = 1 << 5,
-	TRAP = 1 << 6
+	TRAP = 1 << 6,
+	BOSS = 1 << 7,
+	BOSSWEAKNESS = 1 << 8,
+	BULLETENEMY = 1 << 9
 };
 
 const static char strLeftButtonDown[] = "leftButtonDown";
@@ -21,3 +24,4 @@ const static char strRightButtonUp[] = "rightButtonUp";
 const static char strJumpButtonUp[] = "jumpButtonUp";
 
 const static char strHeroShoot[] = "heroShoot";
+const static char strEnemyShoot[] = "enemyShoot";

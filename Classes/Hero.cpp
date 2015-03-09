@@ -11,6 +11,7 @@ bool Hero::init()
 	string txt = ("player_1_4.png");
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
+	setType(TYPE::HERO);
 	Person::init();
 	idle();
 	addObserver();
@@ -43,7 +44,7 @@ void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
 	case EventKeyboard::KeyCode::KEY_SPACE :
 		jumpButtonDown(NULL);	
 		break;
-	case EventKeyboard::KeyCode::KEY_J :
+	case EventKeyboard::KeyCode::KEY_Q :
 		NotificationCenter::getInstance()->postNotification(strHeroShoot);
 		break;
 	default: break;

@@ -1,12 +1,27 @@
 #include "Bullet.h"
 
-bool Bullet::init() //note : this init should used after son create
+Bullet* Bullet::create(TYPE type){
+
+	Bullet* ret = new Bullet();  
+
+
+	if(ret&&ret->init(type)){  
+		ret->autorelease();  
+		return ret;  
+	}  
+
+	CC_SAFE_DELETE(ret);//°²È«É¾³ý  
+	return nullptr;  
+}  
+
+bool Bullet::init(TYPE type) //note : this init should used after son create
 {
 	if (!Sprite::initWithFile("bu1.png"))	return false;
+	_type = type;
 	addAction();
 	addPhysics();
 	_time = 0;
-	this->setTag(TYPE::BULLET);
+	this->setTag(type);
 	return true;
 }
 
@@ -14,9 +29,9 @@ void Bullet::addPhysics()
 {
 	auto body = PhysicsBody::create();
 	body->addShape(PhysicsShapeBox::create(this->getContentSize() ,PhysicsMaterial(100.0f, 0.01f, 1.0f)));
-	body->setCategoryBitmask(TYPE::BULLET);
-	body->setCollisionBitmask(TYPE::BULLET | TYPE::MONSTER | TYPE::HERO);
-	body->setContactTestBitmask(TYPE::BULLET | TYPE::MONSTER | TYPE::HERO);
+	body->setCategoryBitmask(_type);
+	body->setCollisionBitmask(_type | TYPE::MONSTER | TYPE::HERO);
+	body->setContactTestBitmask(_type | TYPE::MONSTER | TYPE::HERO);
 	body->setLinearDamping(0.0f);
 	body->setDynamic(true);
 	body->setGravityEnable(false);

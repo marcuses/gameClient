@@ -7,6 +7,7 @@
 #include "Hero.h"
 #include "Bullet.h"
 #include "MoveBody.h"
+#include "Boss.h"
 USING_NS_CC;
 
 class MainScene :  public Layer  //test file
@@ -33,10 +34,12 @@ public:
 	Sprite* makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic, float aDensity, float aRes, float aFriction);
 	void setViewPointCenter(Point position); 
 	void heroShoot(Object * object);
+	void enemyShoot(Object * object);
 private:
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;
 	Hero* _hero;
+	Boss* _boss;
 	Vector<MoveBody*> _vMoveBody;
 	Vector<Monster*> _vMonster;
 	Vector<Bullet*> _vBullet;
