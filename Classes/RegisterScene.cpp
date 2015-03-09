@@ -1,19 +1,18 @@
-#include "LogInScene.h"
-#include "MainScene.h"
 #include "RegisterScene.h"
+#include "LogInScene.h"
 #include "socketClient.h"
 USING_NS_CC;
 
-Scene* LogInScene::createScene(){
+Scene* RegisterScene::createScene(){
 	auto scene = Scene::create();
-	auto layer = LogInScene::create();
+	auto layer = RegisterScene::create();
 	scene->addChild(layer);
 	return scene;
 }
-bool LogInScene::init(){
+bool RegisterScene::init(){
 	if(!Layer::init())	return false;
 	Size vSize  = Director::getInstance()->getVisibleSize();
-	auto bgSprite = Sprite::create("login.png");
+	auto bgSprite = Sprite::create("register.png");
 	float rateX = vSize.width/bgSprite->getContentSize().width;
 	float rateY = vSize.height/bgSprite->getContentSize().height;
 	bgSprite->setPosition(vSize/2);
@@ -29,15 +28,19 @@ bool LogInScene::init(){
 	addChild(TextFieldPSW);
 	TextFieldPSW->setPosition(Vec2(300*rateX,162*rateY));
 
+	TextFieldPSWS = MyTextFieldTTF::myTextFieldWithPlaceHolder(2,"<Confirm your PassWord>","fonts/Marker Felt.ttf",20);
+	addChild(TextFieldPSWS);
+	TextFieldPSWS->setPosition(Vec2(300*rateX,125*rateY));
+	
 	hintMsg = Label::createWithTTF("","fonts/Marker Felt.ttf",20);
 	addChild(hintMsg);
 	hintMsg->setTextColor(Color4B(138,43,226,255));
-	hintMsg->setPosition(Vec2(300*rateX,70*rateY));
+	hintMsg->setPosition(Vec2(300*rateX,60*rateY));
 
 	Rect rectPID = Rect(210*rateX,190*rateY,175*rateX,30*rateY);
 	Rect rectPSW = Rect(210*rateX,148*rateY,175*rateX,30*rateY);
-	Rect rectLOG = Rect(210*rateX,109*rateY,175*rateX,30*rateY);
-	Rect rectREG = Rect(414*rateX,150*rateY,32*rateX,62*rateY);
+	Rect rectPSWS = Rect(210*rateX,109*rateY,175*rateX,30*rateY);
+	Rect rectREG = Rect(424*rateX,108*rateY,49*rateX,108*rateY);
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch,Event* evt){
@@ -47,16 +50,22 @@ bool LogInScene::init(){
 			log("PID");
 			TextFieldPID->attachWithIME();
 			TextFieldPSW->detachWithIME();
+			TextFieldPSWS->detachWithIME();
 		}else if( rectPSW.containsPoint(touch->getLocation()) ){
 			log("PSW");
 			TextFieldPSW->attachWithIME();
+			TextFieldPSWS->detachWithIME();
 			TextFieldPID->detachWithIME();
-		}else if( rectLOG.containsPoint(touch->getLocation()) ){
-			log("SUCCESS");
-			logIn();
+		}else if( rectPSWS.containsPoint(touch->getLocation()) ){
+			log("PSWS");
+			TextFieldPSWS->attachWithIME();
+			TextFieldPSW->detachWithIME();
+			TextFieldPID->detachWithIME();
 		}else if( rectREG.containsPoint(touch->getLocation()) ){
 			log("Register");
-			Director::getInstance()->replaceScene(RegisterScene::createScene());
+			if(TextFieldPSW->getString().size()<3)	invalidPSW();
+			else if(TextFieldPSW->getString() == TextFieldPSWS->getString())	registerID();
+			else wrongPSW();
 		}else{
 			TextFieldPID->detachWithIME();
 			TextFieldPSW->detachWithIME();
@@ -66,19 +75,28 @@ bool LogInScene::init(){
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 	return true;
 }
-void LogInScene::logIn(){
+void RegisterScene::registerID(){
 	socketClient test;
-	if(test.LoginSendData(TextFieldPID->getString(),TextFieldPSW->getString(),2)) logInSuccess();
-	else	logInFail();
+	if(test.LoginSendData(TextFieldPID->getString(),TextFieldPSW->getString(),1)) registerSuccess();
+	else	registerFail();
 }
-void LogInScene::logInSuccess(){
-	log(TextFieldPID->getString().c_str());
-	log(TextFieldPSW->getString().c_str());
-	auto scene = MainScene::createScene();
+void RegisterScene::registerSuccess(){
+	auto scene = LogInScene::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
-void LogInScene::logInFail(){
+void RegisterScene::wrongPSW(){
+	TextFieldPSW->setString("");
+	TextFieldPSWS->setString("");
+	hintMsg->setString("passwords don\'t match");
+}
+void  RegisterScene::invalidPSW(){
+	TextFieldPSW->setString("");
+	TextFieldPSWS->setString("");
+	hintMsg->setString("passwords is invalid");
+}
+void RegisterScene::registerFail(){
 	TextFieldPID->setString("");
 	TextFieldPSW->setString("");
-	hintMsg->setString("Incorrect ID or password");
+	TextFieldPSWS->setString("");
+	hintMsg->setString("The ID has been registered before");
 }
