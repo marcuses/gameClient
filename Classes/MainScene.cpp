@@ -11,13 +11,13 @@ using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
-Scene* MainScene::_scene = nullptr;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
-	_scene = Scene::createWithPhysics();
-
+	
+	auto _scene = Scene::createWithPhysics();
 	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
 	// add layer as a child to scene
@@ -37,6 +37,7 @@ bool MainScene::init()
 	//_monster = Monster::create();
 	//addChild(_monster, 1);
 	//_monster->setPosition(200, 320);
+	if(!Layer::init()) return false;
 	_hero = Hero::create();
 	//_hero1 = Hero::create();
 	addChild(_hero, 2);
@@ -64,18 +65,24 @@ void MainScene::onEnter()
 	Layer::onEnter();
 	auto size = Director::getInstance()->getWinSize();
 	addBackGround("map.tmx");
-	_scene->getPhysicsWorld()->setAutoStep(false);
+	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
 	addObserver();
 }
 
+//void MainScene::onExit()
+//{
+////	removeAllChildrenWithCleanup(true);
+////	_scene->removeAllChildrenWithCleanup(true);
+////	removeAllComponents();
+//}
 void MainScene::update(float dt)
 {
 	setViewPointCenter(_hero->getPosition());
 	for (int i = 0; i < 3; ++i)
 	{
-		_scene->getPhysicsWorld()->step(1/180.0f);
+		getScene()->getPhysicsWorld()->step(1/180.0f);
 	}
 	if(fabs(_hero->getPositionX() - _boss->getPositionX()) <= 480)
 	{

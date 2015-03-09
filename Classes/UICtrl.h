@@ -6,6 +6,7 @@ USING_NS_CC;
 class UICtrl : public cocos2d::Layer{
 public:
 	virtual bool init();
+	void onEnter();
 	CREATE_FUNC(UICtrl);
 private:
 
@@ -18,6 +19,7 @@ private:
 
 	cocos2d::Layer* stopLayer;
 	cocos2d::Sprite* backButton;
+	cocos2d::Sprite* restartButton;
 	cocos2d::Sprite* quitButton;
 	
 	void showLayer();

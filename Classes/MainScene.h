@@ -19,6 +19,7 @@ public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
 	virtual void onEnter();
+//	virtual void onExit();
 	// implement the "static create()" method manually
 	CREATE_FUNC(MainScene);
 	void update(float dt);
@@ -41,7 +42,7 @@ private:
 	TMXTiledMap* _tileMap;
 	Hero* _hero;
 	Boss* _boss;
-	static Scene* _scene;
+	//static Scene* _scene;
 };
 
 
