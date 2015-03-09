@@ -90,5 +90,3 @@ void NewLogIn::logInFail(){
 	TextFieldPID->setString("");
 	TextFieldPSW->setString("");
 }
-
-

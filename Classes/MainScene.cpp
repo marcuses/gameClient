@@ -198,7 +198,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		_hero = (Hero*)spriteB;
 		_hero->dead();
 	}
-	/*else if((spriteA && spriteA->getTag() == TYPE::HERO)
+	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::MONSTER)
 	{
 		_hero = (Hero*)spriteA;
@@ -209,7 +209,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->dead();
-	}*/
+	}
 	return true;
 }
 void MainScene::addBackGround(char *tmxName)

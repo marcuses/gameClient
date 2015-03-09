@@ -19,15 +19,15 @@ bool LogInScene::init(){
 	bgSprite->setScaleY(rateY);
 	addChild(bgSprite);
 
-	TextFieldPID = TextFieldTTF::textFieldWithPlaceHolder("<Input your ID>","fonts/Marker Felt.ttf",20);
-    addChild(TextFieldPID);
+	TextFieldPID = MyTextFieldTTF::myTextFieldWithPlaceHolder(1,"<Input your ID>","fonts/Marker Felt.ttf",20);
+	TextFieldPID->setType(1);
+	addChild(TextFieldPID);
 	TextFieldPID->setPosition(Vec2(300*rateX,205*rateY));
-	TextFieldPID->attachWithIME();
 	
-	TextFieldPSW = TextFieldTTF::textFieldWithPlaceHolder("<Input your PassWord>","fonts/Marker Felt.ttf",20);
-    addChild(TextFieldPSW);
+	TextFieldPSW = MyTextFieldTTF::myTextFieldWithPlaceHolder(2,"<Input your PassWord>","fonts/Marker Felt.ttf",20);
+    TextFieldPSW->setType(2);
+	addChild(TextFieldPSW);
 	TextFieldPSW->setPosition(Vec2(300*rateX,162*rateY));
-	TextFieldPSW->detachWithIME();
 
 	Rect rectPID = Rect(210*rateX,190*rateY,175*rateX,30*rateY);
 	Rect rectPSW = Rect(210*rateX,148*rateY,175*rateX,30*rateY);
@@ -38,17 +38,25 @@ bool LogInScene::init(){
 		if( rectPID.containsPoint(touch->getLocation())){
 			log("PID");
 			TextFieldPID->attachWithIME();
+			TextFieldPID->getString();
+			
+			//TextFieldPID->setOn(true);
 			TextFieldPSW->detachWithIME();
+			//TextFieldPSW->setOn(false);
 		}else if( rectPSW.containsPoint(touch->getLocation()) ){
 			log("PSW");
 			TextFieldPSW->attachWithIME();
+			//TextFieldPSW->setOn(true);
 			TextFieldPID->detachWithIME();
+			//TextFieldPID->setOn(false);
 		}else if( rectLOG.containsPoint(touch->getLocation()) ){
 			log("SUCCESS");
 			logInSuccess();
 		}else{
+			TextFieldPID->detachWithIME();
+			//TextFieldPID->setOn(false);
 			TextFieldPSW->detachWithIME();
-			TextFieldPSW->detachWithIME();
+			//TextFieldPSW->setOn(false);
 		}
 		return true;
 	};
