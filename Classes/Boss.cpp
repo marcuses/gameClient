@@ -1,6 +1,7 @@
 #include "Boss.h"
 #include "Headfile.h"
 #include "MainScene.h"
+
 bool Boss::init()
 {
 	_monsterType = 2;
@@ -15,9 +16,11 @@ bool Boss::init()
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
-	_life = 20;
+	_curLife = 20;
+	_maxLife = 20;
 	_isdead = false;
 	_spWeak = Sprite::create();
+	_spHitTime = 0;
 	auto body = PhysicsBody::createCircle(36, PhysicsMaterial(0, 0, 0));
 	body->setCategoryBitmask(TYPE::BOSSWEAKNESS);
 	body->setCollisionBitmask(TYPE::BOSSWEAKNESS | TYPE::BULLET);
@@ -28,6 +31,14 @@ bool Boss::init()
 	_spWeak->setPhysicsBody(body);
 	_spWeak->setTag(TYPE::BOSSWEAKNESS);
 	addChild(_spWeak);
+	_spHit = Sprite::create("hitBlode.png");
+	addChild(_spHit, 1);
+	_spHit->setVisible(false);
+	_progress = Progress::create("small-enemy-progress-bg.png","small-enemy-progress-fill.png");
+	auto size = this->getContentSize();
+	_progress->setPosition( size.width*2/3, size.height + _progress->getContentSize().height/2 + 50);
+	_progress->setScaleX(2);
+	addChild(_progress);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
 	scheduleUpdate();
 	return true;
@@ -66,8 +77,12 @@ void Boss::addRunAnimation()
 
 void Boss::beHit()
 {
-	_life--;
-	if(_life <= 0)
+	SimpleAudioEngine::getInstance()->playEffect("explode.wav");
+	_curLife--;
+	_spHit->setVisible(true);
+	_progress->setProgress(_curLife * 1.0 / _maxLife * 100);
+	_spHitTime = 0;
+	if(_curLife <= 0)
 	{
 		_isdead = true;
 		getParent()->removeChild(this, true);
@@ -99,4 +114,10 @@ void Boss::update(float dt)
 	if(_time == 0) 
 		NotificationCenter::getInstance()->postNotification(strEnemyShoot);
 	_spWeak->setPosition(Vec2(260, 410) );
+	_spHit->setPosition(Vec2(260, 410) );
+	if(_spHit->isVisible())
+	{
+		_spHitTime++;
+		if(_spHitTime >= 10) _spHit->setVisible(false);
+	}
 }

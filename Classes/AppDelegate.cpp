@@ -5,7 +5,8 @@
 #include "Splash.h"
 #include "Standing.h"
 #include <vector>
-
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -53,12 +54,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("GameOver");
 	searchPath.push_back("WinScene");
 	searchPath.push_back("NextScene");
+	searchPath.push_back("image");
 	searchPath.push_back("UI");
 	searchPath.push_back("Map");
 	searchPath.push_back("Bullet");
 	searchPath.push_back("monsterAnimation\\Export\\NewAnimation");
+	searchPath.push_back("sEffect");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
-
+	SimpleAudioEngine::getInstance()->preloadEffect("explode.wav");
+	SimpleAudioEngine::getInstance()->preloadEffect("hit.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background.mp3");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("image/ui.plist","image/ui.pvr.ccz");
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
 	//auto scene = NewLogIn::createScene();

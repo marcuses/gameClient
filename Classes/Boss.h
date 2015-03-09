@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "Person.h"
+#include "Progress.h"
 USING_NS_CC;
 enum STATE
 {
@@ -18,8 +19,11 @@ public:
 	void shoot(Object * object);
 	void beHit();
 private:
-	int _life;
+	int _maxLife;
+	int _curLife;
 	Sprite* _spHit;
+	Progress* _progress;
+	int _spHitTime;
 	bool _isdead;
 	STATE _curState;
 	Sprite* _spWeak;

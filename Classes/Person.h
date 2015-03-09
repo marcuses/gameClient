@@ -3,7 +3,8 @@
 #include "cocos2d.h"
 #include "Headfile.h"
 #include"cocostudio/CocoStudio.h"
-
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 using namespace cocostudio;
 USING_NS_CC;
 
@@ -29,6 +30,7 @@ public:
 	//void setHealth(float h){ health = h; }
 private:
 	int _dir; //指示方向
+	
 	TYPE _type;
 	float _speed;
 };

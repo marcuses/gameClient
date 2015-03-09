@@ -16,7 +16,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 	
 	auto _scene = Scene::createWithPhysics();
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -69,6 +69,7 @@ void MainScene::onEnter()
 	Layer::onEnter();
 	auto size = Director::getInstance()->getWinSize();
 	addBackGround("map.tmx");
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
@@ -138,7 +139,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteB;
 		auto bullet = (Bullet*)spriteA;
-		removeChild(monster);
+		monster->behit();
 		removeChild(bullet);
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
@@ -146,7 +147,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteA;
 		auto bullet = (Bullet*)spriteB;
-		removeChild(monster);
+		monster->behit();
 		removeChild(bullet); //
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
