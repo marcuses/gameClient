@@ -35,14 +35,12 @@ public:
 	void setViewPointCenter(Point position); 
 	void heroShoot(Object * object);
 	void enemyShoot(Object * object);
+	inline Point getPlayerPosition(){ return _hero->getPosition();} 
 private:
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;
 	Hero* _hero;
 	Boss* _boss;
-	Vector<MoveBody*> _vMoveBody;
-	Vector<Monster*> _vMonster;
-	Vector<Bullet*> _vBullet;
 	static Scene* _scene;
 };
 

@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "Headfile.h"
+#include "MainScene.h"
 bool Boss::init()
 {
 	_monsterType = 2;
@@ -14,6 +15,8 @@ bool Boss::init()
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
+	scheduleUpdate();
 	return true;
 }
 
@@ -48,6 +51,16 @@ void Boss::addRunAnimation()
 	}
 }
 
+void Boss::shoot(Object * object)
+{
+	Point pos1 = ((MainScene*)this->getParent())->getPlayerPosition();
+	Point pos2 = this->getPosition();
+	Vec2 dire = pos1 - pos2;
+	dire.normalize();
+	auto bullet = Bullet::create(BULLETENEMY, dire, 180);
+	bullet->setPosition(pos2);
+	this->getParent()->addChild(bullet, 2);
+}
 void Boss::update(float dt)
 {
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));

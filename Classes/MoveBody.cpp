@@ -29,6 +29,7 @@ bool MoveBody::init(const char* imgname, Sprite* sp, float speed, int type, floa
 	_type = type;
 	if(type == 1) dir = Vec2(0, 1);
 	else dir = Vec2(1, 0);
+	scheduleUpdate();
 	return true;  
 }  
 

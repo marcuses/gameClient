@@ -1,11 +1,11 @@
 #include "Bullet.h"
 
-Bullet* Bullet::create(TYPE type){
+Bullet* Bullet::create(TYPE type,Vec2 dir, float speed){
 
 	Bullet* ret = new Bullet();  
 
 
-	if(ret&&ret->init(type)){  
+	if(ret&&ret->init(type, dir, speed)){  
 		ret->autorelease();  
 		return ret;  
 	}  
@@ -14,14 +14,20 @@ Bullet* Bullet::create(TYPE type){
 	return nullptr;  
 }  
 
-bool Bullet::init(TYPE type) //note : this init should used after son create
+bool Bullet::init(TYPE type,Vec2 dir, float speed) //note : this init should used after son create
 {
 	if (!Sprite::initWithFile("bu1.png"))	return false;
 	_type = type;
+	_dir = dir;
+	_speed = speed;
 	addAction();
 	addPhysics();
-	_time = 0;
 	this->setTag(type);
+	this->getPhysicsBody()->setVelocity(_dir * _speed);
+	float anc = atan2(_dir.y, _dir.x);
+	this->setRotation(- anc * 180.0 / 3.1415);
+	scheduleOnce(schedule_selector(Bullet::del), 5);
+	scheduleUpdate();
 	return true;
 }
 
@@ -51,13 +57,13 @@ void Bullet::addAction()
 	auto runAni = Animation::createWithSpriteFrames(allFrames, 0.1f);
 	runAction(RepeatForever::create(Animate::create(runAni)));
 }
+void Bullet::del(float dt)
+{
+	this->getParent()->removeChild(this);
+}
 void Bullet::update(float dt)
 {
 	this->getPhysicsBody()->setVelocity(_dir * _speed);
 	float anc = atan2(_dir.y, _dir.x);
-	log("%lf",anc);
 	this->setRotation(- anc * 180.0 / 3.1415);
-	_time++;
-	//setPosition(getPosition() + _dir * _speed);
-	//Point o = getPosition();
 }

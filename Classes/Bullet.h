@@ -8,17 +8,14 @@ class Bullet : public Sprite
 {
 public:
 
-	static Bullet* create(TYPE type);
-	bool init(TYPE type);
+	static Bullet* create(TYPE type, Vec2 dir, float speed);
+	bool init(TYPE type, Vec2 dir, float speed);
 	void update(float dt);
-	inline void setDir(Vec2 dir) { _dir = dir; }
-	inline void setSpeed(float speed){ _speed = speed;}
-	inline int getTime(){ return _time; }
 	void addPhysics();
 	void addAction();
+	void del(float dt);
 private:
 	Vec2 _dir;
 	float _speed;
-	int _time;
 	TYPE _type;
 };

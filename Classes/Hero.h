@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include "Person.h"
 #include "string.h"
+#include "Bullet.h"
 USING_NS_CC;
 
 class Hero : public Person
@@ -24,7 +25,7 @@ public:
 	void leftButtonUp(Object * object);
 	void rightButtonUp(Object * object);
 	void jumpButtonUp(Object * object);
-
+	void shoot(Object * object);
 	void runAnimation();
 	void dead();
 
@@ -32,8 +33,8 @@ public:
 	void setBuff(){hasBuff = true;}
 	bool isDead; // «∑ÒÀ¿Õˆ
 	void setJump(bool isJump){ _isJump = isJump;}
+	
 private:
-
 	void updateMoveState();
 	int _moveState;
 	std::string userName;

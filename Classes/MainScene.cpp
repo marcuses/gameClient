@@ -72,23 +72,7 @@ void MainScene::onEnter()
 
 void MainScene::update(float dt)
 {
-	_hero->update(dt);
-	_boss->update(dt);
 	setViewPointCenter(_hero->getPosition());
-	for(auto moveBody : _vMoveBody)
-		moveBody->update(dt);
-	for(auto monster : _vMonster)
-	monster->update(dt);
-	for(auto bullet : _vBullet)
-	{
-		bullet->update(dt);
-		if(bullet->getTime() >= 300)
-		{
-			_vBullet.eraseObject(bullet);
-			removeChild(bullet);
-			break;
-		}
-	}
 	for (int i = 0; i < 3; ++i)
 	{
 		_scene->getPhysicsWorld()->step(1/180.0f);
@@ -109,41 +93,17 @@ void MainScene::addListener()
 
 void MainScene::addObserver()
 {
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::heroShoot), strHeroShoot, NULL);
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::enemyShoot), strEnemyShoot, NULL);
+	//NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::heroShoot), strHeroShoot, NULL);
+	//NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::enemyShoot), strEnemyShoot, NULL);
 }
-
-void MainScene::heroShoot(Object * object)
-{
-	if(_hero->isDead)	return;
-	Point pos = _hero->getPosition();
-	auto bullet = Bullet::create(BULLET);
-	if(_hero->getDir() == 1)
-	{
-		bullet->setPosition(pos.x + 10, pos.y);
-		bullet->setDir(Vec2(1, 0));
-	}
-	else
-	{
-		bullet->setPosition(pos.x - 10, pos.y);
-		bullet->setDir(Vec2(-1, 0));
-	}
-	bullet->setSpeed(361);
-	_vBullet.pushBack(bullet);
-	addChild(bullet, 2);
-}
-
 void MainScene::enemyShoot(Object * object)
 {
 	Point pos1 = _hero->getPosition();
 	Point pos2 = _boss->getPosition();
 	Vec2 dire = pos1 - pos2;
 	dire.normalize();
-	auto bullet = Bullet::create(BULLETENEMY);
+	auto bullet = Bullet::create(BULLETENEMY, dire, 180);
 	bullet->setPosition(pos2);
-	bullet->setDir(dire);
-	bullet->setSpeed(361);
-	_vBullet.pushBack(bullet);
 	addChild(bullet, 2);
 }
 bool MainScene::onContactBegin(PhysicsContact& contact)
@@ -173,8 +133,6 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteB;
 		auto bullet = (Bullet*)spriteA;
-		_vMonster.eraseObject(monster);
-		_vBullet.eraseObject(bullet);
 		removeChild(monster);
 		removeChild(bullet);
 	}
@@ -183,8 +141,6 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteA;
 		auto bullet = (Bullet*)spriteB;
-		_vMonster.eraseObject(monster);
-		_vBullet.eraseObject(bullet);
 		removeChild(monster);
 		removeChild(bullet); //
 	}
@@ -328,10 +284,11 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 		else
 			sprite = Sprite::create();
 		sprite->setTag(type);
-		if(imgName == "Swing.png")
+		if(imgName == "tai.png")
 		{
-			body->setPositionOffset(Point( -115, 75));
-			sprite->setPosition(Point(x + 115, y - 75));
+			Size size = sprite->getContentSize();
+			body->setPositionOffset(Point( -size.width / 2, size.height / 2));
+			sprite->setPosition(Point(x + size.width / 2, y - size.height / 2));
 			body->setGravityEnable(false);
 		}
 		else if(imgName == "BalanceBoard.png")
@@ -375,18 +332,21 @@ void MainScene::addPhysics()
 		addChild(sprite);
 	}
 
-	//添加移动台
+	//添加移动台水平
+	auto objectsHmove = _tileMap ->objectGroupNamed("hMove")->getObjects();
+	for (auto& obj : objectsHmove) 
+	{
+		auto dic= obj.asValueMap();
+		auto sprite = makePolygon(dic, TYPE::GROUND, "tai.png", true, true, 0, 0, 1);
+		Size sz = sprite->getContentSize();
+		Point pos = sprite->getPosition();
+		auto moveBody = MoveBody::create("tai.png", sprite, 100, 2,pos.x - sz.width - 100 , pos.x + sz.width - 100);
+		addChild(moveBody);
+	}
 	auto objects = _tileMap ->objectGroupNamed("ObjectsSwing");
-	auto Swing = objects->getObject("Swing");
-	auto spw = makePolygon(Swing, TYPE::GROUND, "Swing.png", true, true, 0, 0, 1);
-	auto moveBody1 = MoveBody::create("Swing.png", spw, 100, 2, 4000, 4500);
-	addChild(moveBody1);
-	_vMoveBody.pushBack(moveBody1);
-	
 	auto vBmap = objects->getObject("BalanceBoard");
 	auto balanceBoard = makePolygon(vBmap, TYPE::GROUND, "BalanceBoard.png", true, true, 0, 0.0f, 1.0f );
 	auto moveBody2 = MoveBody::create("BalanceBoard.png", balanceBoard, 100, 1, 400, 600);
-	_vMoveBody.pushBack(moveBody2);
 	addChild(moveBody2);
 
 	auto objectGroupEnemy = _tileMap ->objectGroupNamed("Enemy")->getObjects();
@@ -397,7 +357,6 @@ void MainScene::addPhysics()
 		float y = dic["y"].asFloat();
 		auto ememy = Monster::create();
 		ememy->setPosition(x, y);
-		_vMonster.pushBack(ememy);
 		addChild(ememy);
 	}
 

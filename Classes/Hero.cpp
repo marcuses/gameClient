@@ -16,6 +16,7 @@ bool Hero::init()
 	idle();
 	addObserver();
 	addListener();
+	scheduleUpdate();
 	return true;
 }
 
@@ -35,16 +36,16 @@ void Hero::addListener()
 }
 void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
 	switch(keyCode){
-	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+	case EventKeyboard::KeyCode::KEY_A :
 		leftButtonDown(NULL);
 		break;
-	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW :
+	case EventKeyboard::KeyCode::KEY_D :
 		rightButtonDown(NULL);
 		break;
-	case EventKeyboard::KeyCode::KEY_SPACE :
+	case EventKeyboard::KeyCode::KEY_K :
 		jumpButtonDown(NULL);	
 		break;
-	case EventKeyboard::KeyCode::KEY_Q :
+	case EventKeyboard::KeyCode::KEY_J :
 		NotificationCenter::getInstance()->postNotification(strHeroShoot);
 		break;
 	default: break;
@@ -67,16 +68,24 @@ void Hero::jumpButtonDown(Object * object){
 }
 void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt){
 	switch(keyCode){
-	case EventKeyboard::KeyCode::KEY_LEFT_ARROW :
+	case EventKeyboard::KeyCode::KEY_A :
 		leftButtonUp(NULL);
 		break;
-	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW :
+	case EventKeyboard::KeyCode::KEY_D :
 		rightButtonUp(NULL);
 		break;
-	case EventKeyboard::KeyCode::KEY_SPACE :  //never have this function!!!!
+	case EventKeyboard::KeyCode::KEY_K :  //never have this function!!!!
 		//jumpButtonUp();
 		break;
 	}
+}
+void Hero::shoot(Object * object)
+{
+	if(isDead)	return;
+	Point pos = getPosition();
+	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361);
+	bullet->setPosition(pos.x + getDir() * 10, pos.y);
+	this->getParent()->addChild(bullet, 2);
 }
 void Hero::leftButtonUp(Object * object){
 	_leftDown = false;
@@ -110,7 +119,7 @@ void Hero::addObserver()
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::leftButtonDown), strLeftButtonDown, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::rightButtonDown), strRightButtonDown, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::jumpButtonDown), strJumpButtonDown, NULL);
-
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::shoot), strHeroShoot, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::leftButtonUp), strLeftButtonUp, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::rightButtonUp), strRightButtonUp, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::jumpButtonUp), strJumpButtonUp, NULL);
@@ -123,7 +132,6 @@ void Hero::update(float dt)
 		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	}
 }
-
 void Hero::dead()
 {
 	stopAllActions();

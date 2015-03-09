@@ -15,6 +15,7 @@ public:
 	void addRunAnimation();
 	//void deadAnimation();
 	void update(float dt);
+	void shoot(Object * object);
 private:
 	STATE _curState;
 	ArmatureAnimation* _animation;

@@ -12,6 +12,7 @@ bool Monster::init()
 //	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::MONSTER);
 	setType(TYPE::MONSTER);
+	scheduleUpdate();
 	Person::init();
 	return true;
 }
