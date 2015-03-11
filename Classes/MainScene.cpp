@@ -41,7 +41,7 @@ bool MainScene::init()
 	_hero = Hero::create();
 	//_hero1 = Hero::create();
 	addChild(_hero, 2);
-	_hero->setPosition(5000, 680); 
+	_hero->setPosition(300, 680); 
 	
 
 	/*ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
@@ -139,7 +139,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteB;
 		auto bullet = (Bullet*)spriteA;
-		monster->behit();
+		monster->beHit();
 		removeChild(bullet);
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
@@ -147,7 +147,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteA;
 		auto bullet = (Bullet*)spriteB;
-		monster->behit();
+		monster->beHit();
 		removeChild(bullet); //
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
@@ -178,49 +178,51 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		&& spriteB && spriteB->getTag() == TYPE::TRAP)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::TRAP)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
 		_hero = (Hero*)spriteB;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::MONSTER)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
 		_hero = (Hero*)spriteB;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::BOSS)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BOSS)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
 		_hero = (Hero*)spriteB;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::BULLETENEMY)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->dead();
+		_hero->beHit();
+		removeChild(spriteB);
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BULLETENEMY)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
+		removeChild(spriteA);
 		_hero = (Hero*)spriteB;
-		_hero->dead();
+		_hero->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BULLET)
 		&& spriteB && spriteB->getTag() == TYPE::BOSSWEAKNESS)

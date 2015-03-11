@@ -10,8 +10,6 @@ bool Monster::init()
 		return false;
 	}
 	addRunAnimation();
-	_maxLife = _monsterType + 1;
-	_curLife = _monsterType + 1;
 	auto size = this->getContentSize();
 	_progress = Progress::create("small-enemy-progress-bg.png","small-enemy-progress-fill.png");
 	_progress->setScaleY(0.6);
@@ -26,16 +24,16 @@ bool Monster::init()
 	addChild(_spHit, 1);
 	_spHit->setVisible(false);
 	_spHitTime = 0;
-	_isdead = false;
+	_isDead = false;
 	_spHit->setScale(0.5);
 	schedule(schedule_selector(Monster::updateBullet),4);
-	Person::init();
+	Person::init(_monsterType + 1);
 	return true;
 }
 void Monster::updateBullet(float dt)
 {
-	if(_isdead) return;
-	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 100);
+	if(_isDead) return;
+	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250);
 	bullet->setPosition(this->getPosition());
 	getParent()->addChild(bullet, 2);
 }
@@ -70,24 +68,22 @@ void Monster::addRunAnimation()
 	}
 }
 
-void Monster::behit()
+void Monster::beHit()
 {
+	Person::beHit();
 	SimpleAudioEngine::getInstance()->playEffect("hit.mp3");
-	_curLife--;
 	_progress->setProgress(_curLife * 1.0 / _maxLife * 100);
 	_spHit->setVisible(true);
 	_spHitTime = 0;
-	if(_curLife <= 0)
+	if(_isDead)
 	{
-		_isdead = true;
 		getParent()->removeChild(this, true);
-		//NotificationCenter::getInstance()->postNotification(strWin);
 	}
 
 }
 void Monster::update(float dt)
 {
-	if(_isdead) return;
+	if(_isDead) return;
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	if(_monsterType < 2)setScaleX(getDir() == 1 ? 1 : -1);
 	else setScaleX(getDir() == 1 ? -1 : 1);

@@ -17,14 +17,11 @@ public:
 	//void deadAnimation();
 	void update(float dt);
 	void shoot(Object * object);
-	void beHit();
+	void beHit() override;
 private:
-	int _maxLife;
-	int _curLife;
 	Sprite* _spHit;
 	Progress* _progress;
 	int _spHitTime;
-	bool _isdead;
 	STATE _curState;
 	Sprite* _spWeak;
 	ArmatureAnimation* _animation;

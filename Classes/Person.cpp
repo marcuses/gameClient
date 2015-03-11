@@ -1,15 +1,38 @@
 #include "Person.h"
 
-bool Person::init() //note : this init should used after son create
+Person* Person::create(int maxLife)
+{
+	Person* ret = new Person();
+	if(ret && ret->init(maxLife))
+	{
+		ret->autorelease();
+		return ret;
+	}
+
+	CC_SAFE_DELETE(ret);
+	return nullptr;
+}
+bool Person::init(int maxLife) //note : this init should used after son create
 {
 	//Sprite::create();
 	_dir = 1;
 	_speed = 180.0f;
+	_isDead = false;
+	_curLife = maxLife;
+	_maxLife = maxLife;
 	addRunAnimation();
 	addPhysics();
 	return true;
 }
 
+void Person::beHit()
+{
+	_curLife--;
+	if(_curLife <= 0)
+	{
+		_isDead = true;
+	}
+}
 void Person::changeDir()
 {
 	_dir = -_dir;

@@ -23,10 +23,6 @@ Progress* Progress::create(const char* background, const char* fillname)
 		progress->autorelease();
 		return progress;
 	}
-	else
-	{
-		delete progress;
-		progress = NULL;
-		return NULL;
-	}
+	CC_SAFE_DELETE(progress);
+	return nullptr;
 }

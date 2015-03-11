@@ -12,13 +12,10 @@ bool Boss::init()
 	//	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::BOSS);
 	setType(TYPE::BOSS);
-	Person::init();
+	Person::init(20);
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
-	_curLife = 20;
-	_maxLife = 20;
-	_isdead = false;
 	_spWeak = Sprite::create();
 	_spHitTime = 0;
 	auto body = PhysicsBody::createCircle(36, PhysicsMaterial(0, 0, 0));
@@ -77,22 +74,20 @@ void Boss::addRunAnimation()
 
 void Boss::beHit()
 {
+	Person::beHit();
 	SimpleAudioEngine::getInstance()->playEffect("explode.wav");
-	_curLife--;
 	_spHit->setVisible(true);
 	_progress->setProgress(_curLife * 1.0 / _maxLife * 100);
 	_spHitTime = 0;
-	if(_curLife <= 0)
+	if(_isDead)
 	{
-		_isdead = true;
 		getParent()->removeChild(this, true);
 		NotificationCenter::getInstance()->postNotification(strWin);
-
 	}
 }
 void Boss::shoot(Object * object)
 {
-	if(_isdead) return;
+	if(_isDead) return;
 	Point pos1 = this->getParent()->getChildByTag(TYPE::HERO)->getPosition();
 	Point pos2 = this->getPosition();
 	Vec2 dire = pos1 - pos2;
@@ -103,7 +98,7 @@ void Boss::shoot(Object * object)
 }
 void Boss::update(float dt)
 {
-	if(_isdead) return;
+	if(_isDead) return;
 	Point pos1 = this->getParent()->getChildByTag(TYPE::HERO)->getPosition();
 	Point pos2 = this->getPosition();
 	if(fabs(pos2.x - pos1.x) <= 480 ) setSpeed(100);

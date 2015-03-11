@@ -14,13 +14,10 @@ public:
 	void updateBullet(float dt);
 	//void deadAnimation();
 	void update(float dt);
-	void behit();
+	void beHit() override;
 private:
-	bool _isdead;
 	Sprite* _spHit;
 	Progress* _progress;
 	int _spHitTime;
-	int _maxLife;
-	int _curLife;
 	int _monsterType;
 };

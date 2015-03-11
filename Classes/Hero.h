@@ -28,15 +28,16 @@ public:
 	void shoot(Object * object);
 	void runAnimation();
 	void dead();
-
+	void beHit() override;
 	bool getBuff(){ return hasBuff; }
-	void setBuff(){hasBuff = true;}
-	bool isDead; // «∑ÒÀ¿Õˆ
+	void setBuff(){ hasBuff = true; }
+	
 	void setJump(bool isJump){ _isJump = isJump;}
 	
 private:
 	void updateMoveState();
 	int _moveState;
+	
 	std::string userName;
 	bool _leftDown;
 	bool _rightDown;

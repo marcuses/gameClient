@@ -3,7 +3,6 @@
 using namespace std;
 bool Hero::init()
 {
-	isDead = false;
 	_isJump = true;
 	_leftDown  = false;
 	_rightDown = false;
@@ -12,7 +11,7 @@ bool Hero::init()
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
 	setType(TYPE::HERO);
-	Person::init();
+	Person::init(3);
 	idle();
 	addObserver();
 	addListener();
@@ -27,6 +26,14 @@ void Hero::idle()
 	setSpriteFrame(SpriteFrame::create("player_1_4.png", Rect(0, 0, 57, 63)));
 }
 
+void Hero::beHit() 
+{
+	Person::beHit();
+	if(_isDead)
+	{
+		dead();
+	}
+}
 void Hero::addListener()
 {
 	_listen_key = EventListenerKeyboard::create();
@@ -60,7 +67,7 @@ void Hero::rightButtonDown(Object * object){
 	_rightDown = true;
 }
 void Hero::jumpButtonDown(Object * object){
-	if(isDead) return;
+	if(_isDead) return;
 	if(!_isJump){
 		_isJump = true;
 		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 503.0));
@@ -81,7 +88,7 @@ void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt){
 }
 void Hero::shoot(Object * object)
 {
-	if(isDead)	return;
+	if(_isDead)	return;
 	Point pos = getPosition();
 	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361);
 	bullet->setPosition(pos.x + getDir() * 10, pos.y);
@@ -126,7 +133,7 @@ void Hero::addObserver()
 }
 void Hero::update(float dt)
 {
-	if(isDead) return;
+	if(_isDead) return;
 	updateMoveState();	//ÐÎÌ¬¸üÐÂ
 	if(_moveState&1){
 		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
@@ -136,7 +143,7 @@ void Hero::dead()
 {
 	stopAllActions();
 	//	removeAllChildren();
-	isDead = true;
+	_isDead = true;
 	_eventDispatcher->removeEventListener(_listen_key);
 	setSpriteFrame(SpriteFrame::create("player_2.png", Rect(0, 0, 63, 63)));
 }
