@@ -35,6 +35,7 @@ public:
 	void setJump(bool isJump){ _isJump = isJump;}
 	
 private:
+	void possLifeMsg();
 	void updateMoveState();
 	int _moveState;
 	

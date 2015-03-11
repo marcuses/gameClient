@@ -15,6 +15,7 @@ bool Hero::init()
 	idle();
 	addObserver();
 	addListener();
+	possLifeMsg();
 	scheduleUpdate();
 	return true;
 }
@@ -25,10 +26,15 @@ void Hero::idle()
 	stopAllActions();
 	setSpriteFrame(SpriteFrame::create("player_1_4.png", Rect(0, 0, 57, 63)));
 }
-
+void Hero::possLifeMsg(){
+	char s[10];
+	sprintf(s," x %d",getLife());
+	NotificationCenter::getInstance()->postNotification(showHeroLife,String::create(s));
+}
 void Hero::beHit() 
 {
 	Person::beHit();
+	possLifeMsg();
 	if(_isDead)
 	{
 		dead();

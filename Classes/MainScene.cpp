@@ -7,6 +7,7 @@
 #include "Monster.h"
 #include"cocostudio/CocoStudio.h"
 
+
 using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
@@ -21,12 +22,13 @@ Scene* MainScene::createScene()
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
 	// add layer as a child to scene
-	_scene->addChild(layer);
-	_scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
-
 	auto uiCtrl = UICtrl::create();
 	_scene->addChild(uiCtrl,10);
+	auto uiShow = UIShow::create();
+	_scene->addChild(uiShow,9);
 
+	_scene->addChild(layer);
+	_scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
 	// return the scene
 	return _scene;
 }
@@ -74,6 +76,13 @@ void MainScene::onEnter()
 	addPhysics();
 	addListener();
 	addObserver();
+
+	//uiCtrl = UICtrl::create();
+	//getScene()->addChild(uiCtrl,10);
+
+	//uiShow = UIShow::create();
+	//getScene()->addChild(uiShow,9);
+
 }
 
 void MainScene::onExit()
@@ -84,6 +93,7 @@ void MainScene::onExit()
 }
 void MainScene::update(float dt)
 {
+	//uiShow->setLife(_hero->getLife());
 	setViewPointCenter(_hero->getPosition());
 	for (int i = 0; i < 3; ++i)
 	{

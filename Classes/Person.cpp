@@ -24,12 +24,15 @@ bool Person::init(int maxLife) //note : this init should used after son create
 	addPhysics();
 	return true;
 }
-
+int Person::getLife(){
+	return _curLife;
+}
 void Person::beHit()
 {
 	_curLife--;
 	if(_curLife <= 0)
 	{
+		_curLife = 0;
 		_isDead = true;
 	}
 }

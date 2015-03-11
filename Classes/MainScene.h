@@ -2,12 +2,15 @@
 #define __MainScene_SCENE_H__
 
 #include "cocos2d.h"
-#include "Monster.h"
 #include "UICtrl.h"
+#include "UIShow.h"
+
+#include "Monster.h"
 #include "Hero.h"
 #include "Bullet.h"
 #include "MoveBody.h"
 #include "Boss.h"
+
 USING_NS_CC;
 
 class MainScene :  public Layer  //test file
@@ -42,6 +45,8 @@ private:
 	Sprite* _door;
 	Hero* _hero;
 	Boss* _boss;
+	//UICtrl* uiCtrl;
+	//UIShow* uiShow;
 	//static Scene* _scene;
 };
 

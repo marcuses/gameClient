@@ -6,14 +6,6 @@ USING_NS_CC;
 
 bool UICtrl::init(){
 	if(!Layer::init())	return false;
-	
-
-	return true;
-}
-
-void UICtrl::onEnter()
-{
-	Layer::onEnter();
 	auto vSize = Director::getInstance()->getVisibleSize();
 
 	//添加游戏逻辑按钮和暂停按钮和对应的响应函数
@@ -95,7 +87,9 @@ void UICtrl::onEnter()
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerStop,stopLayer);
+	return true;
 }
+
 void UICtrl::showLayer(){
 	stopLayer->setVisible(true);
 	playLayer->setVisible(false);
