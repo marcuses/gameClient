@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 #include "Monster.h"
+#include "WinScene.h"
+#include "NextScene.h"
 #include"cocostudio/CocoStudio.h"
 
 
@@ -12,12 +14,14 @@ using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
+
+int MainScene::level = 2;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
 	
 	auto _scene = Scene::createWithPhysics();
-	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -70,7 +74,9 @@ void MainScene::onEnter()
 {
 	Layer::onEnter();
 	auto size = Director::getInstance()->getWinSize();
-	addBackGround("map.tmx");
+	char mpName[10];
+	sprintf(mpName,"map%d.tmx", level);
+	addBackGround(mpName);
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
@@ -101,8 +107,8 @@ void MainScene::update(float dt)
 	}
 	if(_door->isVisible() && _door->getBoundingBox().containsPoint(_hero->getPosition()))
 	{
-		MessageBox("you win","win");
-		unscheduleUpdate();
+		
+		goNextLevel();
 	}
 }
 
@@ -121,6 +127,19 @@ void MainScene::addObserver()
 void MainScene::doorVisiable(Object * object)
 {
 	_door->setVisible(true);
+}
+void MainScene::goNextLevel()
+{
+	unscheduleUpdate();
+	level ++;
+	if(level >= 3)
+	{
+		Director::getInstance()->replaceScene(TransitionFadeTR::create(1.0f, WinScene::createScene()));
+	}
+	else
+	{
+		Director::getInstance()->replaceScene(TransitionMoveInR::create(1.0f, NextScene::createScene()));
+	}
 }
 bool MainScene::onContactBegin(PhysicsContact& contact)
 {
@@ -171,6 +190,12 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto _monster = (Monster*)spriteB;
 		_monster->changeDir();
+	}
+	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
+		&& spriteB && spriteB->getTag() == TYPE::MONSTER)
+	{
+		((Monster*)spriteA)->changeDir();
+		((Monster*)spriteB)->changeDir();
 	}
 	else if(spriteA && spriteA->getTag() == TYPE::TANGH)
 	{
@@ -355,13 +380,15 @@ void MainScene::addPhysics()
 		addChild(sprite);
 	}
 
-	
-	auto objectGroup2 = _tileMap ->objectGroupNamed("ObjectsTanhuang")->getObjects();
-	for (auto& obj : objectGroup2) //添加弹簧
+	if(MainScene :: level <= 1)
 	{
-		auto dic= obj.asValueMap();
-		auto sprite = makePolygon(dic, TYPE::TANGH, "", false, false,100, 0, 1);
-		addChild(sprite);
+		auto objectGroup2 = _tileMap ->objectGroupNamed("ObjectsTanhuang")->getObjects();
+		for (auto& obj : objectGroup2) //添加弹簧
+		{
+			auto dic= obj.asValueMap();
+			auto sprite = makePolygon(dic, TYPE::TANGH, "", false, false,100, 0, 1);
+			addChild(sprite);
+		}
 	}
 
 	//添加移动台水平
@@ -396,7 +423,7 @@ void MainScene::addPhysics()
 	for (auto& obj : objectGroupTrap) //添加陷阱
 	{
 		auto dic= obj.asValueMap();
-		auto sprite = makeBox(dic, TYPE::TRAP, "", false,100, 0, 1);
+		auto sprite = makePolygon(dic, TYPE::TRAP, "", false,false,0, 0, 0);
 		sprite->getPhysicsBody()->setCollisionBitmask(0xff);
 		sprite->getPhysicsBody()->setContactTestBitmask(0xff);
 		addChild(sprite);
@@ -404,7 +431,7 @@ void MainScene::addPhysics()
 	}
 
 	auto objectGroupBrick = _tileMap ->objectGroupNamed("Brick")->getObjects();
-	for (auto& obj : objectGroupBrick) //添加陷阱
+	for (auto& obj : objectGroupBrick) //添加反弹物
 	{
 		auto dic= obj.asValueMap();
 		auto sprite = makeBox(dic, TYPE::BRICK, "", false,100, 0, 1);

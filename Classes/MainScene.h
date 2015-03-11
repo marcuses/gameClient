@@ -23,10 +23,11 @@ public:
 	virtual bool init();  
 	virtual void onEnter();
 	virtual void onExit();
+	static int level;
 	// implement the "static create()" method manually
 	CREATE_FUNC(MainScene);
 	void update(float dt);
-
+	void goNextLevel();
 	bool onContactBegin(PhysicsContact& contact);
 	void addBackGround(char *tmxName);
 	void addListener();
@@ -39,6 +40,7 @@ public:
 	void setViewPointCenter(Point position); 
 	void doorVisiable(Object * object);
 	inline Point getPlayerPosition(){ return _hero->getPosition();} 
+
 private:
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;

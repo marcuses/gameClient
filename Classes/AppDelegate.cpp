@@ -58,7 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("UI");
 	searchPath.push_back("Map");
 	searchPath.push_back("Bullet");
-	searchPath.push_back("monsterAnimation\\Export\\NewAnimation");
+	searchPath.push_back("monster1Animation");
 	searchPath.push_back("sEffect");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 	SimpleAudioEngine::getInstance()->preloadEffect("explode.wav");

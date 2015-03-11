@@ -3,10 +3,10 @@
 #include "Bullet.h"
 bool Monster::init()
 {
-	_monsterType = rand() % 3;
+	_monsterType = 2;
 	char txt[100];
-	sprintf_s(txt, "boy%d_1_1.png", _monsterType + 1);
-	if (!Sprite::initWithFile(txt)) {
+	//sprintf_s(txt, "boy%d_1_1.png", _monsterType + 1);
+	if (!Sprite::initWithFile("Monster1.png")) {
 		return false;
 	}
 	addRunAnimation();
@@ -54,17 +54,18 @@ void Monster::addRunAnimation()
 	}
 	else
 	{
-		ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
+		ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterAnimation\\Export\\Monster1\\Export\\NewAnimation\\NewAnimation0.png","monsterAnimation\\Export\\Monster1\\Export\\NewAnimation\\NewAnimation0.plist","monsterAnimation\\Export\\Monster1\\Export\\NewAnimation\\NewAnimation.ExportJson");
 
 		Armature *armature = Armature::create("NewAnimation");
 
-		armature->setScale(100 / 671.0);
+		armature->setScale(0.7);
 		armature->setAnchorPoint(Point(0,0));
 	//	armature->setPosition(Point(5700, 320));
 		
 		this->addChild(armature);
 		//²¥·Å¶¯»­
-		armature->getAnimation()->play("walk");
+		armature->getAnimation()->play("dead");
+
 	}
 }
 

@@ -71,7 +71,9 @@
   </data>
  </layer>
  <objectgroup name="trap" width="375" height="46">
-  <object x="5921" y="34" width="16" height="554"/>
+  <object x="5923" y="39">
+   <polygon points="0,0 14,2 14,539 2,548"/>
+  </object>
  </objectgroup>
  <objectgroup name="Brick" width="375" height="46">
   <object x="2374" y="275" width="9" height="118"/>

@@ -58,7 +58,7 @@ void Boss::addRunAnimation()
 	}
 	else
 	{
-		ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
+		ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1Animation\\NewAnimation0.png","Monster1Animation\\NewAnimation0.plist","Monster1Animation\\NewAnimation.ExportJson");
 
 		Armature *armature = Armature::create("NewAnimation");
 

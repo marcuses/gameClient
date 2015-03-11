@@ -11,7 +11,7 @@ bool Hero::init()
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
 	setType(TYPE::HERO);
-	Person::init(3);
+	Person::init(1000);
 	idle();
 	addObserver();
 	addListener();
