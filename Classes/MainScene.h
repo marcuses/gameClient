@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "UICtrl.h"
 #include "UIShow.h"
+#include "KeyBoardListener.h"
 
 #include "Monster.h"
 #include "Hero.h"

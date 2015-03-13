@@ -10,7 +10,7 @@ bool UIShow::init(){
 	lifeSprite->setPosition(20,vSize.height-lifeSprite->getContentSize().height);
 
 	//其实3是有问题的0.0
-	curLife = Label::createWithTTF(" x 3","fonts/Marker Felt.ttf",20);
+	curLife = Label::createWithTTF(" x 10","fonts/Marker Felt.ttf",20);
 	addChild(curLife);
 	curLife->setPosition(50,lifeSprite->getPositionY());
 	return true;

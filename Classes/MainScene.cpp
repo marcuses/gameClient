@@ -15,13 +15,13 @@ using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
 
-int MainScene::level = 2;
+int MainScene::level = 1;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
 	
 	auto _scene = Scene::createWithPhysics();
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -30,6 +30,8 @@ Scene* MainScene::createScene()
 	_scene->addChild(uiCtrl,10);
 	auto uiShow = UIShow::create();
 	_scene->addChild(uiShow,9);
+	auto uiKeyBoard = KeyBoardListener::create();
+	_scene->addChild(uiKeyBoard,8);
 
 	_scene->addChild(layer);
 	_scene->getPhysicsWorld()->setGravity(Vec2(0, -900));
@@ -82,13 +84,6 @@ void MainScene::onEnter()
 	addPhysics();
 	addListener();
 	addObserver();
-
-	//uiCtrl = UICtrl::create();
-	//getScene()->addChild(uiCtrl,10);
-
-	//uiShow = UIShow::create();
-	//getScene()->addChild(uiShow,9);
-
 }
 
 void MainScene::onExit()

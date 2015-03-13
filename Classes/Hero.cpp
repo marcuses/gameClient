@@ -11,10 +11,9 @@ bool Hero::init()
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
 	setType(TYPE::HERO);
-	Person::init(1000);
+	Person::init(10);
 	idle();
 	addObserver();
-	addListener();
 	possLifeMsg();
 	scheduleUpdate();
 	return true;
@@ -40,30 +39,6 @@ void Hero::beHit()
 		dead();
 	}
 }
-void Hero::addListener()
-{
-	_listen_key = EventListenerKeyboard::create();
-	_listen_key->onKeyPressed = CC_CALLBACK_2(Hero::onKeyPressed, this);
-	_listen_key->onKeyReleased = CC_CALLBACK_2(Hero::onKeyReleased, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(_listen_key, this);
-}
-void Hero::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
-	switch(keyCode){
-	case EventKeyboard::KeyCode::KEY_A :
-		leftButtonDown(NULL);
-		break;
-	case EventKeyboard::KeyCode::KEY_D :
-		rightButtonDown(NULL);
-		break;
-	case EventKeyboard::KeyCode::KEY_K :
-		jumpButtonDown(NULL);	
-		break;
-	case EventKeyboard::KeyCode::KEY_J :
-		NotificationCenter::getInstance()->postNotification(strHeroShoot);
-		break;
-	default: break;
-	}
-}
 void Hero::leftButtonDown(Object * object){
 	setDir(-1);
 	_leftDown = true;
@@ -77,19 +52,6 @@ void Hero::jumpButtonDown(Object * object){
 	if(!_isJump){
 		_isJump = true;
 		getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, 503.0));
-	}
-}
-void Hero::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt){
-	switch(keyCode){
-	case EventKeyboard::KeyCode::KEY_A :
-		leftButtonUp(NULL);
-		break;
-	case EventKeyboard::KeyCode::KEY_D :
-		rightButtonUp(NULL);
-		break;
-	case EventKeyboard::KeyCode::KEY_K :  //never have this function!!!!
-		//jumpButtonUp();
-		break;
 	}
 }
 void Hero::shoot(Object * object)

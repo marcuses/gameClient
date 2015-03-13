@@ -16,12 +16,10 @@ public:
 	void idle();
 
 	void addObserver();
-	void addListener();
-	void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt);
 	void leftButtonDown(Object * object);
 	void rightButtonDown(Object * object);
 	void jumpButtonDown(Object * object);
-	void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* evt);
+
 	void leftButtonUp(Object * object);
 	void rightButtonUp(Object * object);
 	void jumpButtonUp(Object * object);
