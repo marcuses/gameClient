@@ -3,6 +3,7 @@
 #include "LogInScene.h"
 #include "NewLogIn.h"
 #include "Splash.h"
+#include "StartScene.h"
 #include "Standing.h"
 #include <vector>
 #include "SimpleAudioEngine.h"
@@ -53,6 +54,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("Role"); 
 	searchPath.push_back("GameOver");
 	searchPath.push_back("WinScene");
+	searchPath.push_back("StartScene");
 	searchPath.push_back("NextScene");
 	searchPath.push_back("image");
 	searchPath.push_back("UI");
@@ -65,11 +67,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	SimpleAudioEngine::getInstance()->preloadEffect("hit.mp3");
 	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background.mp3");
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("image/ui.plist","image/ui.pvr.ccz");
+
+
+	auto scene = StartScene::createScene();
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
 	//auto scene = NewLogIn::createScene();
-	auto scene = MainScene::createScene();
-//	auto scene = Splash::createScene(); 
+	//auto scene = MainScene::createScene();
+	//auto scene = Splash::createScene(); 
 
 	// run
 	director->runWithScene(scene);

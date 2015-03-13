@@ -2,6 +2,7 @@
 #include "Headfile.h"
 #include "LogInScene.h"
 #include "MainScene.h"
+#include "StartScene.h"
 USING_NS_CC;
 
 bool UICtrl::init(){
@@ -78,10 +79,11 @@ bool UICtrl::init(){
 		if(	!stopLayer->isVisible() )	return false;
 		if( backButton->getBoundingBox().containsPoint(touch->getLocation())){
 			hideLayer();
-		}else if( quitButton->getBoundingBox().containsPoint(touch->getLocation())){
-			Director::getInstance()->end();
 		}else if( restartButton->getBoundingBox().containsPoint(touch->getLocation())){
 			Director::getInstance()->replaceScene(MainScene::createScene());
+			Director::getInstance()->resume();
+		}else if( quitButton->getBoundingBox().containsPoint(touch->getLocation())){
+			Director::getInstance()->replaceScene(StartScene::createScene());
 			Director::getInstance()->resume();
 		}
 		return true;
