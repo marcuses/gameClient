@@ -9,6 +9,18 @@ bool Monster::init()
 	if (!Sprite::initWithFile("Monster1.png")) {
 		return false;
 	}
+//	addRunAnimation();
+	schedule(schedule_selector(Monster::updateBullet),4);
+	scheduleUpdate();
+	this->setTag(TYPE::MONSTER);
+	setType(TYPE::MONSTER);
+
+	Person::init(_monsterType + 1);
+	return true;
+}
+void Monster::onEnter()
+{
+	Person::onEnter();
 	addRunAnimation();
 	auto size = this->getContentSize();
 	_progress = Progress::create("small-enemy-progress-bg.png","small-enemy-progress-fill.png");
@@ -16,19 +28,16 @@ bool Monster::init()
 	_progress->setScaleX(0.8);
 	_progress->setPosition( size.width*2/3, size.height + _progress->getContentSize().height/2);
 	this->addChild(_progress);
-//	if(_monsterType >= 2) this->setScale(0.25);
-	this->setTag(TYPE::MONSTER);
-	setType(TYPE::MONSTER);
-	scheduleUpdate();
+	//	if(_monsterType >= 2) this->setScale(0.25);
+	
+	
 	_spHit = Sprite::create("hitBlode.png");
 	addChild(_spHit, 1);
 	_spHit->setVisible(false);
 	_spHitTime = 0;
 	_isDead = false;
 	_spHit->setScale(0.5);
-	schedule(schedule_selector(Monster::updateBullet),4);
-	Person::init(_monsterType + 1);
-	return true;
+	
 }
 void Monster::updateBullet(float dt)
 {
@@ -54,9 +63,9 @@ void Monster::addRunAnimation()
 	}
 	else
 	{
-		ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterAnimation\\Export\\Monster1\\Export\\NewAnimation\\NewAnimation0.png","monsterAnimation\\Export\\Monster1\\Export\\NewAnimation\\NewAnimation0.plist","monsterAnimation\\Export\\Monster1\\Export\\NewAnimation\\NewAnimation.ExportJson");
+		ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster10.png","monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster10.plist","monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster1.ExportJson");
 
-		Armature *armature = Armature::create("NewAnimation");
+		Armature *armature = Armature::create("Monster1");
 
 		armature->setScale(0.7);
 		armature->setAnchorPoint(Point(0,0));

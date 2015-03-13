@@ -20,9 +20,14 @@ bool Person::init(int maxLife) //note : this init should used after son create
 	_isDead = false;
 	_curLife = maxLife;
 	_maxLife = maxLife;
+	return true;
+}
+
+void Person::onEnter()
+{
+	Sprite::onEnter();
 	addRunAnimation();
 	addPhysics();
-	return true;
 }
 int Person::getLife(){
 	return _curLife;
@@ -55,7 +60,7 @@ void Person::addPhysics()
 	}
 	else if(_type == TYPE::HERO)
 	{
-		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY);
+		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH /*| TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY*/);
 		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY);
 	}
 	else if(_type == TYPE::BOSS)

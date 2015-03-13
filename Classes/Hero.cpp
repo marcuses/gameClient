@@ -11,14 +11,18 @@ bool Hero::init()
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
 	setType(TYPE::HERO);
-	Person::init(10);
-	idle();
-	addObserver();
-	possLifeMsg();
+	Person::init(100);
 	scheduleUpdate();
 	return true;
 }
 
+void Hero::onEnter()
+{
+	Person::onEnter();
+	idle();
+	addObserver();
+	possLifeMsg();
+}
 void Hero::idle()
 {    
 	//removeAllChildren();

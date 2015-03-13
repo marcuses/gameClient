@@ -13,6 +13,7 @@ class Person : public Sprite
 public:
 	static Person* create(int maxLife);
 	virtual bool init(int maxLife);
+	void onEnter();
 	virtual void addRunAnimation();
 	virtual void addPhysics();
 	//	void addObserver();

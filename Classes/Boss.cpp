@@ -12,19 +12,26 @@ bool Boss::init()
 	//	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::BOSS);
 	setType(TYPE::BOSS);
-	Person::init(20);
+	Person::init(1);
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
 	_spWeak = Sprite::create();
-	_spHitTime = 0;
+	_spHitTime = 0;	
+	scheduleUpdate();
+	return true;
+}
+
+void Boss::onEnter()
+{
+	Person::onEnter();
 	auto body = PhysicsBody::createCircle(36, PhysicsMaterial(0, 0, 0));
 	body->setCategoryBitmask(TYPE::BOSSWEAKNESS);
 	body->setCollisionBitmask(TYPE::BOSSWEAKNESS | TYPE::BULLET);
 	body->setContactTestBitmask(TYPE::BOSSWEAKNESS | TYPE::BULLET);
 	body->setLinearDamping(0.0f);
 	body->setDynamic(false);
-	
+
 	_spWeak->setPhysicsBody(body);
 	_spWeak->setTag(TYPE::BOSSWEAKNESS);
 	addChild(_spWeak);
@@ -37,10 +44,7 @@ bool Boss::init()
 	_progress->setScaleX(2);
 	addChild(_progress);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
-	scheduleUpdate();
-	return true;
 }
-
 void Boss::addRunAnimation()
 {
 	if(_monsterType < 2)

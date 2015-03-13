@@ -10,6 +10,7 @@ class Monster : public Person
 public:
 	CREATE_FUNC(Monster);
 	bool init();
+	void onEnter();
 	void addRunAnimation();
 	void updateBullet(float dt);
 	//void deadAnimation();

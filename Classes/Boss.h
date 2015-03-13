@@ -6,13 +6,14 @@
 USING_NS_CC;
 enum STATE
 {
-	walk, shoot, addMonster
+	walk, attack, dead, run
 };
 class Boss : public Person
 {
 public:
 	CREATE_FUNC(Boss);
 	bool init();
+	void onEnter();
 	void addRunAnimation();
 	//void deadAnimation();
 	void update(float dt);

@@ -10,7 +10,7 @@ class Hero : public Person
 public:
 	virtual bool init();
 	CREATE_FUNC(Hero);
-
+	void onEnter();
 	void update(float delta);
 
 	void idle();

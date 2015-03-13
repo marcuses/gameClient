@@ -21,7 +21,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 	
 	auto _scene = Scene::createWithPhysics();
-	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -46,6 +46,16 @@ bool MainScene::init()
 	//addChild(_monster, 1);
 	//_monster->setPosition(200, 320);
 	if(!Layer::init()) return false;
+	
+	//armature->getAnimation()->play("walk");
+	//this->addChild(armature, 1);
+	scheduleUpdate();
+	return true;
+}
+
+void MainScene::onEnter()
+{
+	Layer::onEnter();
 	_hero = Hero::create();
 	//_hero1 = Hero::create();
 	addChild(_hero, 2);
@@ -66,15 +76,6 @@ bool MainScene::init()
 	_door->setPosition(Point(5500, 500));
 	addChild(_door, 1);
 	_door->setVisible(false);
-	//armature->getAnimation()->play("walk");
-	//this->addChild(armature, 1);
-	scheduleUpdate();
-	return true;
-}
-
-void MainScene::onEnter()
-{
-	Layer::onEnter();
 	auto size = Director::getInstance()->getWinSize();
 	char mpName[10];
 	sprintf(mpName,"map%d.tmx", level);
@@ -141,7 +142,8 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	log("onContactBegin");
 	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();				
 	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();	
-	log("%d %d",spriteA->getTag(), spriteB->getTag());
+	if(spriteA == NULL || spriteB == NULL) return false;
+//	log("%d %d",spriteA->getTag(), spriteB->getTag());
 	if ((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::GROUND)
 	{
