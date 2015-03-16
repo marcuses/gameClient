@@ -8,7 +8,6 @@ bool Boss::init()
 	if (!Sprite::initWithFile("boss1.png")) {
 		return false;
 	}
-	addRunAnimation();
 	//	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::BOSS);
 	setType(TYPE::BOSS);
@@ -43,7 +42,7 @@ void Boss::onEnter()
 	_progress->setPosition( size.width*2/3, size.height + _progress->getContentSize().height/2 + 50);
 	_progress->setScaleX(2);
 	addChild(_progress);
-	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
+//	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
 }
 void Boss::addRunAnimation()
 {
@@ -111,7 +110,7 @@ void Boss::update(float dt)
 	else setScaleX(getDir() == 1 ? -1 : 1);
 	_time = (_time + 1) % 180;
 	if(_time == 0) 
-		NotificationCenter::getInstance()->postNotification(strEnemyShoot);
+		shoot(NULL);
 	_spWeak->setPosition(Vec2(260, 410) );
 	_spHit->setPosition(Vec2(260, 410) );
 	if(_spHit->isVisible())

@@ -56,10 +56,7 @@ bool MainScene::init()
 void MainScene::onEnter()
 {
 	Layer::onEnter();
-	_hero = Hero::create();
-	//_hero1 = Hero::create();
-	addChild(_hero, 2);
-	_hero->setPosition(300, 680); 
+	
 	
 
 	/*ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
@@ -67,8 +64,9 @@ void MainScene::onEnter()
 	Armature *armature = Armature::create("NewAnimation");
 
 	armature->setPosition(Point(5700, 320));*/
-
-	//²¥·Å¶¯»­
+	_hero = Hero::create();
+	addChild(_hero, 2);
+	_hero->setPosition(5000, 680); 
 	_boss = Boss::create();
 	_boss->setPosition(5700, 640);
 	addChild(_boss, 2);
