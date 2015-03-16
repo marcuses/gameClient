@@ -7,6 +7,7 @@ bool Hero::init()
 	_leftDown  = false;
 	_rightDown = false;
 	_moveState = 0;
+	bulletRate = 0;
 	string txt = ("player_1_4.png");
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
@@ -66,7 +67,8 @@ void Hero::jumpButtonDown(Object * object){
 }
 void Hero::shoot(Object * object)
 {
-	if(_isDead)	return;
+	if(_isDead||bulletRate>0)	return;
+	bulletRate = BULLETRate;
 	Point pos = getPosition();
 	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361);
 	bullet->setPosition(pos.x + getDir() * 10, pos.y);
@@ -112,6 +114,7 @@ void Hero::addObserver()
 void Hero::update(float dt)
 {
 	if(_isDead) return;
+	bulletRate-=dt;
 	updateMoveState();	//ÐÎÌ¬¸üÐÂ
 	if(_moveState&1){
 		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));

@@ -37,7 +37,8 @@ private:
 	void possLifeMsg();
 	void updateMoveState();
 	int _moveState;
-	
+	float bulletRate;
+
 	std::string userName;
 	bool _leftDown;
 	bool _rightDown;

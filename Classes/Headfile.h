@@ -1,4 +1,5 @@
 #pragma  once
+const float BULLETRate = 0.3;
 
 const static enum TYPE
 {

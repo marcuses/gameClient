@@ -66,7 +66,7 @@ void MainScene::onEnter()
 	armature->setPosition(Point(5700, 320));*/
 	_hero = Hero::create();
 	addChild(_hero, 2);
-	_hero->setPosition(5000, 680); 
+	_hero->setPosition(300, 680); 
 	_boss = Boss::create();
 	_boss->setPosition(5700, 640);
 	addChild(_boss, 2);
