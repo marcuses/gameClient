@@ -23,6 +23,12 @@ void Hero::onEnter()
 	addObserver();
 	possLifeMsg();
 }
+
+void Hero::onExit()
+{
+	NotificationCenter::getInstance()->removeAllObservers(this);
+	Person::onExit();
+}
 void Hero::idle()
 {    
 	//removeAllChildren();

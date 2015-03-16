@@ -44,6 +44,7 @@ void Boss::onEnter()
 	addChild(_progress);
 //	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Boss::shoot), strEnemyShoot, NULL);
 }
+
 void Boss::addRunAnimation()
 {
 	if(_monsterType < 2)

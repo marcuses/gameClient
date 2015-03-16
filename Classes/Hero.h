@@ -11,6 +11,7 @@ public:
 	virtual bool init();
 	CREATE_FUNC(Hero);
 	void onEnter();
+	void onExit();
 	void update(float delta);
 
 	void idle();
