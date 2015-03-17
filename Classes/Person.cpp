@@ -17,6 +17,7 @@ bool Person::init(int maxLife) //note : this init should used after son create
 	//Sprite::create();
 	_dir = 1;
 	_speed = 180.0f;
+	_atkTime = 0;
 	_isDead = false;
 	_curLife = maxLife;
 	_maxLife = maxLife;

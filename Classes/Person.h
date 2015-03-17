@@ -7,7 +7,10 @@
 using namespace CocosDenshion;
 using namespace cocostudio;
 USING_NS_CC;
-
+enum STATE
+{
+	walk, attack, dead, run
+};
 class Person : public Sprite
 {
 public:
@@ -35,6 +38,10 @@ protected:
 	bool _isDead;
 	int _curLife;
 	int _maxLife;
+	int _atkTime;
+	STATE _state;
+	Armature* _armature;
+	ArmatureAnimation* _armAnimation;
 private:
 	int _dir; //指示方向
 	TYPE _type;

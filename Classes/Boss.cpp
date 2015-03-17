@@ -47,7 +47,7 @@ void Boss::onEnter()
 
 void Boss::addRunAnimation()
 {
-	if(_monsterType < 2)
+	/*if(_monsterType < 2)
 	{
 		Vector<SpriteFrame*> allFrames;
 		char txt[100];
@@ -61,19 +61,20 @@ void Boss::addRunAnimation()
 		runAction(RepeatForever::create(Animate::create(runAni)));
 	}
 	else
-	{
-		ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1Animation\\NewAnimation0.png","Monster1Animation\\NewAnimation0.plist","Monster1Animation\\NewAnimation.ExportJson");
+	{*/
+		
 
-		Armature *armature = Armature::create("NewAnimation");
+		_armature = Armature::create("NewAnimation");
 
 	//	armature->setScale(600 / 671.0);
-		armature->setAnchorPoint(Point(0,0));
+		_armature->setAnchorPoint(Point(0,0));
 		//	armature->setPosition(Point(5700, 320));
 
-		this->addChild(armature);
+		this->addChild(_armature);
+		_armAnimation = _armature->getAnimation();
 		//²¥·Å¶¯»­
-		armature->getAnimation()->play("walk");
-	}
+		_armAnimation->play("walk");
+	//}
 }
 
 void Boss::beHit()

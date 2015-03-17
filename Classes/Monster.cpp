@@ -14,7 +14,6 @@ bool Monster::init()
 	scheduleUpdate();
 	this->setTag(TYPE::MONSTER);
 	setType(TYPE::MONSTER);
-
 	Person::init(_monsterType + 1);
 	return true;
 }
@@ -30,7 +29,6 @@ void Monster::onEnter()
 	this->addChild(_progress);
 	//	if(_monsterType >= 2) this->setScale(0.25);
 	
-	
 	_spHit = Sprite::create("hitBlode.png");
 	addChild(_spHit, 1);
 	_spHit->setVisible(false);
@@ -42,13 +40,16 @@ void Monster::onEnter()
 void Monster::updateBullet(float dt)
 {
 	if(_isDead) return;
+	_armAnimation->play("attack");
+	_state = STATE::attack;
 	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250);
 	bullet->setPosition(this->getPosition());
 	getParent()->addChild(bullet, 2);
+	scheduleOnce(schedule_selector(Monster::atkToRun),0.5);	
 }
 void Monster::addRunAnimation()
 {
-	if(_monsterType < 2)
+	/*if(_monsterType < 2)
 	{
 		Vector<SpriteFrame*> allFrames;
 		char txt[100];
@@ -63,19 +64,17 @@ void Monster::addRunAnimation()
 	}
 	else
 	{
-		ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster10.png","monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster10.plist","monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster1.ExportJson");
+		*/
 
-		Armature *armature = Armature::create("Monster1");
-
-		armature->setScale(0.7);
-		armature->setAnchorPoint(Point(0,0));
-	//	armature->setPosition(Point(5700, 320));
-		
-		this->addChild(armature);
+		_armature = Armature::create("Monster1");
+		_armature->setScale(0.7);
+		_armature->setAnchorPoint(Point(0,0));
+		this->addChild(_armature);
+		_armAnimation = _armature->getAnimation();
 		//²¥·Å¶¯»­
-		armature->getAnimation()->play("dead");
-
-	}
+		_armAnimation->play("attack");
+		_state = STATE::run;
+	//}
 }
 
 void Monster::beHit()
@@ -87,10 +86,21 @@ void Monster::beHit()
 	_spHitTime = 0;
 	if(_isDead)
 	{
-		getParent()->removeChild(this, true);
+		_armAnimation->play("dead");
+		scheduleOnce(schedule_selector(Monster::removeThis),1);	
 	}
-
 }
+
+void Monster::removeThis(float dt)
+{
+	getParent()->removeChild(this, true);
+}
+
+void Monster::atkToRun(float dt)
+{
+	_state = run;
+	_armAnimation->play("run");
+} 
 void Monster::update(float dt)
 {
 	if(_isDead) return;
@@ -103,4 +113,6 @@ void Monster::update(float dt)
 		_spHitTime++;
 		if(_spHitTime >= 10) _spHit->setVisible(false);
 	}
+
+
 }

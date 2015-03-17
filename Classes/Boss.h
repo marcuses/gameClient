@@ -4,10 +4,7 @@
 #include "Person.h"
 #include "Progress.h"
 USING_NS_CC;
-enum STATE
-{
-	walk, attack, dead, run
-};
+
 class Boss : public Person
 {
 public:
@@ -25,7 +22,6 @@ private:
 	int _spHitTime;
 	STATE _curState;
 	Sprite* _spWeak;
-	ArmatureAnimation* _animation;
 	int _monsterType;
 	int _time;
 };

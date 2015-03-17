@@ -67,7 +67,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	SimpleAudioEngine::getInstance()->preloadEffect("hit.mp3");
 	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background.mp3");
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("image/ui.plist","image/ui.pvr.ccz");
-
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster10.png","monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster10.plist","monsterAnimation\\Export\\Monster1\\Export\\Monster1\\Monster1.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1Animation\\NewAnimation0.png","Monster1Animation\\NewAnimation0.plist","Monster1Animation\\NewAnimation.ExportJson");
 
 	auto scene = StartScene::createScene();
 	//auto scene = LogInScene::createScene();

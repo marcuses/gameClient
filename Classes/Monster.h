@@ -16,6 +16,8 @@ public:
 	//void deadAnimation();
 	void update(float dt);
 	void beHit() override;
+	void removeThis(float dt);
+	void atkToRun(float dt);
 private:
 	Sprite* _spHit;
 	Progress* _progress;

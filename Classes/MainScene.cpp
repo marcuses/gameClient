@@ -87,7 +87,6 @@ void MainScene::onEnter()
 
 void MainScene::onExit()
 {
-	
 	NotificationCenter::getInstance()->removeAllObservers(this);
 	Layer::onExit();
 }
@@ -118,6 +117,7 @@ void MainScene::addObserver()
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::doorVisiable), strWin, NULL);
 	//NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::enemyShoot), strEnemyShoot, NULL);
 }
+
 void MainScene::doorVisiable(Object * object)
 {
 	_door->setVisible(true);
