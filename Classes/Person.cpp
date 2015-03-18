@@ -37,6 +37,7 @@ int Person::getLife(){
 }
 void Person::beHit()
 {
+	if(_isDead) return;
 	_curLife--;
 	if(_curLife <= 0)
 	{

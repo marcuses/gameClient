@@ -69,7 +69,7 @@ void Monster::beHit()
 	if(_isDead)
 	{
 		_armAnimation->play("dead");
-		scheduleOnce(schedule_selector(Monster::removeThis),1);	
+		scheduleOnce(schedule_selector(Monster::removeThis), 0.3);	
 	}
 }
 

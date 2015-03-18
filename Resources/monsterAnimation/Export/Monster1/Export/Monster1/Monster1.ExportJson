@@ -514,7 +514,7 @@
         },
         {
           "name": "dead",
-          "dr": 31,
+          "dr": 16,
           "lp": false,
           "to": 0,
           "drTW": 0,
@@ -547,7 +547,7 @@
                   "cY": 1.0,
                   "kX": 0.0,
                   "kY": 0.0,
-                  "fi": 10,
+                  "fi": 5,
                   "twE": 0,
                   "tweenFrame": false
                 },
@@ -560,7 +560,7 @@
                   "cY": 1.0,
                   "kX": 0.0,
                   "kY": 0.0,
-                  "fi": 20,
+                  "fi": 10,
                   "twE": 0,
                   "tweenFrame": false
                 },
@@ -573,7 +573,7 @@
                   "cY": 1.0,
                   "kX": 0.0,
                   "kY": 0.0,
-                  "fi": 30,
+                  "fi": 15,
                   "twE": 0,
                   "tweenFrame": false
                 }
