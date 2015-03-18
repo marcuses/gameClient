@@ -20,6 +20,8 @@ bool Person::init(int maxLife) //note : this init should used after son create
 	_atkTime = 0;
 	_isDead = false;
 	_curLife = maxLife;
+
+
 	_maxLife = maxLife;
 	return true;
 }
@@ -49,10 +51,10 @@ void Person::changeDir()
 
 void Person::addPhysics()
 {
-	auto size = this->getContentSize();
+	auto size = (this->getBoundingBox()).size;
 	PhysicsBody *body = PhysicsBody::create();
 	auto material = PhysicsMaterial(100.0f, 0.01f, 1.0f);
-	body->addShape(PhysicsShapeBox::create(Size(size.width/2,size.height),material));
+	body->addShape(PhysicsShapeBox::create(Size(size.width,size.height),material));
 	body->setCategoryBitmask(_type);
 	if(_type == TYPE::MONSTER) 
 	{

@@ -9,6 +9,8 @@ bool Monster::init()
 	if (!Sprite::initWithFile("Monster1.png")) {
 		return false;
 	}
+//	_armature = Armature::create("Monster1");
+//	_armAnimation = _armature->getAnimation();
 //	addRunAnimation();
 	schedule(schedule_selector(Monster::updateBullet),4);
 	scheduleUpdate();
@@ -20,13 +22,13 @@ bool Monster::init()
 void Monster::onEnter()
 {
 	Person::onEnter();
-	addRunAnimation();
-	auto size = this->getContentSize();
+	//addRunAnimation();
+	auto size = getContentSize();
 	_progress = Progress::create("small-enemy-progress-bg.png","small-enemy-progress-fill.png");
 	_progress->setScaleY(0.6);
 	_progress->setScaleX(0.8);
 	_progress->setPosition( size.width*2/3, size.height + _progress->getContentSize().height/2);
-	this->addChild(_progress);
+	addChild(_progress);
 	//	if(_monsterType >= 2) this->setScale(0.25);
 	
 	_spHit = Sprite::create("hitBlode.png");
@@ -35,51 +37,31 @@ void Monster::onEnter()
 	_spHitTime = 0;
 	_isDead = false;
 	_spHit->setScale(0.5);
-	
 }
 void Monster::updateBullet(float dt)
 {
 	if(_isDead) return;
+//	_armAnimation->stop();
 	_armAnimation->play("attack");
 	_state = STATE::attack;
-	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250);
-	bullet->setPosition(this->getPosition());
-	getParent()->addChild(bullet, 2);
-	scheduleOnce(schedule_selector(Monster::atkToRun),0.5);	
+	
+	scheduleOnce(schedule_selector(Monster::atkToRun), 0.6);	
 }
 void Monster::addRunAnimation()
 {
-	/*if(_monsterType < 2)
-	{
-		Vector<SpriteFrame*> allFrames;
-		char txt[100];
-		for(int i = 1;i <= 5; i++)
-		{
-			sprintf_s(txt, "boy%d_1_%d.png",_monsterType + 1, i);
-			SpriteFrame *sf = SpriteFrame::create(txt, Rect(0, 0, 43, 63));
-			allFrames.pushBack(sf);
-		}
-		auto runAni = Animation::createWithSpriteFrames(allFrames, 0.1f);
-		runAction(RepeatForever::create(Animate::create(runAni)));
-	}
-	else
-	{
-		*/
-
-		_armature = Armature::create("Monster1");
-		_armature->setScale(0.7);
-		_armature->setAnchorPoint(Point(0,0));
-		this->addChild(_armature);
-		_armAnimation = _armature->getAnimation();
-		//²¥·Å¶¯»­
-		_armAnimation->play("attack");
-		_state = STATE::run;
-	//}
+	_armature = Armature::create("Monster1");
+	_armature->setScale(0.7);
+	_armature->setAnchorPoint(Point(0,0));
+	this->addChild(_armature);
+	_armAnimation = _armature->getAnimation();
+	_armAnimation->play("run");;
+	_state = STATE::run;
 }
 
 void Monster::beHit()
 {
 	Person::beHit();
+	if(_curLife < 0) return;
 	SimpleAudioEngine::getInstance()->playEffect("hit.mp3");
 	_progress->setProgress(_curLife * 1.0 / _maxLife * 100);
 	_spHit->setVisible(true);
@@ -98,7 +80,11 @@ void Monster::removeThis(float dt)
 
 void Monster::atkToRun(float dt)
 {
+	if(_isDead) return;
 	_state = run;
+	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250);
+	bullet->setPosition(this->getPosition());
+	getParent()->addChild(bullet, 2);
 	_armAnimation->play("run");
 } 
 void Monster::update(float dt)

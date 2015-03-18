@@ -536,7 +536,7 @@
                   "kY": 0.0,
                   "fi": 0,
                   "twE": 0,
-                  "tweenFrame": true
+                  "tweenFrame": false
                 },
                 {
                   "dI": 1,
@@ -549,12 +549,12 @@
                   "kY": 0.0,
                   "fi": 10,
                   "twE": 0,
-                  "tweenFrame": true
+                  "tweenFrame": false
                 },
                 {
                   "dI": 2,
-                  "x": 0.0,
-                  "y": 0.0,
+                  "x": 1.0,
+                  "y": -5.0,
                   "z": 0,
                   "cX": 1.0,
                   "cY": 1.0,
@@ -562,12 +562,12 @@
                   "kY": 0.0,
                   "fi": 20,
                   "twE": 0,
-                  "tweenFrame": true
+                  "tweenFrame": false
                 },
                 {
                   "dI": 3,
                   "x": 0.0,
-                  "y": 0.0,
+                  "y": -35.0,
                   "z": 0,
                   "cX": 1.0,
                   "cY": 1.0,
@@ -575,7 +575,7 @@
                   "kY": 0.0,
                   "fi": 30,
                   "twE": 0,
-                  "tweenFrame": true
+                  "tweenFrame": false
                 }
               ]
             }
@@ -691,24 +691,24 @@
     },
     {
       "name": "Monster1-2.psd_Psd.Dir/图层 2",
-      "width": 0.0,
-      "height": 0.0,
+      "width": 210.0,
+      "height": 165.0,
       "pX": 0.5,
       "pY": 0.5,
       "plistFile": ""
     },
     {
       "name": "Monster1-2.psd_Psd.Dir/图层 3",
-      "width": 0.0,
-      "height": 0.0,
+      "width": 233.0,
+      "height": 147.0,
       "pX": 0.5,
       "pY": 0.5,
       "plistFile": ""
     },
     {
       "name": "Monster1-2.psd_Psd.Dir/图层 4",
-      "width": 0.0,
-      "height": 0.0,
+      "width": 234.0,
+      "height": 102.0,
       "pX": 0.5,
       "pY": 0.5,
       "plistFile": ""
