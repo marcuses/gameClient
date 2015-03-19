@@ -409,7 +409,7 @@ void MainScene::addPhysics()
 		auto dic= obj.asValueMap();
 		float x = dic["x"].asFloat();
 		float y = dic["y"].asFloat();
-		auto ememy = Monster::create();
+		auto ememy = Monster::create(rand() % 2);
 		ememy->setPosition(x, y);
 		addChild(ememy);
 	}

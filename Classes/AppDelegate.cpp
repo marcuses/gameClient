@@ -72,7 +72,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		"monsterAnimation/Export/Monster1/Export/Monster1/Monster1.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1Animation/NewAnimation0.png",
 		"Monster1Animation/NewAnimation0.plist","Monster1Animation/NewAnimation.ExportJson");
-
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster2/Monster20.png",
+		"Monster2/Monster20.plist","Monster2/Monster2.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster3/Monster30.png",
+		"Monster3/Monster30.plist","Monster3/Monster3.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster4/Monster40.png",
+		"Monster4/Monster40.plist","Monster4/Monster4.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("boss2/boss20.png",
+		"boss2/boss20.plist","boss2/boss2.ExportJson");
 	//auto scene = StartScene::createScene();
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();

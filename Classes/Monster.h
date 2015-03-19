@@ -4,15 +4,16 @@
 #include "Person.h"
 #include "Progress.h"
 USING_NS_CC;
-
 class Monster : public Person
 {
 public:
-	CREATE_FUNC(Monster);
-	bool init();
+	static Monster* create(int mType);
+	bool init(int mType);
 	void onEnter();
+	void addPhysics();
 	void addRunAnimation();
 	void updateBullet(float dt);
+	void onFrameEvent(Bone *bone,const std::string& evt, int originFrameIndex, int currentFrameIndex); 
 	//void deadAnimation();
 	void update(float dt);
 	void beHit() override;

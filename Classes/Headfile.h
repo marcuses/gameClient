@@ -28,3 +28,24 @@ const static char strHeroShoot[] = "heroShoot";
 const static char strEnemyShoot[] = "enemyShoot";
 const static char strWin[] = "win";
 const static char showHeroLife[] = "ShowHeroLife";
+
+struct Monster_data
+{
+	Monster_data(float x = 0, float y = 0, float marmScale = 1)
+	{
+
+		offset_x = x;
+		offset_y = y;
+		armScale = marmScale;
+	}
+	float offset_x;
+	float offset_y;
+	float armScale;
+};
+const static Monster_data monster_data[10] = {
+	Monster_data(0, 0, 1),
+	Monster_data(0, 1, 0.7),
+	Monster_data(0, 0, 1),
+	Monster_data(0, 0, 1),
+	Monster_data(0, 0, 1)
+};

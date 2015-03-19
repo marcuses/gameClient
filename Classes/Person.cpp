@@ -53,6 +53,7 @@ void Person::changeDir()
 void Person::addPhysics()
 {
 	auto size = (this->getBoundingBox()).size;
+	log("%lf %lf", size.width, size.height);
 	PhysicsBody *body = PhysicsBody::create();
 	auto material = PhysicsMaterial(100.0f, 0.01f, 1.0f);
 	body->addShape(PhysicsShapeBox::create(Size(size.width,size.height),material));

@@ -19,7 +19,7 @@ public:
 	void onEnter();
 	
 	virtual void addRunAnimation();
-	virtual void addPhysics();
+	void addPhysics();
 	//	void addObserver();
 
 	void setSpeed(float speed);

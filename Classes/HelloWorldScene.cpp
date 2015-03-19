@@ -33,7 +33,7 @@ bool HelloWorld::init()
 {
 	auto size = Director::getInstance()->getWinSize();
 	
-	_monster = Monster::create();
+	_monster = Monster::create(1);
 	//addChild(_monster, 1);
 	//_monster->setPosition(200, 320);
 	_hero = Hero::create();
