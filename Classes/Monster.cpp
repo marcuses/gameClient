@@ -16,9 +16,9 @@ Monster* Monster::create(int mType){
 }  
 bool Monster::init(int mType)
 {
-	_monsterType = 2;
+	_monsterType = mType + 1;
 	char txt[100];
-	sprintf_s(txt, "boss%d.png", _monsterType );
+	sprintf_s(txt, "Monster%d.png", _monsterType );
 	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
@@ -61,7 +61,7 @@ void Monster::updateBullet(float dt)
 void Monster::addRunAnimation()
 {
 	char txt[100];
-	sprintf(txt, "boss%d", _monsterType);
+	sprintf(txt, "Monster%d", _monsterType);
 	_armature = Armature::create(txt);
 //	_armature->setScale(monster_data[_monsterType].armScale);
 	_armature->setAnchorPoint(Point(0,0));
@@ -90,6 +90,10 @@ void Monster::beHit()
 	if(_isDead)
 	{
 		_armAnimation->play("dead");
+		getPhysicsBody()->setCategoryBitmask(0);
+		getPhysicsBody()->setCollisionBitmask(0);
+		getPhysicsBody()->setContactTestBitmask(0);
+		log("dead");
 		scheduleOnce(schedule_selector(Monster::removeThis), 1);	
 	}
 }

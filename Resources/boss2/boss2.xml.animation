@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<AnimationProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>D:\GitProject\test\Resources\boss2</ProjectDir>
+  <Version>1.5.0.0</Version>
+  <Resources>D:\GitProject\test\Resources\boss2\Resources</Resources>
+  <Name>boss2</Name>
+  <JsonFileName>boss2.json</JsonFileName>
+  <JsonFolder>D:\GitProject\test\Resources\boss2\Json</JsonFolder>
+  <JsonList />
+  <CanvasSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </CanvasSize>
+  <filePath>D:\GitProject\test\Resources\boss2\boss2.xml.animation</filePath>
+  <ProjectType>AnimationProject</ProjectType>
+  <ResRelativePath />
+  <ResourceFileList>
+    <string>boss20.plist</string>
+  </ResourceFileList>
+  <bBatchImage>true</bBatchImage>
+</AnimationProject>

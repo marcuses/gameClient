@@ -80,6 +80,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		"Monster4/Monster40.plist","Monster4/Monster4.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("boss2/boss20.png",
 		"boss2/boss20.plist","boss2/boss2.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("boss3/boss30.png",
+		"boss3/boss30.plist","boss3/boss3.ExportJson");
 	//auto scene = StartScene::createScene();
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();

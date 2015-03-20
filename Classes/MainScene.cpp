@@ -171,8 +171,8 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteA;
 		auto bullet = (Bullet*)spriteB;
-		monster->beHit();
 		removeChild(bullet); //
+		monster->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::BRICK)
@@ -409,7 +409,7 @@ void MainScene::addPhysics()
 		auto dic= obj.asValueMap();
 		float x = dic["x"].asFloat();
 		float y = dic["y"].asFloat();
-		auto ememy = Monster::create(rand() % 2);
+		auto ememy = Monster::create(rand() % 4);
 		ememy->setPosition(x, y);
 		addChild(ememy);
 	}

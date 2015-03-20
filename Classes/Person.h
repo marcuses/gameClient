@@ -32,6 +32,7 @@ public:
 	void deadAnimation();
 	void changeDir(); // 改变方向
 	int getLife();
+	inline bool isDead();
 	//float getHealth(){ return health; }
 	//void setHealth(float h){ health = h; }
 protected:
