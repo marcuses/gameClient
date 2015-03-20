@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <NormalCloseTag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IsNormalClose>true</IsNormalClose>
+  <IsNormalClose>false</IsNormalClose>
   <LastSaveDateTime>2015-03-19T23:49:27.6804159+08:00</LastSaveDateTime>
   <LastBackupDir>20150319 234927</LastBackupDir>
 </NormalCloseTag>

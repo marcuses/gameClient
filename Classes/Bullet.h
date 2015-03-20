@@ -7,9 +7,8 @@ USING_NS_CC;
 class Bullet : public Sprite
 {
 public:
-
-	static Bullet* create(TYPE type, Vec2 dir, float speed);
-	bool init(TYPE type, Vec2 dir, float speed);
+	static Bullet* create(TYPE type, Vec2 dir, float speed, int bType);
+	bool init(TYPE type, Vec2 dir, float speed, int bType);
 	void update(float dt);
 	void addPhysics();
 	void addAction();
@@ -18,4 +17,5 @@ private:
 	Vec2 _dir;
 	float _speed;
 	TYPE _type;
+	int _bType;
 };

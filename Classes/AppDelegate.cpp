@@ -67,11 +67,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	SimpleAudioEngine::getInstance()->preloadEffect("hit.mp3");
 	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background.mp3");
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("image/ui.plist","image/ui.pvr.ccz");
-	ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterAnimation/Export/Monster1/Export/Monster1/Monster10.png",
-		"monsterAnimation/Export/Monster1/Export/Monster1/Monster10.plist",
-		"monsterAnimation/Export/Monster1/Export/Monster1/Monster1.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1Animation/NewAnimation0.png",
 		"Monster1Animation/NewAnimation0.plist","Monster1Animation/NewAnimation.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1/Monster10.png",
+		"Monster1/Monster10.plist","Monster1/Monster1.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster2/Monster20.png",
 		"Monster2/Monster20.plist","Monster2/Monster2.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster3/Monster30.png",
@@ -82,6 +81,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		"boss2/boss20.plist","boss2/boss2.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("boss3/boss30.png",
 		"boss3/boss30.plist","boss3/boss3.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet1/bullet10.png",
+		"bullet1/bullet10.plist","bullet1/bullet1.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet2/bullet20.png",
+		"bullet2/bullet20.plist","bullet2/bullet2.ExportJson");
 	//auto scene = StartScene::createScene();
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();

@@ -1,11 +1,12 @@
 #include "Bullet.h"
-
-Bullet* Bullet::create(TYPE type,Vec2 dir, float speed){
+#include"cocostudio/CocoStudio.h"
+using namespace cocostudio;
+Bullet* Bullet::create(TYPE type,Vec2 dir, float speed, int bType){
 
 	Bullet* ret = new Bullet();  
 
 
-	if(ret&&ret->init(type, dir, speed)){  
+	if(ret&&ret->init(type, dir, speed, bType)){  
 		ret->autorelease();  
 		return ret;  
 	}  
@@ -14,10 +15,13 @@ Bullet* Bullet::create(TYPE type,Vec2 dir, float speed){
 	return nullptr;  
 }  
 
-bool Bullet::init(TYPE type,Vec2 dir, float speed) //note : this init should used after son create
+bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType) //note : this init should used after son create
 {
-	if (!Sprite::initWithFile("bu1.png"))	return false;
+	char txt[100];
+	sprintf(txt,"bullet%d.png", bType);
+	if (!Sprite::initWithFile(txt))	return false;
 	_type = type;
+	_bType = bType;
 	_dir = dir;
 	_speed = speed;
 	addAction();
@@ -49,16 +53,13 @@ void Bullet::addPhysics()
 
 void Bullet::addAction()
 {
-	Vector<SpriteFrame*> allFrames;
 	char txt[100];
-	for(int i = 1;i <= 6; i++)
-	{
-		sprintf_s(txt, "bu%d.png", i);
-		SpriteFrame *sf = SpriteFrame::create(txt, Rect(0, 0, 82, 39));
-		allFrames.pushBack(sf);
-	}
-	auto runAni = Animation::createWithSpriteFrames(allFrames, 0.1f);
-	runAction(RepeatForever::create(Animate::create(runAni)));
+	sprintf(txt, "bullet%d", _bType);
+	auto armature = Armature::create(txt);
+	armature->setAnchorPoint(Point(0,0));
+	this->addChild(armature);
+	armature->getAnimation()->play("run");
+	
 }
 void Bullet::del(float dt)
 {

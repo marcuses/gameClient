@@ -54,9 +54,7 @@ void Monster::updateBullet(float dt)
 	if(_isDead) return;
 //	_armAnimation->stop();
 	_armAnimation->play("attack");
-	_state = STATE::attack;
-	
-	scheduleOnce(schedule_selector(Monster::atkToRun), 0.6);	
+	_state = STATE::attack;	
 }
 void Monster::addRunAnimation()
 {
@@ -74,10 +72,16 @@ void Monster::addRunAnimation()
 
 void Monster::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
-	CCPoint p = _armature->getBone("attack" )->getDisplayRenderNode()->convertToWorldSpaceAR( ccp (0, 0)); 
-	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250);
-	bullet->setPosition(p);
-	getParent()->addChild(bullet, 2);
+	if(evt == "attack")
+	{
+		//write attack AI here
+		CCPoint p = getPosition();
+		auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, 2);
+		bullet->setPosition(p);
+		getParent()->addChild(bullet, 2);
+		_armAnimation->play("run");
+	}
+	
 }
 void Monster::beHit()
 {
@@ -93,7 +97,8 @@ void Monster::beHit()
 		getPhysicsBody()->setCategoryBitmask(0);
 		getPhysicsBody()->setCollisionBitmask(0);
 		getPhysicsBody()->setContactTestBitmask(0);
-		log("dead");
+		Vec2 v = getPhysicsBody()->getVelocity();
+		getPhysicsBody()->setVelocity(Vec2(v.x, 50));
 		scheduleOnce(schedule_selector(Monster::removeThis), 1);	
 	}
 }
@@ -102,16 +107,6 @@ void Monster::removeThis(float dt)
 {
 	getParent()->removeChild(this, true);
 }
-
-void Monster::atkToRun(float dt)
-{
-	if(_isDead) return;
-	_state = run;
-	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250);
-	bullet->setPosition(this->getPosition());
-	getParent()->addChild(bullet, 2);
-	_armAnimation->play("run");
-} 
 void Monster::update(float dt)
 {
 	if(_isDead) return;

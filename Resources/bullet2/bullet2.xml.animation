@@ -14,6 +14,8 @@
   <filePath>D:\GitProject\test\Resources\bullet2\bullet2.xml.animation</filePath>
   <ProjectType>AnimationProject</ProjectType>
   <ResRelativePath />
-  <ResourceFileList />
-  <bBatchImage>false</bBatchImage>
+  <ResourceFileList>
+    <string>bullet20.plist</string>
+  </ResourceFileList>
+  <bBatchImage>true</bBatchImage>
 </AnimationProject>

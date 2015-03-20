@@ -97,7 +97,7 @@ void Boss::shoot(Object * object)
 	Point pos2 = this->getPosition();
 	Vec2 dire = pos1 - pos2;
 	dire.normalize();
-	auto bullet = Bullet::create(BULLETENEMY, dire, 180);
+	auto bullet = Bullet::create(BULLETENEMY, dire, 180, 1);
 	bullet->setPosition(pos2);
 	this->getParent()->addChild(bullet, 2);
 }
