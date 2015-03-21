@@ -40,7 +40,8 @@ bool RegisterScene::init(){
 	Rect rectPID = Rect(210*rateX,190*rateY,175*rateX,30*rateY);
 	Rect rectPSW = Rect(210*rateX,148*rateY,175*rateX,30*rateY);
 	Rect rectPSWS = Rect(210*rateX,109*rateY,175*rateX,30*rateY);
-	Rect rectREG = Rect(424*rateX,108*rateY,49*rateX,108*rateY);
+	Rect rectREG = Rect(422*rateX,105*rateY,97*rateX,48*rateY);
+	Rect rectBACK = Rect(422*rateX,162*rateY,97*rateX,50*rateY);
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch,Event* evt){
@@ -66,6 +67,8 @@ bool RegisterScene::init(){
 			if(TextFieldPSW->getString().size()<3)	invalidPSW();
 			else if(TextFieldPSW->getString() == TextFieldPSWS->getString())	registerID();
 			else wrongPSW();
+		}else if(rectBACK.containsPoint(touch->getLocation()) ){
+			Director::getInstance()->replaceScene(LogInScene::createScene());
 		}else{
 			TextFieldPID->detachWithIME();
 			TextFieldPSW->detachWithIME();

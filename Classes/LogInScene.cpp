@@ -16,6 +16,8 @@ bool LogInScene::init(){
 	auto bgSprite = Sprite::create("login.png");
 	float rateX = vSize.width/bgSprite->getContentSize().width;
 	float rateY = vSize.height/bgSprite->getContentSize().height;
+
+	log("%f %f",rateX,rateY);
 	bgSprite->setPosition(vSize/2);
 	bgSprite->setScaleX(rateX);
 	bgSprite->setScaleY(rateY);
@@ -36,8 +38,10 @@ bool LogInScene::init(){
 
 	Rect rectPID = Rect(210*rateX,190*rateY,175*rateX,30*rateY);
 	Rect rectPSW = Rect(210*rateX,148*rateY,175*rateX,30*rateY);
-	Rect rectLOG = Rect(210*rateX,109*rateY,175*rateX,30*rateY);
+	Rect rectLOG = Rect(310*rateX,109*rateY,75*rateX,30*rateY);
+	Rect rectFLOG= Rect(210*rateX,109*rateY,75*rateX,30*rateY);
 	Rect rectREG = Rect(414*rateX,150*rateY,32*rateX,62*rateY);
+
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch,Event* evt){
@@ -54,6 +58,9 @@ bool LogInScene::init(){
 		}else if( rectLOG.containsPoint(touch->getLocation()) ){
 			log("SUCCESS");
 			logIn();
+		}else if(rectFLOG.containsPoint(touch->getLocation()) ){
+			log("FastLogIn");
+			logInSuccess();
 		}else if( rectREG.containsPoint(touch->getLocation()) ){
 			log("Register");
 			Director::getInstance()->replaceScene(RegisterScene::createScene());
