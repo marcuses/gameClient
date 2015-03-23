@@ -1,5 +1,5 @@
 #include "LogInScene.h"
-#include "MainScene.h"
+#include "StartScene.h"
 #include "RegisterScene.h"
 #include "socketClient.h"
 USING_NS_CC;
@@ -10,8 +10,8 @@ Scene* LogInScene::createScene(){
 	scene->addChild(layer);
 	return scene;
 }
-bool LogInScene::init(){
-	if(!Layer::init())	return false;
+void LogInScene::onEnter(){
+	Layer::onEnter();
 	Size vSize  = Director::getInstance()->getVisibleSize();
 	auto bgSprite = Sprite::create("login.png");
 	float rateX = vSize.width/bgSprite->getContentSize().width;
@@ -26,7 +26,7 @@ bool LogInScene::init(){
 	TextFieldPID = MyTextFieldTTF::myTextFieldWithPlaceHolder(1,"<Input your ID>","fonts/Marker Felt.ttf",20);
 	addChild(TextFieldPID);
 	TextFieldPID->setPosition(Vec2(300*rateX,205*rateY));
-	
+
 	TextFieldPSW = MyTextFieldTTF::myTextFieldWithPlaceHolder(2,"<Input your PassWord>","fonts/Marker Felt.ttf",20);
 	addChild(TextFieldPSW);
 	TextFieldPSW->setPosition(Vec2(300*rateX,162*rateY));
@@ -43,7 +43,7 @@ bool LogInScene::init(){
 	Rect rectREG = Rect(414*rateX,150*rateY,32*rateX,62*rateY);
 
 
-	auto listener = EventListenerTouchOneByOne::create();
+	listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch,Event* evt){
 		log("%f %f",touch->getLocation().x,touch->getLocation().y);
 		hintMsg->setString("");
@@ -71,7 +71,10 @@ bool LogInScene::init(){
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
-	return true;
+}
+void LogInScene::onExit(){
+	_eventDispatcher->removeEventListener(listener);
+	Layer::onExit();
 }
 void LogInScene::logIn(){
 	socketClient test;
@@ -81,7 +84,7 @@ void LogInScene::logIn(){
 void LogInScene::logInSuccess(){
 	log(TextFieldPID->getString().c_str());
 	log(TextFieldPSW->getString().c_str());
-	auto scene = MainScene::createScene();
+	auto scene = StartScene::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
 void LogInScene::logInFail(){

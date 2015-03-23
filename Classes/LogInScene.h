@@ -5,7 +5,8 @@
 class LogInScene : public cocos2d::Layer{
 public:
     static cocos2d::Scene* createScene();
-    virtual bool init();
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	void logIn();
     CREATE_FUNC(LogInScene);
 private:
@@ -14,5 +15,6 @@ private:
 	cocos2d::Label* hintMsg;
 	MyTextFieldTTF* TextFieldPID;
 	MyTextFieldTTF* TextFieldPSW;
+	cocos2d::EventListenerTouchOneByOne* listener;
 };
 #endif

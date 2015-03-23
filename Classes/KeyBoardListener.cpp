@@ -2,15 +2,16 @@
 #include "Headfile.h"
 USING_NS_CC;
 
-bool KeyBoardListener::init(){
-	if(!Layer::init())	return false;
-	
-	auto listener = EventListenerKeyboard::create();
+void KeyBoardListener::onEnter(){
+	Layer::onEnter();
+	listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_2(KeyBoardListener::onKeyPressed, this);
 	listener->onKeyReleased = CC_CALLBACK_2(KeyBoardListener::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
-	
-	return true;
+}
+void KeyBoardListener::onExit(){
+	_eventDispatcher->removeEventListener(listener);
+	Layer::onExit();
 }
 void KeyBoardListener::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
 	switch(keyCode){

@@ -9,8 +9,8 @@ Scene* RegisterScene::createScene(){
 	scene->addChild(layer);
 	return scene;
 }
-bool RegisterScene::init(){
-	if(!Layer::init())	return false;
+void RegisterScene::onEnter(){
+	Layer::onEnter();
 	Size vSize  = Director::getInstance()->getVisibleSize();
 	auto bgSprite = Sprite::create("register.png");
 	float rateX = vSize.width/bgSprite->getContentSize().width;
@@ -43,7 +43,7 @@ bool RegisterScene::init(){
 	Rect rectREG = Rect(422*rateX,105*rateY,97*rateX,48*rateY);
 	Rect rectBACK = Rect(422*rateX,162*rateY,97*rateX,50*rateY);
 
-	auto listener = EventListenerTouchOneByOne::create();
+	listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch,Event* evt){
 		log("%f %f",touch->getLocation().x,touch->getLocation().y);
 		hintMsg->setString("");
@@ -76,7 +76,10 @@ bool RegisterScene::init(){
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
-	return true;
+}
+void RegisterScene::onExit(){
+	_eventDispatcher->removeEventListener(listener);
+	Layer::onExit();
 }
 void RegisterScene::registerID(){
 	socketClient test;

@@ -14,8 +14,7 @@ using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
-
-int MainScene::level = 1;
+int MainScene::level = 2;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
@@ -66,7 +65,7 @@ void MainScene::onEnter()
 	armature->setPosition(Point(5700, 320));*/
 	_hero = Hero::create();
 	addChild(_hero, 2);
-	_hero->setPosition(300, 680); 
+	_hero->setPosition(5000, 680); 
 	_boss = Boss::create();
 	_boss->setPosition(5700, 640);
 	addChild(_boss, 2);
@@ -78,7 +77,7 @@ void MainScene::onEnter()
 	char mpName[10];
 	sprintf(mpName,"map%d.tmx", level);
 	addBackGround(mpName);
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
+	//SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
@@ -87,6 +86,7 @@ void MainScene::onEnter()
 
 void MainScene::onExit()
 {
+	//SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
 	NotificationCenter::getInstance()->removeAllObservers(this);
 	Layer::onExit();
 }
@@ -100,7 +100,6 @@ void MainScene::update(float dt)
 	}
 	if(_door->isVisible() && _door->getBoundingBox().containsPoint(_hero->getPosition()))
 	{
-		
 		goNextLevel();
 	}
 }

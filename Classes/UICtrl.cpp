@@ -5,8 +5,8 @@
 #include "StartScene.h"
 USING_NS_CC;
 
-bool UICtrl::init(){
-	if(!Layer::init())	return false;
+void UICtrl::onEnter(){
+	Layer::onEnter();
 	auto vSize = Director::getInstance()->getVisibleSize();
 
 	//添加游戏逻辑按钮和暂停按钮和对应的响应函数
@@ -30,7 +30,7 @@ bool UICtrl::init(){
 	playLayer->addChild(stopButton);
 	this->addChild(playLayer,1);
 	//最好改成 EventListenerTouchAllAtOnce
-	auto listener = EventListenerTouchOneByOne::create();
+	listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [=](Touch* touch, Event* e){
 		if( stopButton->getBoundingBox().containsPoint(touch->getLocation())){
 			showLayer();
@@ -73,7 +73,6 @@ bool UICtrl::init(){
 	stopLayer->addChild(quitButton);
 	this->addChild(stopLayer,2);
 	stopLayer->setVisible(false);
-//	hideLayer();
 	auto listenerStop = EventListenerTouchOneByOne::create();		
 	listenerStop->onTouchBegan = [=](Touch* touch, Event* e){
 		if(	!stopLayer->isVisible() )	return false;
@@ -89,9 +88,11 @@ bool UICtrl::init(){
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerStop,stopLayer);
-	return true;
 }
-
+void UICtrl::onExit(){
+	_eventDispatcher->removeEventListener(listener);
+	Layer::onExit();
+}
 void UICtrl::showLayer(){
 	stopLayer->setVisible(true);
 	playLayer->setVisible(false);

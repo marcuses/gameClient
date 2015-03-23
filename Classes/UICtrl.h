@@ -5,7 +5,8 @@
 
 class UICtrl : public cocos2d::Layer{
 public:
-	virtual bool init()override;
+	virtual void onEnter() override;
+	virtual void onExit() override;
 	CREATE_FUNC(UICtrl);
 private:
 
@@ -23,6 +24,8 @@ private:
 	
 	void showLayer();
 	void hideLayer();
+
+	cocos2d::EventListenerTouchOneByOne* listener;
 };
 
 #endif

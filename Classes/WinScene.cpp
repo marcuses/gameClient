@@ -1,5 +1,6 @@
 #include "WinScene.h"
 #include "LogInScene.h"
+#include "StartScene.h"
 #include "ui/UIButton.h"
 using namespace cocostudio;
 cocos2d::Scene* WinScene::createScene()
@@ -31,7 +32,7 @@ bool WinScene::init()
 	auto mBackBtn = dynamic_cast<ui::Button*>(node->getChildByName("Button_Back"));
 	mBackBtn->addClickEventListener([&](Ref* sender)
 	{
-		auto nextScene = LogInScene::createScene();
+		auto nextScene = StartScene::createScene();
 		Director::getInstance()->replaceScene(CCTransitionFade::create(1.0f,nextScene));
 	});
 	return true;

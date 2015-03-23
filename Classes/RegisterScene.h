@@ -5,7 +5,8 @@
 class RegisterScene : public cocos2d::Layer{
 public:
     static cocos2d::Scene* createScene();
-    virtual bool init();
+    virtual void onEnter();
+	virtual void onExit();
 	void registerID();
     CREATE_FUNC(RegisterScene);
 private:
@@ -17,5 +18,6 @@ private:
 	MyTextFieldTTF* TextFieldPID;
 	MyTextFieldTTF* TextFieldPSW;
 	MyTextFieldTTF* TextFieldPSWS;
+	cocos2d::EventListenerTouchOneByOne* listener;
 };
 #endif
