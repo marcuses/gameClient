@@ -51,23 +51,23 @@ void Person::addPhysics()
 {
 	auto size = (this->getBoundingBox()).size;
 	log("%lf %lf", size.width, size.height);
-	PhysicsBody *body = PhysicsBody::create();
 	auto material = PhysicsMaterial(100.0f, 0.01f, 1.0f);
-	body->addShape(PhysicsShapeBox::create(Size(size.width,size.height),material));
+	PhysicsBody *body = PhysicsBody::createBox(Size(size.width,size.height),material);
+//	body->addShape(PhysicsShapeBox::create(Size(size.width,size.height),material));
 	body->setCategoryBitmask(_type);
 	if(_type == TYPE::MONSTER) 
 	{
-		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS);
+		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS | TYPE::PLANK);
 		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS);
 	}
 	else if(_type == TYPE::HERO)
 	{
-		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH /*| TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY*/);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY);
+		body->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::PLANK);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY | TYPE::PLANK);
 	}
 	else if(_type == TYPE::BOSS)
 	{
-		body->setCollisionBitmask( TYPE::HERO | TYPE::GROUND | TYPE::BOSS );
+		body->setCollisionBitmask( TYPE::HERO | TYPE::GROUND | TYPE::BOSS | PLANK);
 		body->setContactTestBitmask( TYPE::HERO | TYPE::GROUND | TYPE::BOSS);
 	}
 	body->setDynamic(true);

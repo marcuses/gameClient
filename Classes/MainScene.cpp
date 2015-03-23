@@ -15,7 +15,7 @@ using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
 
-int MainScene::level = 2;
+int MainScene::level = 3;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
@@ -72,7 +72,7 @@ void MainScene::onEnter()
 	_boss->setPosition(getTilePosition("bossPos", "bossPos"));
 	addChild(_boss, 2);
 	_door = Sprite::create("door.png");
-	_door->setPosition(Point(5500, 500));
+	_door->setPosition(getTilePosition("door", "door"));
 	addChild(_door, 1);
 	_door->setVisible(false);
 	auto size = Director::getInstance()->getWinSize();
@@ -125,7 +125,7 @@ void MainScene::goNextLevel()
 {
 	unscheduleUpdate();
 	level ++;
-	if(level >2)
+	if(level > 3)
 	{
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1.0f, WinScene::createScene()));
 	}
@@ -142,7 +142,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	if(spriteA == NULL || spriteB == NULL) return false;
 //	log("%d %d",spriteA->getTag(), spriteB->getTag());
 	if ((spriteA && spriteA->getTag() == TYPE::HERO)
-		&& spriteB && spriteB->getTag() == TYPE::GROUND)
+		&& spriteB && spriteB->getTag() == TYPE::PLANK)
 	{
 		_hero = (Hero*)spriteA;
 		_hero->setJump(false);
@@ -150,11 +150,25 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	}
 
 	else if((spriteB && spriteB->getTag() == TYPE::HERO)
-		&& spriteA && spriteA->getTag() == TYPE::GROUND)
+		&& spriteA && spriteA->getTag() == TYPE::PLANK)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->setJump(false);
 		return contact.getContactData()->normal.y > 0;;
+	}
+
+	else if ((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() == TYPE::GROUND)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->setJump(false);
+	}
+
+	else if((spriteB && spriteB->getTag() == TYPE::HERO)
+		&& spriteA && spriteA->getTag() == TYPE::GROUND)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->setJump(false);
 	}
 
 	else if((spriteB && spriteB->getTag() == TYPE::MONSTER)
@@ -381,7 +395,14 @@ void MainScene::addPhysics()
 		auto sprite = makePolygon(dic, TYPE::GROUND, "", false, false, 100, 0, 1);
 		addChild(sprite);
 	}
-	if(level > 2) return;
+
+	auto objectPlank = _tileMap ->objectGroupNamed("Plank")->getObjects();
+	for (auto& obj : objectGroup1)  //添加木板
+	{
+		auto dic= obj.asValueMap();
+		auto sprite = makePolygon(dic, TYPE::PLANK, "", false, false, 100, 0, 1);
+		addChild(sprite);
+	}
 	if(MainScene :: level <= 1)
 	{
 		auto objectGroup2 = _tileMap ->objectGroupNamed("ObjectsTanhuang")->getObjects();
@@ -398,18 +419,24 @@ void MainScene::addPhysics()
 	for (auto& obj : objectsHmove) 
 	{
 		auto dic= obj.asValueMap();
-		auto sprite = makePolygon(dic, TYPE::GROUND, "tai.png", true, true, 0, 0, 1);
+		auto sprite = makePolygon(dic, TYPE::PLANK, "tai.png", true, true, 0, 0, 1);
 		Size sz = sprite->getContentSize();
 		Point pos = sprite->getPosition();
 		auto moveBody = MoveBody::create("tai.png", sprite, 100, 2,pos.x - sz.width - 100 , pos.x + sz.width - 100);
 		addChild(moveBody);
 	}
-	auto objects = _tileMap ->objectGroupNamed("ObjectsSwing");
-	auto vBmap = objects->getObject("BalanceBoard");
-	auto balanceBoard = makePolygon(vBmap, TYPE::GROUND, "BalanceBoard.png", true, true, 0, 0.0f, 1.0f );
-	auto moveBody2 = MoveBody::create("BalanceBoard.png", balanceBoard, 100, 1, 400, 600);
-	addChild(moveBody2);
 
+	//添加移动台上下
+	auto objectsVmove = _tileMap ->objectGroupNamed("ObjectsSwing")->getObjects();
+	for(auto& obj : objectsVmove)
+	{
+		auto dic= obj.asValueMap();
+		auto sprite = makePolygon(dic, TYPE::PLANK, "BalanceBoard.png", true, true, 0, 0, 1);
+		Size sz = sprite->getContentSize();
+		Point pos = sprite->getPosition();
+		auto moveBody = MoveBody::create("BalanceBoard.png", sprite, 100, 1,pos.y  , pos.y + 200);
+		addChild(moveBody);
+	}
 	auto objectGroupEnemy = _tileMap ->objectGroupNamed("Enemy")->getObjects();
 	for (auto& obj : objectGroupEnemy) //添加小怪
 	{

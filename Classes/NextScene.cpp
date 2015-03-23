@@ -29,6 +29,7 @@ bool NextScene::init()
 	mNextBtn->addClickEventListener([&](Ref* sender)
 	{
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(2.0f, MainScene::createScene()));
+		Director::getInstance()->resume();
 	});
 	return true;
 }

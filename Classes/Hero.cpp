@@ -3,7 +3,7 @@
 using namespace std;
 bool Hero::init()
 {
-	_isJump = true;
+	_isJump = false;
 	_leftDown  = false;
 	_rightDown = false;
 	_moveState = 0;

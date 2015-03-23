@@ -33,29 +33,11 @@
   <object x="2138" y="598">
    <polygon points="0,0 128,-102 748,-93 749,-75 141,-83 43,7"/>
   </object>
-  <object x="2407" y="393">
-   <polygon points="0,0 384,-1 382,13 0,18"/>
-  </object>
   <object x="2862" y="168">
    <polygon points="0,0 360,0 352,31 -3,30"/>
   </object>
   <object x="3443" y="356">
    <polygon points="0,0 292,-2 289,37 0,36"/>
-  </object>
-  <object x="4708" y="422">
-   <polygon points="0,0 256,0 256,11 1,10"/>
-  </object>
-  <object x="4732" y="511">
-   <polygon points="0,0 223,2 222,13 -1,17"/>
-  </object>
-  <object x="4971" y="526">
-   <polygon points="0,0 349,-1 353,11 1,12"/>
-  </object>
-  <object x="4956" y="394">
-   <polygon points="0,0 367,-3 366,9 -1,8"/>
-  </object>
-  <object x="4969" y="252">
-   <polygon points="0,0 357,2 359,18 0,15"/>
   </object>
  </objectgroup>
  <objectgroup name="ObjectsBox" width="375" height="46">
@@ -141,5 +123,28 @@
  </objectgroup>
  <objectgroup name="bossPos" width="375" height="46">
   <object name="bossPos" x="5614" y="94" width="26" height="22"/>
+ </objectgroup>
+ <objectgroup name="door" width="375" height="46">
+  <object name="door" x="5468" y="149" width="13" height="17"/>
+ </objectgroup>
+ <objectgroup name="Plank" width="375" height="46">
+  <object x="2409" y="393">
+   <polygon points="0,0 376,-1 381,14 1,12"/>
+  </object>
+  <object x="4714" y="424">
+   <polygon points="0,0 250,1 250,9 1,9"/>
+  </object>
+  <object x="4735" y="513">
+   <polygon points="0,0 219,1 220,14 -1,13"/>
+  </object>
+  <object x="4971" y="528">
+   <polygon points="0,0 347,-1 350,9 3,9"/>
+  </object>
+  <object x="4959" y="392">
+   <polygon points="0,0 363,0 365,9 -2,11"/>
+  </object>
+  <object x="4969" y="255">
+   <polygon points="0,0 357,1 357,13 -1,11"/>
+  </object>
  </objectgroup>
 </map>
