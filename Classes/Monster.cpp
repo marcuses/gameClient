@@ -76,7 +76,7 @@ void Monster::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIn
 	{
 		//write attack AI here
 		CCPoint p = getPosition();
-		auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, 2);
+		auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
 		bullet->setPosition(p);
 		getParent()->addChild(bullet, 2);
 		_armAnimation->play("run");

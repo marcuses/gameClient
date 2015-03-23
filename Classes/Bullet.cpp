@@ -41,7 +41,7 @@ bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType) //note : this init
 void Bullet::addPhysics()
 {
 	auto body = PhysicsBody::create();
-	body->addShape(PhysicsShapeBox::create(this->getContentSize() ,PhysicsMaterial(100.0f, 0.01f, 1.0f)));
+	body->addShape(PhysicsShapeBox::create(this->getContentSize() ,PhysicsMaterial(0.0f, 0.01f, 1.0f)));
 	body->setCategoryBitmask(_type);
 	body->setCollisionBitmask(_type | TYPE::MONSTER | TYPE::HERO | BOSSWEAKNESS);
 	body->setContactTestBitmask(_type | TYPE::MONSTER | TYPE::HERO | BOSSWEAKNESS);
@@ -59,7 +59,6 @@ void Bullet::addAction()
 	armature->setAnchorPoint(Point(0,0));
 	this->addChild(armature);
 	armature->getAnimation()->play("run");
-	
 }
 void Bullet::del(float dt)
 {
@@ -67,7 +66,7 @@ void Bullet::del(float dt)
 }
 void Bullet::update(float dt)
 {
-	this->getPhysicsBody()->setVelocity(_dir * _speed);
+	_dir = getPhysicsBody()->getVelocity();
 	float anc = atan2(_dir.y, _dir.x);
 	this->setRotation(- anc * 180.0 / 3.1415);
 }

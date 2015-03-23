@@ -70,7 +70,7 @@ void Hero::shoot(Object * object)
 	if(_isDead||bulletRate>0)	return;
 	bulletRate = BULLETRate;
 	Point pos = getPosition();
-	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361, 1);
+	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361, 10);
 	bullet->setPosition(pos.x + getDir() * 10, pos.y);
 	this->getParent()->addChild(bullet, 2);
 }
