@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <AnimationProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ProjectDir>D:\GitProject\test\Resources\Monster4</ProjectDir>
+  <ProjectDir>D:\GitProject\test\Resources\bullet10</ProjectDir>
   <Version>1.5.0.0</Version>
-  <Resources>D:\GitProject\test\Resources\Monster4\Resources</Resources>
-  <Name>Monster4</Name>
-  <JsonFileName>Monster4.json</JsonFileName>
-  <JsonFolder>D:\GitProject\test\Resources\Monster4\Json</JsonFolder>
+  <Resources>D:\GitProject\test\Resources\bullet10\Resources</Resources>
+  <Name>bullet10</Name>
+  <JsonFileName>bullet10.json</JsonFileName>
+  <JsonFolder>D:\GitProject\test\Resources\bullet10\Json</JsonFolder>
   <JsonList />
   <CanvasSize>
     <Width>0</Width>
     <Height>0</Height>
   </CanvasSize>
-  <filePath>D:\GitProject\test\Resources\Monster4\Monster4.xml.animation</filePath>
+  <filePath>D:\GitProject\test\Resources\bullet10\bullet10.xml.animation</filePath>
   <ProjectType>AnimationProject</ProjectType>
   <ResRelativePath />
   <ResourceFileList />
