@@ -66,7 +66,7 @@ void Bullet::del(float dt)
 }
 void Bullet::update(float dt)
 {
-	_dir = getPhysicsBody()->getVelocity();
+	getPhysicsBody()->setVelocity(_dir * _speed);
 	float anc = atan2(_dir.y, _dir.x);
 	this->setRotation(- anc * 180.0 / 3.1415);
 }

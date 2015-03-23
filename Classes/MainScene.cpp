@@ -14,13 +14,14 @@ using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
+
 int MainScene::level = 2;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
 	
 	auto _scene = Scene::createWithPhysics();
-	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -45,7 +46,6 @@ bool MainScene::init()
 	//addChild(_monster, 1);
 	//_monster->setPosition(200, 320);
 	if(!Layer::init()) return false;
-	
 	//armature->getAnimation()->play("walk");
 	//this->addChild(armature, 1);
 	scheduleUpdate();
@@ -55,29 +55,29 @@ bool MainScene::init()
 void MainScene::onEnter()
 {
 	Layer::onEnter();
-	
-	
 
 	/*ArmatureDataManager::getInstance()->addArmatureFileInfo("NewAnimation0.png","NewAnimation0.plist","NewAnimation.ExportJson");
 
 	Armature *armature = Armature::create("NewAnimation");
 
 	armature->setPosition(Point(5700, 320));*/
+	char mpName[10];
+	sprintf(mpName,"map%d.tmx", level);
+	addBackGround(mpName);
 	_hero = Hero::create();
 	addChild(_hero, 2);
-	_hero->setPosition(5000, 680); 
+
+	_hero->setPosition(getTilePosition("heroPos", "heroPos")); 
 	_boss = Boss::create();
-	_boss->setPosition(5700, 640);
+	_boss->setPosition(getTilePosition("bossPos", "bossPos"));
 	addChild(_boss, 2);
 	_door = Sprite::create("door.png");
 	_door->setPosition(Point(5500, 500));
 	addChild(_door, 1);
 	_door->setVisible(false);
 	auto size = Director::getInstance()->getWinSize();
-	char mpName[10];
-	sprintf(mpName,"map%d.tmx", level);
-	addBackGround(mpName);
-	//SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
+	
+	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
@@ -86,7 +86,6 @@ void MainScene::onEnter()
 
 void MainScene::onExit()
 {
-	//SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
 	NotificationCenter::getInstance()->removeAllObservers(this);
 	Layer::onExit();
 }
@@ -100,6 +99,7 @@ void MainScene::update(float dt)
 	}
 	if(_door->isVisible() && _door->getBoundingBox().containsPoint(_hero->getPosition()))
 	{
+		
 		goNextLevel();
 	}
 }
@@ -125,7 +125,7 @@ void MainScene::goNextLevel()
 {
 	unscheduleUpdate();
 	level ++;
-	if(level >= 3)
+	if(level >2)
 	{
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1.0f, WinScene::createScene()));
 	}
@@ -356,6 +356,14 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 	}
 	return nullptr;
 }
+
+Point MainScene::getTilePosition(std::string groupName, std::string objectName)
+{
+	auto dict = _tileMap->getObjectGroup(groupName)->getObject(objectName);
+	float x = dict["x"].asFloat();
+	float y = dict["y"].asFloat();
+	return Point(x, y);
+}
 void MainScene::addPhysics()
 {
 	auto objectGroup = _tileMap ->objectGroupNamed("ObjectsBox")->getObjects();
@@ -365,7 +373,7 @@ void MainScene::addPhysics()
 		auto sprite = makeBox(dict, TYPE::GROUND, "", false, 100, 0, 1);
 		addChild(sprite);
 	}
-
+	
 	auto objectGroup1 = _tileMap ->objectGroupNamed("ObjectsPolygon")->getObjects();
 	for (auto& obj : objectGroup1)  //添加多边形地面
 	{
@@ -373,7 +381,7 @@ void MainScene::addPhysics()
 		auto sprite = makePolygon(dic, TYPE::GROUND, "", false, false, 100, 0, 1);
 		addChild(sprite);
 	}
-
+	if(level > 2) return;
 	if(MainScene :: level <= 1)
 	{
 		auto objectGroup2 = _tileMap ->objectGroupNamed("ObjectsTanhuang")->getObjects();

@@ -62,8 +62,8 @@
   <object x="3047" y="195" width="17" height="13"/>
   <object x="3067" y="326" width="15" height="16"/>
   <object x="2363" y="573" width="13" height="13"/>
-  <object x="5202" y="214" width="12" height="15"/>
-  <object x="4584" y="206" width="11" height="11"/>
+  <object x="5193" y="183" width="12" height="15"/>
+  <object x="4620" y="192" width="11" height="11"/>
  </objectgroup>
  <layer name="ci" width="375" height="46">
   <data encoding="base64" compression="zlib">
@@ -97,5 +97,11 @@
   <object x="1309" y="270">
    <polygon points="0,0 238,3 239,26 -1,19"/>
   </object>
+ </objectgroup>
+ <objectgroup name="heroPos" width="375" height="46">
+  <object name="heroPos" x="433" y="418" width="13" height="12"/>
+ </objectgroup>
+ <objectgroup name="bossPos" width="375" height="46">
+  <object name="bossPos" x="5662" y="138" width="20" height="20"/>
  </objectgroup>
 </map>

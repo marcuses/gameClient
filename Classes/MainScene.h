@@ -39,6 +39,7 @@ public:
 	//通过tilemap添加多边形
 	Sprite* makePolygon(ValueMap& dict, TYPE type, const char* imgName, bool hasImg, bool dynamic, float aDensity, float aRes, float aFriction);
 	void setViewPointCenter(Point position); 
+	Point getTilePosition(std::string groupName, std::string objectName);
 	void doorVisiable(Object * object);
 	inline Point getPlayerPosition(){ return _hero->getPosition();} 
 
