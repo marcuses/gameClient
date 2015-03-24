@@ -47,11 +47,15 @@ void Monster::onEnter()
 }
 void Monster::updateBullet(float dt)
 {
-	if(_isDead) return;
+	if(_isDead||outScene()) return;
 //	_armAnimation->stop();
 	_armAnimation->play("attack");
 	_state = STATE::attack;	
 }
+bool Monster::outScene(){
+	float tmp = getPositionX()+getParent()->getPositionX();
+	return tmp<0||tmp>Director::getInstance()->getVisibleSize().width;
+};
 void Monster::addRunAnimation()
 {
 	char txt[100];
@@ -91,13 +95,9 @@ void Monster::AImid(){
 	bullet1->setPosition(this->getPosition());
 	getParent()->addChild(bullet1, 2);
 
-	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(getDir(), getDir()), 250, _monsterType);
+	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType);
 	bullet2->setPosition(this->getPosition());
 	getParent()->addChild(bullet2, 2);
-
-	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 250, _monsterType);
-	bullet3->setPosition(this->getPosition());
-	getParent()->addChild(bullet3, 2);
 }
 void Monster::AIhard(){
 	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
@@ -112,17 +112,17 @@ void Monster::AIhard(){
 	bullet3->setPosition(this->getPosition());
 	getParent()->addChild(bullet3, 2);
 
-	auto bullet4 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType);
-	bullet4->setPosition(this->getPosition());
-	getParent()->addChild(bullet4, 2);
+	//auto bullet4 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType);
+	//bullet4->setPosition(this->getPosition());
+	//getParent()->addChild(bullet4, 2);
 
-	auto bullet5 = Bullet::create(BULLETENEMY, Vec2(-getDir(), getDir()), 250, _monsterType);
-	bullet5->setPosition(this->getPosition());
-	getParent()->addChild(bullet5, 2);
+	//auto bullet5 = Bullet::create(BULLETENEMY, Vec2(-getDir(), getDir()), 250, _monsterType);
+	//bullet5->setPosition(this->getPosition());
+	//getParent()->addChild(bullet5, 2);
 
-	auto bullet6 = Bullet::create(BULLETENEMY, Vec2(-getDir(),-getDir()), 250, _monsterType);
-	bullet6->setPosition(this->getPosition());
-	getParent()->addChild(bullet6, 2);
+	//auto bullet6 = Bullet::create(BULLETENEMY, Vec2(-getDir(),-getDir()), 250, _monsterType);
+	//bullet6->setPosition(this->getPosition());
+	//getParent()->addChild(bullet6, 2);
 }
 void Monster::beHit()
 {

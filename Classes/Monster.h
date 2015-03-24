@@ -27,4 +27,5 @@ private:
 	int _spHitTime;
 	int _monsterType;
 	int _hard;
+	bool outScene();
 };
