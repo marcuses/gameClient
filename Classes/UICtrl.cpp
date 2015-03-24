@@ -79,10 +79,11 @@ void UICtrl::onEnter(){
 		if( backButton->getBoundingBox().containsPoint(touch->getLocation())){
 			hideLayer();
 		}else if( restartButton->getBoundingBox().containsPoint(touch->getLocation())){
+			Hero::heroLife = 10;
 			Director::getInstance()->replaceScene(MainScene::createScene());
 			Director::getInstance()->resume();
-			Hero::heroLife = 10;
 		}else if( quitButton->getBoundingBox().containsPoint(touch->getLocation())){
+			Hero::heroLife = 10;
 			Director::getInstance()->replaceScene(StartScene::createScene());
 			Director::getInstance()->resume();
 		}

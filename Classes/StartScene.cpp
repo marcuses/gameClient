@@ -28,7 +28,6 @@ bool StartScene::init(){
 	auto choiceNode = CSLoader::createNode("ChoiceNode.csb");
 	addChild(choiceNode,2);
 	choiceNode->setVisible(false);
-
 	auto easyMode = dynamic_cast<ui::Button*>(choiceNode->getChildByName("easyButton"));
 	easyMode->addClickEventListener([=](Ref* pSender){
 		MainScene::hard  = 1;
