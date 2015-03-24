@@ -12,10 +12,12 @@ public:
 	void update(float dt);
 	void addPhysics();
 	void addAction();
-	void del(float dt);
+	void del();
 private:
 	Vec2 _dir;
 	float _speed;
 	TYPE _type;
 	int _bType;
+	float _maxTime;
+	float _nowTime;
 };

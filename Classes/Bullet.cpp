@@ -31,10 +31,11 @@ bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType) //note : this init
 	this->getPhysicsBody()->setVelocity(_dir * _speed);
 	float anc = atan2(_dir.y, _dir.x);
 	this->setRotation(- anc * 180.0 / 3.1415);
-	float delTime = 1;
-	if(type == BULLET) delTime = 1.2;
-	else delTime = 5;
- 	scheduleOnce(schedule_selector(Bullet::del), delTime);
+	_maxTime = 1;
+	if(type == BULLET) _maxTime = 1.2;
+	else _maxTime = 5;
+	_nowTime = _maxTime;
+	this->setCascadeOpacityEnabled(true);
 	scheduleUpdate();
 	return true;
 }
@@ -63,13 +64,19 @@ void Bullet::addAction()
 	this->addChild(armature);
 	armature->getAnimation()->play("run");
 }
-void Bullet::del(float dt)
+void Bullet::del()
 {
 	removeFromParentAndCleanup(this);
 }
 void Bullet::update(float dt)
 {
-	getPhysicsBody()->setVelocity(_dir * _speed);
-	float anc = atan2(_dir.y, _dir.x);
-	this->setRotation(- anc * 180.0 / 3.1415);
+	_nowTime -= dt;
+	if(_nowTime<=0){
+		del();
+	}else{
+		getPhysicsBody()->setVelocity(_dir * _speed);
+		float anc = atan2(_dir.y, _dir.x);
+		this->setRotation(- anc * 180.0 / 3.1415);
+		this->setOpacity(GLubyte(255*sqrt(_nowTime/_maxTime)));  //…Ë÷√Õ∏√˜∂»
+	}
 }
