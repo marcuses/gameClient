@@ -398,7 +398,7 @@ void MainScene::addPhysics()
 	}
 
 	auto objectPlank = _tileMap ->objectGroupNamed("Plank")->getObjects();
-	for (auto& obj : objectGroup1)  //Ìí¼ÓÄ¾°å
+	for (auto& obj : objectPlank)  //Ìí¼ÓÄ¾°å
 	{
 		auto dic= obj.asValueMap();
 		auto sprite = makePolygon(dic, TYPE::PLANK, "", false, false, 100, 0, 1);

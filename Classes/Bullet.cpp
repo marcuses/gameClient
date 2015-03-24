@@ -24,6 +24,7 @@ bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType) //note : this init
 	_bType = bType;
 	_dir = dir;
 	_speed = speed;
+	setScale(0.7);
 	addAction();
 	addPhysics();
 	this->setTag(type);
@@ -41,7 +42,8 @@ bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType) //note : this init
 void Bullet::addPhysics()
 {
 	auto body = PhysicsBody::create();
-	body->addShape(PhysicsShapeBox::create(this->getContentSize() ,PhysicsMaterial(0.0f, 0.01f, 1.0f)));
+	body->addShape(PhysicsShapeBox::create(this->getContentSize() * 0.7,PhysicsMaterial(0.0f, 0.01f, 1.0f)));
+	
 	body->setCategoryBitmask(_type);
 	body->setCollisionBitmask(_type | TYPE::MONSTER | TYPE::HERO | BOSSWEAKNESS);
 	body->setContactTestBitmask(_type | TYPE::MONSTER | TYPE::HERO | BOSSWEAKNESS);
@@ -57,6 +59,7 @@ void Bullet::addAction()
 	sprintf(txt, "bullet%d", _bType);
 	auto armature = Armature::create(txt);
 	armature->setAnchorPoint(Point(0,0));
+//	armature->setScale(0.5);
 	this->addChild(armature);
 	armature->getAnimation()->play("run");
 }
