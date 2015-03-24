@@ -51,10 +51,10 @@ void Gun::updateBullet(float dt)
 bool Gun::outScene(){
 	float tmp = getPositionX()+getParent()->getPositionX();
 	return tmp<0||tmp>Director::getInstance()->getVisibleSize().width;
-};
+}
 void Gun::addRunAnimation()
 {
-	
+
 }
 void Gun::beHit()
 {
