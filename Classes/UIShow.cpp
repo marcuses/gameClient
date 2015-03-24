@@ -13,6 +13,14 @@ bool UIShow::init(){
 	curLife = Label::createWithTTF(" x 10","fonts/Marker Felt.ttf",20);
 	addChild(curLife);
 	curLife->setPosition(50,lifeSprite->getPositionY());
+
+	runTime = 0;
+
+	curTime = Label::createWithTTF("0","fonts/Marker Felt.ttf",30);
+	addChild(curTime);
+	curTime->setPosition(vSize.width/2,vSize.height-curTime->getContentSize().width);
+
+	scheduleUpdate();
 	return true;
 }
 void UIShow::onEnter(){
@@ -26,4 +34,13 @@ void UIShow::onExit(){
 void UIShow::setLife(Object* object){
 	String* life = (String*)(object);
 	curLife->setString(life->_string);
+}
+void UIShow::update(float dt){
+	runTime += dt;
+	char tmp[10];
+	sprintf(tmp,"%.1f",runTime);
+	curTime->setString(tmp);
+}
+float UIShow::getTime(){
+	return runTime;
 }
