@@ -32,7 +32,7 @@ void Gun::onEnter()
 	auto size = getContentSize();
 	getPhysicsBody()->setDynamic(false);
 	//	if(_monsterType >= 2) this->setScale(0.25);
-	_spHit = Sprite::create("hitBlode.png");
+	_spHit = Sprite::create("boom.png");
 	addChild(_spHit, 1);
 	_spHit->setVisible(false);
 	_spHitTime = 0;
@@ -44,7 +44,7 @@ void Gun::updateBullet(float dt)
 	if(_isDead||outScene()) return;
 	//	_armAnimation->stop();
 	
-	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 250, 5, true);
+	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 150, 5, true);
 	bullet3->setPosition(this->getPosition());
 	getParent()->addChild(bullet3, 2);
 }

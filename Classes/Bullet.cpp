@@ -34,7 +34,12 @@ bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType, bool track) //note
 	this->setRotation(- anc * 180.0 / 3.1415);
 	_maxTime = 1;
 	if(type == BULLET) _maxTime = 1.2;
-	else _maxTime = 5;
+	else{
+		if(bType == 5)
+			_maxTime = 3;
+		else
+			_maxTime = 5;
+	}
 	_nowTime = _maxTime;
 	this->setCascadeOpacityEnabled(true);
 	scheduleUpdate();
