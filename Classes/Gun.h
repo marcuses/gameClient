@@ -4,17 +4,15 @@
 #include "Person.h"
 #include "Progress.h"
 USING_NS_CC;
-class Monster : public Person
+class Gun : public Person
 {
 public:
-	static Monster* create(int mhard,int mType);
-	bool init(int mhard, int mType);
+	static Gun* create(int mhard);
+	bool init(int mhard);
 	void onEnter();
 	void addPhysics();
-	void addRunAnimation();
 	void updateBullet(float dt);
-	void onFrameEvent(Bone *bone,const std::string& evt, int originFrameIndex, int currentFrameIndex); 
-	//void deadAnimation();
+	void addRunAnimation();
 	void update(float dt);
 	void beHit() override;
 	void removeThis(float dt);

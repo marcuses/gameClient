@@ -38,7 +38,7 @@
   </object>
  </objectgroup>
  <objectgroup name="heroPos" width="349" height="24">
-  <object name="heroPos" x="9465" y="332" width="13" height="12"/>
+  <object name="heroPos" x="10427" y="276" width="13" height="12"/>
  </objectgroup>
  <objectgroup name="bossPos" width="349" height="24">
   <object name="bossPos" x="10621" y="306" width="16" height="13"/>
@@ -137,5 +137,9 @@
   <object x="7034" y="577">
    <polygon points="0,0 223,4 219,11 1,10"/>
   </object>
+ </objectgroup>
+ <objectgroup name="sEnemy" width="349" height="24">
+  <object x="10788" y="304" width="15" height="17"/>
+  <object x="10894" y="379" width="8" height="16"/>
  </objectgroup>
 </map>

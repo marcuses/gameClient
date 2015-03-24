@@ -1,6 +1,7 @@
 #include"Hero.h"
 #include "Headfile.h"
 using namespace std;
+int Hero::heroLife = 10;
 bool Hero::init()
 {
 	_isJump = false;
@@ -12,7 +13,7 @@ bool Hero::init()
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
 	setType(TYPE::HERO);
-	Person::init(100);
+	Person::init(heroLife);
 	scheduleUpdate();
 	return true;
 }
@@ -44,6 +45,7 @@ void Hero::possLifeMsg(){
 void Hero::beHit() 
 {
 	Person::beHit();
+	heroLife = _curLife;
 	possLifeMsg();
 	if(_isDead)
 	{
@@ -70,7 +72,7 @@ void Hero::shoot(Object * object)
 	if(_isDead||bulletRate>0)	return;
 	bulletRate = BULLETRate;
 	Point pos = getPosition();
-	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361, 10);
+	auto bullet = Bullet::create(BULLET,Vec2(getDir() == 1 ? 1 : -1, 0), 361, 10, false);
 	bullet->setPosition(pos.x + getDir() * 10, pos.y);
 	this->getParent()->addChild(bullet, 2);
 }

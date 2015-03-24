@@ -89,6 +89,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		"bullet3/bullet30.plist","bullet3/bullet3.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet4/bullet40.png",
 		"bullet4/bullet40.plist","bullet4/bullet4.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet5/bullet50.png",
+		"bullet5/bullet50.plist","bullet5/bullet5.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet10/bullet100.png",
 		"bullet10/bullet100.plist","bullet10/bullet10.ExportJson");
 	//auto scene = StartScene::createScene();

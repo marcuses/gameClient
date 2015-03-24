@@ -1,12 +1,12 @@
 #include "Bullet.h"
 #include"cocostudio/CocoStudio.h"
 using namespace cocostudio;
-Bullet* Bullet::create(TYPE type,Vec2 dir, float speed, int bType){
+Bullet* Bullet::create(TYPE type,Vec2 dir, float speed, int bType, bool track){
 
 	Bullet* ret = new Bullet();  
 
 
-	if(ret&&ret->init(type, dir, speed, bType)){  
+	if(ret&&ret->init(type, dir, speed, bType, track)){  
 		ret->autorelease();  
 		return ret;  
 	}  
@@ -15,12 +15,13 @@ Bullet* Bullet::create(TYPE type,Vec2 dir, float speed, int bType){
 	return nullptr;  
 }  
 
-bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType) //note : this init should used after son create
+bool Bullet::init(TYPE type,Vec2 dir, float speed, int bType, bool track) //note : this init should used after son create
 {
 	char txt[100];
 	sprintf(txt,"bullet%d.png", bType);
 	if (!Sprite::initWithFile(txt))	return false;
 	_type = type;
+	_track = track;
 	_bType = bType;
 	_dir = dir;
 	_speed = speed;
@@ -74,6 +75,14 @@ void Bullet::update(float dt)
 	if(_nowTime<=0){
 		del();
 	}else{
+		if(_track)
+		{
+			Point pos1 = this->getParent()->getChildByTag(TYPE::HERO)->getPosition();
+			Point pos2 = this->getPosition();
+			Vec2 dire = pos1 - pos2;
+			dire.normalize();
+			_dir = dire;
+		}
 		getPhysicsBody()->setVelocity(_dir * _speed);
 		float anc = atan2(_dir.y, _dir.x);
 		this->setRotation(- anc * 180.0 / 3.1415);

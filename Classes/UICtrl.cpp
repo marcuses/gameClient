@@ -81,6 +81,7 @@ void UICtrl::onEnter(){
 		}else if( restartButton->getBoundingBox().containsPoint(touch->getLocation())){
 			Director::getInstance()->replaceScene(MainScene::createScene());
 			Director::getInstance()->resume();
+			Hero::heroLife = 10;
 		}else if( quitButton->getBoundingBox().containsPoint(touch->getLocation())){
 			Director::getInstance()->replaceScene(StartScene::createScene());
 			Director::getInstance()->resume();

@@ -86,29 +86,29 @@ void Monster::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIn
 	
 }
 void Monster::AIeasy(){
-	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
+	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType, false);
 	bullet->setPosition(this->getPosition());
 	getParent()->addChild(bullet, 2);
 }
 void Monster::AImid(){
-	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
+	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType, false);
 	bullet1->setPosition(this->getPosition());
 	getParent()->addChild(bullet1, 2);
 
-	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType);
+	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType, false);
 	bullet2->setPosition(this->getPosition());
 	getParent()->addChild(bullet2, 2);
 }
 void Monster::AIhard(){
-	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
+	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType, false);
 	bullet1->setPosition(this->getPosition());
 	getParent()->addChild(bullet1, 2);
 
-	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(getDir(), getDir()), 250, _monsterType);
+	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(getDir(), getDir()), 250, _monsterType, false);
 	bullet2->setPosition(this->getPosition());
 	getParent()->addChild(bullet2, 2);
 
-	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 250, _monsterType);
+	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 250, _monsterType, false);
 	bullet3->setPosition(this->getPosition());
 	getParent()->addChild(bullet3, 2);
 

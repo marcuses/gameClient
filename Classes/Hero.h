@@ -32,7 +32,7 @@ public:
 	void setBuff(){ hasBuff = true; }
 	
 	void setJump(bool isJump){ _isJump = isJump;}
-	
+	static int heroLife;
 private:
 	void possLifeMsg();
 	void updateMoveState();

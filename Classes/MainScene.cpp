@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "buttonSkill.h"
 #include "Headfile.h"
+#include"Gun.h"
 #include <vector>
 #include <string>
 #include "Monster.h"
@@ -445,6 +446,18 @@ void MainScene::addPhysics()
 		float x = dic["x"].asFloat();
 		float y = dic["y"].asFloat();
 		auto ememy = Monster::create(hard,rand() % 4);
+		ememy->setPosition(x, y);
+		addChild(ememy);
+	}
+
+
+	auto objectGroupsEnemy = _tileMap ->objectGroupNamed("sEnemy")->getObjects();
+	for (auto& obj : objectGroupsEnemy) //Ìí¼ÓÅÚÌ¨
+	{
+		auto dic= obj.asValueMap();
+		float x = dic["x"].asFloat();
+		float y = dic["y"].asFloat();
+		auto ememy = Gun::create(hard);
 		ememy->setPosition(x, y);
 		addChild(ememy);
 	}

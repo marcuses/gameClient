@@ -142,4 +142,8 @@
    <polygon points="0,0 357,1 357,13 -1,11"/>
   </object>
  </objectgroup>
+ <objectgroup name="sEnemy" width="375" height="46">
+  <object x="5608" y="263" width="9" height="13"/>
+  <object x="5731" y="340" width="8" height="13"/>
+ </objectgroup>
 </map>
