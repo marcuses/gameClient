@@ -1,4 +1,5 @@
 #include "StartScene.h"
+#include "Author.h"
 #include "MainScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIButton.h"
@@ -24,18 +25,40 @@ bool StartScene::init(){
 	auto node = CSLoader::createNode("StartScene.csb");
 	addChild(node);
 	
-	auto startButton = dynamic_cast<ui::Button*>(node->getChildByName("StartButton"));
-	startButton->addClickEventListener([=](Ref* pSender){
+	auto choiceNode = CSLoader::createNode("ChoiceNode.csb");
+	addChild(choiceNode,2);
+	choiceNode->setVisible(false);
+
+	auto easyMode = dynamic_cast<ui::Button*>(choiceNode->getChildByName("easyButton"));
+	easyMode->addClickEventListener([=](Ref* pSender){
 		MainScene::hard  = 1;
 		MainScene::level = 1;
-		Director::getInstance()->replaceScene(MainScene::createScene());
+		Director::getInstance()->replaceScene(MainScene::createScene()); // change later
 	});
-
-	auto aboutButton = dynamic_cast<ui::Button*>(node->getChildByName("AboutButton"));
-	aboutButton->addClickEventListener([=](Ref* pSender){
+	auto midMode = dynamic_cast<ui::Button*>(choiceNode->getChildByName("midButton"));
+	midMode->addClickEventListener([=](Ref* pSender){
 		MainScene::hard  = 2;
 		MainScene::level = 1;
 		Director::getInstance()->replaceScene(MainScene::createScene()); // change later
 	});
+	auto hardMode = dynamic_cast<ui::Button*>(choiceNode->getChildByName("hardButton"));
+	hardMode->addClickEventListener([=](Ref* pSender){
+		MainScene::hard  = 3;
+		MainScene::level = 1;
+		Director::getInstance()->replaceScene(MainScene::createScene()); // change later
+	});
+
+	auto aboutButton = dynamic_cast<ui::Button*>(node->getChildByName("AboutButton"));
+	aboutButton->addClickEventListener([=](Ref* pSender){
+		Director::getInstance()->replaceScene(Author::createScene()); 
+	});
+
+	auto startButton = dynamic_cast<ui::Button*>(node->getChildByName("StartButton"));
+	startButton->addClickEventListener([=](Ref* pSender){
+		choiceNode->setVisible(true);
+		aboutButton->setVisible(false);
+		aboutButton->setVisible(true);
+	});
+
 	return true;
 }
