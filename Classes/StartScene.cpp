@@ -26,12 +26,14 @@ bool StartScene::init(){
 	
 	auto startButton = dynamic_cast<ui::Button*>(node->getChildByName("StartButton"));
 	startButton->addClickEventListener([=](Ref* pSender){
+		MainScene::hard  = 1;
 		MainScene::level = 1;
 		Director::getInstance()->replaceScene(MainScene::createScene());
 	});
 
 	auto aboutButton = dynamic_cast<ui::Button*>(node->getChildByName("AboutButton"));
 	aboutButton->addClickEventListener([=](Ref* pSender){
+		MainScene::hard  = 2;
 		MainScene::level = 1;
 		Director::getInstance()->replaceScene(MainScene::createScene()); // change later
 	});

@@ -17,6 +17,9 @@ USING_NS_CC;
 class MainScene :  public Layer  //test file
 {
 public:
+
+	static int level;
+	static int hard;
 	// there's no 'id' in cpp, so we recommend returning the class instance pointer
 	static cocos2d::Scene* createScene();
 
@@ -24,7 +27,6 @@ public:
 	virtual bool init();  
 	virtual void onEnter();
 	virtual void onExit();
-	static int level;
 	// implement the "static create()" method manually
 	CREATE_FUNC(MainScene);
 	void update(float dt);

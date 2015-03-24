@@ -7,8 +7,8 @@ USING_NS_CC;
 class Monster : public Person
 {
 public:
-	static Monster* create(int mType);
-	bool init(int mType);
+	static Monster* create(int mhard,int mType);
+	bool init(int mhard,int mType);
 	void onEnter();
 	void addPhysics();
 	void addRunAnimation();
@@ -18,9 +18,13 @@ public:
 	void update(float dt);
 	void beHit() override;
 	void removeThis(float dt);
+	void AIeasy();
+	void AImid();
+	void AIhard();
 private:
 	Sprite* _spHit;
 	Progress* _progress;
 	int _spHitTime;
 	int _monsterType;
+	int _hard;
 };

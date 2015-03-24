@@ -2,16 +2,27 @@
 #include "Headfile.h"
 #include "MainScene.h"
 
-bool Boss::init()
+Boss* Boss::create(int mhard)
 {
+	Boss* ret = new Boss();  
+	if(ret&&ret->init(mhard)){  
+		ret->autorelease();  
+		return ret;  
+	}  
+	CC_SAFE_DELETE(ret);//°²È«É¾³ý  
+	return nullptr;  
+}
+bool Boss::init(int mhard)
+{	
 	_monsterType = 2;
+	_hard = mhard;
 	if (!Sprite::initWithFile("boss1.png")) {
 		return false;
 	}
 	//	if(_monsterType >= 2) this->setScale(0.25);
 	this->setTag(TYPE::BOSS);
 	setType(TYPE::BOSS);
-	Person::init(1);
+	Person::init(1 * _hard);
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
@@ -110,9 +121,12 @@ void Boss::update(float dt)
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	if(_monsterType < 2)setScaleX(getDir() == 1 ? 1 : -1);
 	else setScaleX(getDir() == 1 ? -1 : 1);
-	_time = (_time + 1) % 180;
-	if(_time == 0) 
-		shoot(NULL);
+	switch(_hard){
+	case 1: AIeasy();break;
+	case 2: AImid();break;
+	case 3: AIhard();break;
+	default:break;
+	}
 	_spWeak->setPosition(Vec2(260, 410) );
 	_spHit->setPosition(Vec2(260, 410) );
 	if(_spHit->isVisible())
@@ -120,4 +134,17 @@ void Boss::update(float dt)
 		_spHitTime++;
 		if(_spHitTime >= 10) _spHit->setVisible(false);
 	}
+}
+void Boss::AIeasy(){
+	_time = (_time + 1) % 180;
+	if(_time == 0)	shoot(NULL);
+}
+void Boss::AImid(){
+	_time = (_time + 1) % 90;
+	if(_time == 0)	shoot(NULL);	
+}
+void Boss::AIhard(){
+	_time = (_time + 1) % 60;
+	if(_time == 0)	shoot(NULL);
+		
 }

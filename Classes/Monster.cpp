@@ -1,34 +1,30 @@
 #include "Monster.h"
 #include "Headfile.h"
 #include "Bullet.h"
-Monster* Monster::create(int mType){
-
+Monster* Monster::create(int mhard,int mType){
 	Monster* ret = new Monster();  
-
-
-	if(ret&&ret->init(mType)){  
+	if(ret&&ret->init(mhard,mType)){  
 		ret->autorelease();  
 		return ret;  
 	}  
-
 	CC_SAFE_DELETE(ret);//°²È«É¾³ý  
 	return nullptr;  
 }  
-bool Monster::init(int mType)
+bool Monster::init(int mhard,int mType)
 {
 	_monsterType = mType + 1;
+	_hard = mhard;
 	char txt[100];
 	sprintf_s(txt, "Monster%d.png", _monsterType );
 	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
-
 	setScale(0.7);
 	schedule(schedule_selector(Monster::updateBullet),4);
 	scheduleUpdate();
 	this->setTag(TYPE::MONSTER);
 	setType(TYPE::MONSTER);
-	Person::init(_monsterType );
+	Person::init(_monsterType + _hard);
 	return true;
 }
 void Monster::onEnter()
@@ -75,13 +71,58 @@ void Monster::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIn
 	if(evt == "attack")
 	{
 		//write attack AI here
-		CCPoint p = getPosition();
-		auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
-		bullet->setPosition(p);
-		getParent()->addChild(bullet, 2);
+		switch(_hard){
+		case 1: AIeasy();break;
+		case 2: AImid();break;
+		case 3: AIhard();break;
+		default:break;
+		}
 		_armAnimation->play("run");
 	}
 	
+}
+void Monster::AIeasy(){
+	auto bullet = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
+	bullet->setPosition(this->getPosition());
+	getParent()->addChild(bullet, 2);
+}
+void Monster::AImid(){
+	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
+	bullet1->setPosition(this->getPosition());
+	getParent()->addChild(bullet1, 2);
+
+	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(getDir(), getDir()), 250, _monsterType);
+	bullet2->setPosition(this->getPosition());
+	getParent()->addChild(bullet2, 2);
+
+	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 250, _monsterType);
+	bullet3->setPosition(this->getPosition());
+	getParent()->addChild(bullet3, 2);
+}
+void Monster::AIhard(){
+	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType);
+	bullet1->setPosition(this->getPosition());
+	getParent()->addChild(bullet1, 2);
+
+	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(getDir(), getDir()), 250, _monsterType);
+	bullet2->setPosition(this->getPosition());
+	getParent()->addChild(bullet2, 2);
+
+	auto bullet3 = Bullet::create(BULLETENEMY, Vec2(getDir(),-getDir()), 250, _monsterType);
+	bullet3->setPosition(this->getPosition());
+	getParent()->addChild(bullet3, 2);
+
+	auto bullet4 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType);
+	bullet4->setPosition(this->getPosition());
+	getParent()->addChild(bullet4, 2);
+
+	auto bullet5 = Bullet::create(BULLETENEMY, Vec2(-getDir(), getDir()), 250, _monsterType);
+	bullet5->setPosition(this->getPosition());
+	getParent()->addChild(bullet5, 2);
+
+	auto bullet6 = Bullet::create(BULLETENEMY, Vec2(-getDir(),-getDir()), 250, _monsterType);
+	bullet6->setPosition(this->getPosition());
+	getParent()->addChild(bullet6, 2);
 }
 void Monster::beHit()
 {
@@ -102,7 +143,6 @@ void Monster::beHit()
 		scheduleOnce(schedule_selector(Monster::removeThis), 1);	
 	}
 }
-
 void Monster::removeThis(float dt)
 {
 	getParent()->removeChild(this, true);

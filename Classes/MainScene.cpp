@@ -16,6 +16,7 @@ USING_NS_CC;
 using namespace CocosDenshion;
 
 int MainScene::level = 3;
+int MainScene::hard = 1;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
@@ -68,7 +69,7 @@ void MainScene::onEnter()
 	addChild(_hero, 2);
 
 	_hero->setPosition(getTilePosition("heroPos", "heroPos")); 
-	_boss = Boss::create();
+	_boss = Boss::create(hard);
 	_boss->setPosition(getTilePosition("bossPos", "bossPos"));
 	addChild(_boss, 2);
 	_door = Sprite::create("door.png");
@@ -443,7 +444,7 @@ void MainScene::addPhysics()
 		auto dic= obj.asValueMap();
 		float x = dic["x"].asFloat();
 		float y = dic["y"].asFloat();
-		auto ememy = Monster::create(rand() % 4);
+		auto ememy = Monster::create(hard,rand() % 4);
 		ememy->setPosition(x, y);
 		addChild(ememy);
 	}
