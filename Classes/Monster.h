@@ -28,4 +28,5 @@ private:
 	int _monsterType;
 	int _hard;
 	bool outScene();
+	bool hitArea();
 };

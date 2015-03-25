@@ -24,7 +24,7 @@ bool Monster::init(int mhard,int mType)
 	scheduleUpdate();
 	this->setTag(TYPE::MONSTER);
 	setType(TYPE::MONSTER);
-	Person::init(_monsterType + _hard);
+	Person::init( int(_monsterType/2)+_hard );
 	return true;
 }
 void Monster::onEnter()
@@ -150,12 +150,27 @@ void Monster::removeThis(float dt)
 void Monster::update(float dt)
 {
 	if(_isDead) return;
-	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-	setScaleX(getDir() == 1 ? -1 : 1);
+	if(_hard == 3&&hitArea()){
+		float tx = getParent()->getChildByTag(TYPE::HERO)->getPositionX() - getPositionX();
+		if(tx>0){
+			setDir(1);
+		}else{
+			setDir(-1);
+		}
+		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+		setScaleX(getDir() == 1 ? -1 : 1);
+	}else{
+		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+		setScaleX(getDir() == 1 ? -1 : 1);
+	}
 	_spHit->setPosition(Vec2(30, 30) );
 	if(_spHit->isVisible())
 	{
 		_spHitTime++;
 		if(_spHitTime >= 10) _spHit->setVisible(false);
 	}
+}
+bool Monster::hitArea(){
+	auto p = getParent()->getChildByTag(TYPE::HERO)->getPosition() - getPosition();
+	return fabs(p.x)<200 && fabs(p.y)<30;
 }
