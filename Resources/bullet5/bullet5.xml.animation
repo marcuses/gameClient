@@ -15,5 +15,5 @@
   <ProjectType>AnimationProject</ProjectType>
   <ResRelativePath />
   <ResourceFileList />
-  <bBatchImage>false</bBatchImage>
+  <bBatchImage>true</bBatchImage>
 </AnimationProject>

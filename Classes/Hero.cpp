@@ -14,6 +14,7 @@ bool Hero::init()
 	setTag(TYPE::HERO);
 	setType(TYPE::HERO);
 	Person::init(heroLife);
+	setSpeed(220);
 	scheduleUpdate();
 	return true;
 }

@@ -151,18 +151,17 @@ void Monster::update(float dt)
 {
 	if(_isDead) return;
 	if(_hard == 3&&hitArea()){
+		getPhysicsBody()->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS | TYPE::PLANK);
+		getPhysicsBody()->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO  | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS);
 		float tx = getParent()->getChildByTag(TYPE::HERO)->getPositionX() - getPositionX();
 		if(tx>0){
 			setDir(1);
 		}else{
 			setDir(-1);
 		}
-		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-		setScaleX(getDir() == 1 ? -1 : 1);
-	}else{
-		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-		setScaleX(getDir() == 1 ? -1 : 1);
 	}
+	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
+	setScaleX(getDir() == 1 ? -1 : 1);
 	_spHit->setPosition(Vec2(30, 30) );
 	if(_spHit->isVisible())
 	{
@@ -172,5 +171,5 @@ void Monster::update(float dt)
 }
 bool Monster::hitArea(){
 	auto p = getParent()->getChildByTag(TYPE::HERO)->getPosition() - getPosition();
-	return fabs(p.x)<200 && fabs(p.y)<30;
+	return fabs(p.x)<300 && fabs(p.y)<30;
 }

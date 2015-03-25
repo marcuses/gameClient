@@ -67,7 +67,7 @@ void MainScene::onEnter()
 	sprintf(mpName,"map%d.tmx", level);
 	addBackGround(mpName);
 	_hero = Hero::create();
-	addChild(_hero, 2);
+	addChild(_hero, 3);
 
 	_hero->setPosition(getTilePosition("heroPos", "heroPos")); 
 	_boss = Boss::create(hard);
