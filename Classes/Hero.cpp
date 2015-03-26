@@ -1,5 +1,6 @@
 #include"Hero.h"
 #include "Headfile.h"
+#include "peopleEffect.h"
 using namespace std;
 int Hero::heroLife = 10;
 bool Hero::init()
@@ -9,6 +10,9 @@ bool Hero::init()
 	_rightDown = false;
 	_moveState = 0;
 	bulletRate = 0;
+	_isQuickMove = false;
+	_quickMoveTime = 30;
+	_tolTime = 0;
 	string txt = ("player_1_4.png");
 	if (!Sprite::initWithFile(txt))	return false;
 	setTag(TYPE::HERO);
@@ -110,6 +114,7 @@ void Hero::addObserver()
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::rightButtonDown), strRightButtonDown, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::jumpButtonDown), strJumpButtonDown, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::shoot), strHeroShoot, NULL);
+	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::quickMove), strQuickMove, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::leftButtonUp), strLeftButtonUp, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::rightButtonUp), strRightButtonUp, NULL);
 	NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(Hero::jumpButtonUp), strJumpButtonUp, NULL);
@@ -117,11 +122,45 @@ void Hero::addObserver()
 void Hero::update(float dt)
 {
 	if(_isDead) return;
+	_tolTime ++;
+	//log("%d",_tolTime);
+	if(_tolTime % _quickMoveTime == 0 && _isQuickMove)
+	{
+		auto ef = peopleEffect::create();
+		ef->setPosition(getPosition());
+		ef->setScaleX(getDir() == 1 ? 1 : -1);
+		getParent()->addChild(ef);
+	//	vEffect.pushBack(ef);
+	}
+	/*for(auto &ef : vEffect)
+	{
+	ef->update(dt);
+	if(ef->rest_Time <= 0)
+	{
+	vEffect.eraseObject(ef);
+	ef->removeFromParentAndCleanup(true);
+	break;
+	}
+	}*/
 	bulletRate-=dt;
 	updateMoveState();	//ÐÎÌ¬¸üÐÂ
 	if(_moveState&1){
 		getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	}
+}
+
+void Hero::quickMove(Object * object)
+{
+	if(_isQuickMove) return;
+	setSpeed(getSpeed() * 3);
+	_isQuickMove = true;
+	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 3);
+}
+
+void Hero::quickMoveEnd(float dt)
+{
+	setSpeed(getSpeed() / 3);
+	_isQuickMove = false;
 }
 void Hero::dead()
 {
@@ -132,6 +171,7 @@ void Hero::dead()
 	setSpriteFrame(SpriteFrame::create("player_2.png", Rect(0, 0, 63, 63)));
 }
 void Hero::updateMoveState(){
+	
 	int tmpState = 0;
 	if(_leftDown)	tmpState ^= 1;
 	if(_rightDown)	tmpState ^= 3;
@@ -141,4 +181,5 @@ void Hero::updateMoveState(){
 	idle();
 	if( (_moveState&1) && (!(_moveState&4)))	runAnimation();
 	setScaleX(getDir() == 1 ? 1 : -1);
+	
 }

@@ -13,7 +13,8 @@ public:
 	void onEnter();
 	void onExit();
 	void update(float delta);
-
+	void quickMove(Object * object);
+	void quickMoveEnd(float dt);
 	void idle();
 
 	void addObserver();
@@ -30,7 +31,6 @@ public:
 	void beHit() override;
 	bool getBuff(){ return hasBuff; }
 	void setBuff(){ hasBuff = true; }
-	
 	void setJump(bool isJump){ _isJump = isJump;}
 	static int heroLife;
 private:
@@ -38,8 +38,10 @@ private:
 	void updateMoveState();
 	int _moveState;
 	float bulletRate;
-
 	std::string userName;
+	bool _isQuickMove;
+	int _tolTime;
+	int _quickMoveTime;
 	bool _leftDown;
 	bool _rightDown;
 	bool _isJump;

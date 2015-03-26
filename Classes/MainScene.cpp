@@ -141,7 +141,7 @@ void MainScene::goNextLevel()
 }
 bool MainScene::onContactBegin(PhysicsContact& contact)
 {
-	log("onContactBegin");
+//	log("onContactBegin");
 	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();				
 	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();	
 	if(spriteA == NULL || spriteB == NULL) return false;

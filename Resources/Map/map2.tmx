@@ -92,7 +92,7 @@
   </object>
  </objectgroup>
  <objectgroup name="heroPos" width="375" height="46">
-  <object name="heroPos" x="184" y="251" width="26" height="24"/>
+  <object name="heroPos" x="5072" y="122" width="26" height="24"/>
  </objectgroup>
  <objectgroup name="bossPos" width="375" height="46">
   <object name="bossPos" x="5614" y="94" width="26" height="22"/>

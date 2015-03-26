@@ -27,6 +27,9 @@ void KeyBoardListener::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* evt){
 	case EventKeyboard::KeyCode::KEY_J :
 		NotificationCenter::getInstance()->postNotification(strHeroShoot);
 		break;
+	case EventKeyboard::KeyCode::KEY_U :
+		NotificationCenter::getInstance()->postNotification(strQuickMove);
+		break;
 	default: break;
 	}
 }
