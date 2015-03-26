@@ -97,6 +97,10 @@ void Boss::beHit()
 	_spHitTime = 0;
 	if(_isDead)
 	{
+		heroScore += 1000*_hard;
+		char s[10];
+		sprintf(s,"%d",heroScore);
+		NotificationCenter::getInstance()->postNotification(showScore,String::create(s));
 		getParent()->removeChild(this, true);
 		NotificationCenter::getInstance()->postNotification(strWin);
 	}

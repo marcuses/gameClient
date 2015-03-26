@@ -11,11 +11,13 @@ public:
 	void update(float dt);
 	CREATE_FUNC(UIShow);
 	void setLife(cocos2d::Object* object);
+	void setScore(cocos2d::Object* object);
 	float getTime();
 private:
 	cocos2d::Sprite* lifeSprite;
 	cocos2d::Label* curLife;
 	cocos2d::Label* curTime;
+	cocos2d::Label* curScore;
 	float runTime;
 };
 

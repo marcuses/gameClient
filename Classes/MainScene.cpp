@@ -18,6 +18,7 @@ using namespace CocosDenshion;
 
 int MainScene::level = 2;
 int MainScene::hard = 1;
+int MainScene::score = 0;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
@@ -125,6 +126,8 @@ void MainScene::doorVisiable(Object * object)
 }
 void MainScene::goNextLevel()
 {
+	score += heroScore;
+	heroScore = 0;
 	unscheduleUpdate();
 	level ++;
 	if(level > 3)

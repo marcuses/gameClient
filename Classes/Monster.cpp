@@ -134,6 +134,10 @@ void Monster::beHit()
 	_spHitTime = 0;
 	if(_isDead)
 	{
+		heroScore += 100*_monsterType*_hard;
+		char s[10];
+		sprintf(s,"%d",heroScore);
+		NotificationCenter::getInstance()->postNotification(showScore,String::create(s));
 		_armAnimation->play("dead");
 		getPhysicsBody()->setCategoryBitmask(0);
 		getPhysicsBody()->setCollisionBitmask(0);

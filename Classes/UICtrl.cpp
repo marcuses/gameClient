@@ -80,6 +80,7 @@ void UICtrl::onEnter(){
 			hideLayer();
 		}else if( restartButton->getBoundingBox().containsPoint(touch->getLocation())){
 			Hero::heroLife = 10;
+			heroScore = 0;
 			Director::getInstance()->replaceScene(MainScene::createScene());
 			Director::getInstance()->resume();
 		}else if( quitButton->getBoundingBox().containsPoint(touch->getLocation())){

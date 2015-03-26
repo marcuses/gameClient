@@ -31,6 +31,10 @@ const static char strEnemyShoot[] = "enemyShoot";
 const static char strWin[] = "win";
 const static char showHeroLife[] = "ShowHeroLife";
 
+const static char showScore[]= "ShowScore";
+
+static int heroScore;
+
 struct Monster_data
 {
 	Monster_data(float x = 0, float y = 0, float marmScale = 1)
