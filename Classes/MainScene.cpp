@@ -71,7 +71,7 @@ void MainScene::onEnter()
 	addChild(_hero, 3);
 
 	_hero->setPosition(getTilePosition("heroPos", "heroPos")); 
-	_boss = Boss::create(hard);
+	_boss = Boss::create(level, hard);
 	_boss->setPosition(getTilePosition("bossPos", "bossPos"));
 	addChild(_boss, 2);
 	_door = Sprite::create("door.png");

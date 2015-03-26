@@ -2,26 +2,36 @@
 #include "Headfile.h"
 #include "MainScene.h"
 
-Boss* Boss::create(int mhard)
+Boss* Boss::create(int bossType, int mhard)
 {
 	Boss* ret = new Boss();  
-	if(ret&&ret->init(mhard)){  
+	if(ret&&ret->init(bossType, mhard)){  
 		ret->autorelease();  
 		return ret;  
 	}  
 	CC_SAFE_DELETE(ret);//安全删除  
 	return nullptr;  
 }
-bool Boss::init(int mhard)
+bool Boss::init(int bossType, int mhard)
 {	
-	_monsterType = 2;
+	_bossType = bossType;
 	_hard = mhard;
-	if (!Sprite::initWithFile("boss1.png")) {
+	char txt[100];
+	sprintf(txt, "boss%d.png", _bossType);
+	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
 	//	if(_monsterType >= 2) this->setScale(0.25);
-	this->setTag(TYPE::BOSS);
-	setType(TYPE::BOSS);
+	if(bossType == 1)
+	{
+		this->setTag(TYPE::BOSS);
+		setType(TYPE::BOSS);
+	}
+	else
+	{
+		this->setTag(TYPE::MONSTER);
+		setType(TYPE::MONSTER);
+	}
 	Person::init(1 * _hard);
 	setSpeed(0);
 	setDir(-1);
@@ -58,34 +68,19 @@ void Boss::onEnter()
 
 void Boss::addRunAnimation()
 {
-	/*if(_monsterType < 2)
-	{
-		Vector<SpriteFrame*> allFrames;
-		char txt[100];
-		for(int i = 1;i <= 5; i++)
-		{
-			sprintf_s(txt, "boy%d_1_%d.png",_monsterType + 1, i);
-			SpriteFrame *sf = SpriteFrame::create(txt, Rect(0, 0, 43, 63));
-			allFrames.pushBack(sf);
-		}
-		auto runAni = Animation::createWithSpriteFrames(allFrames, 0.1f);
-		runAction(RepeatForever::create(Animate::create(runAni)));
-	}
-	else
-	{*/
-		
-
+	if(_bossType == 1)
 		_armature = Armature::create("NewAnimation");
-
-	//	armature->setScale(600 / 671.0);
-		_armature->setAnchorPoint(Point(0,0));
-		//	armature->setPosition(Point(5700, 320));
-
-		this->addChild(_armature);
-		_armAnimation = _armature->getAnimation();
-		//播放动画
-		_armAnimation->play("walk");
-	//}
+	else
+	{
+		char txt[100];
+		sprintf(txt, "boss%d", _bossType);
+		_armature = Armature::create(txt);
+	}
+	_armature->setAnchorPoint(Point(0,0));
+	this->addChild(_armature);
+	_armAnimation = _armature->getAnimation();	
+	if(_bossType == 1)_armAnimation->play("walk");
+	else _armAnimation->play("run");
 }
 
 void Boss::beHit()
@@ -123,8 +118,8 @@ void Boss::update(float dt)
 	Point pos2 = this->getPosition();
 	if(fabs(pos2.x - pos1.x) <= 480 ) setSpeed(100);
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
-	if(_monsterType < 2)setScaleX(getDir() == 1 ? 1 : -1);
-	else setScaleX(getDir() == 1 ? -1 : 1);
+	if(_bossType < 2)setScaleX(getDir() == 1 ? -1 : 1);
+	else setScaleX(getDir() == 1 ? 1 : -1);
 	switch(_hard){
 	case 1: AIeasy();break;
 	case 2: AImid();break;

@@ -8,8 +8,8 @@ USING_NS_CC;
 class Boss : public Person
 {
 public:
-	static Boss* create(int mhard);
-	bool init(int mhard);
+	static Boss* create(int bossType, int mhard);
+	bool init(int bossType, int mhard);
 	void onEnter();
 	void addRunAnimation();
 	//void deadAnimation();
@@ -25,7 +25,7 @@ private:
 	int _spHitTime;
 	STATE _curState;
 	Sprite* _spWeak;
-	int _monsterType;
+	int _bossType;
 	int _time;
 	int _hard;
 };
