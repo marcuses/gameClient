@@ -11,7 +11,7 @@ bool Hero::init()
 	_moveState = 0;
 	bulletRate = 0;
 	_isQuickMove = false;
-	_quickMoveTime = 30;
+	_quickMoveTime = 5;
 	_tolTime = 0;
 	string txt = ("player_1_4.png");
 	if (!Sprite::initWithFile(txt))	return false;
@@ -130,18 +130,7 @@ void Hero::update(float dt)
 		ef->setPosition(getPosition());
 		ef->setScaleX(getDir() == 1 ? 1 : -1);
 		getParent()->addChild(ef);
-	//	vEffect.pushBack(ef);
 	}
-	/*for(auto &ef : vEffect)
-	{
-	ef->update(dt);
-	if(ef->rest_Time <= 0)
-	{
-	vEffect.eraseObject(ef);
-	ef->removeFromParentAndCleanup(true);
-	break;
-	}
-	}*/
 	bulletRate-=dt;
 	updateMoveState();	//ĞÎÌ¬¸üĞÂ
 	if(_moveState&1){
