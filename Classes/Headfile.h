@@ -14,7 +14,8 @@ const static enum TYPE
 	BOSS = 1 << 7,
 	BOSSWEAKNESS = 1 << 8,
 	BULLETENEMY = 1 << 9,
-	PLANK = 1 << 10
+	PLANK = 1 << 10,
+	TAI = 1 << 11
 
 };
 

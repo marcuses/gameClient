@@ -45,10 +45,13 @@ public:
 	Point getTilePosition(std::string groupName, std::string objectName);
 	void doorVisiable(Object * object);
 	inline Point getPlayerPosition(){ return _hero->getPosition();} 
+	void createTai();
 
 private:
 	//Layer* _layer;
 	TMXTiledMap* _tileMap;
+	int m_nTeeterboardCnt;
+	int m_nToneCnt;
 	Sprite* _door;
 	Hero* _hero;
 	Boss* _boss;

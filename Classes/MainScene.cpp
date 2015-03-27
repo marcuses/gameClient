@@ -9,23 +9,23 @@
 #include "WinScene.h"
 #include "NextScene.h"
 #include"cocostudio/CocoStudio.h"
+#include "addJoint.h"
 
 
 using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
-
-int MainScene::level = 2;
-int MainScene::hard = 1;
 int MainScene::score = 0;
+int MainScene::level = 3;
+int MainScene::hard = 1;
 Scene* MainScene::createScene()
 {
 	// 'scene' is an autorelease object
-	
+
 	auto _scene = Scene::createWithPhysics();
 	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	
+
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
 	// add layer as a child to scene
@@ -52,6 +52,8 @@ bool MainScene::init()
 	//armature->getAnimation()->play("walk");
 	//this->addChild(armature, 1);
 	scheduleUpdate();
+	m_nTeeterboardCnt = 0;
+	m_nToneCnt = 0;
 	return true;
 }
 
@@ -70,7 +72,7 @@ void MainScene::onEnter()
 	_hero = Hero::create();
 	addChild(_hero, 3);
 
-	_hero->setPosition(getTilePosition("heroPos", "heroPos")); 
+	_hero->setPosition(getTilePosition("heroPos", "heroPos"));
 	_boss = Boss::create(level, hard);
 	_boss->setPosition(getTilePosition("bossPos", "bossPos"));
 	addChild(_boss, 2);
@@ -79,12 +81,26 @@ void MainScene::onEnter()
 	addChild(_door, 1);
 	_door->setVisible(false);
 	auto size = Director::getInstance()->getWinSize();
-	
+
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
 	addObserver();
+
+	auto add = AddJoint::create();
+	for (int nIndex = 0; nIndex < m_nTeeterboardCnt; nIndex++)
+	{
+		auto sp1 = getChildByTag(10000 + nIndex);
+		add->addJoint(getScene(), sp1);
+	}
+
+	for (int nIndex = 0; nIndex < m_nToneCnt; nIndex++)
+	{
+		auto sp1 = getChildByTag(100000 + nIndex);
+		add->addJoint(getScene(), sp1, sp1);
+	}
+	this->addChild(add);
 }
 
 void MainScene::onExit()
@@ -102,7 +118,7 @@ void MainScene::update(float dt)
 	}
 	if(_door->isVisible() && _door->getBoundingBox().containsPoint(_hero->getPosition()))
 	{
-		
+
 		goNextLevel();
 	}
 }
@@ -126,8 +142,6 @@ void MainScene::doorVisiable(Object * object)
 }
 void MainScene::goNextLevel()
 {
-	score += heroScore;
-	heroScore = 0;
 	unscheduleUpdate();
 	level ++;
 	if(level > 3)
@@ -141,9 +155,9 @@ void MainScene::goNextLevel()
 }
 bool MainScene::onContactBegin(PhysicsContact& contact)
 {
-//	log("onContactBegin");
-	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();				
-	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();	
+	//log("onContactBegin");
+	auto spriteA = (Sprite*)contact.getShapeA()->getBody()->getNode();
+	auto spriteB = (Sprite*)contact.getShapeB()->getBody()->getNode();
 	if(spriteA == NULL || spriteB == NULL) return false;
 //	log("%d %d",spriteA->getTag(), spriteB->getTag());
 	if ((spriteA && spriteA->getTag() == TYPE::HERO)
@@ -171,6 +185,20 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 
 	else if((spriteB && spriteB->getTag() == TYPE::HERO)
 		&& spriteA && spriteA->getTag() == TYPE::GROUND)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->setJump(false);
+	}
+
+	else if ((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() >= 10000)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->setJump(false);
+	}
+
+	else if((spriteB && spriteB->getTag() == TYPE::HERO)
+		&& spriteA && spriteA->getTag() >= 10000)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->setJump(false);
@@ -304,20 +332,43 @@ Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool 
 	float height = dict["height"].asFloat();
 	auto body = PhysicsBody::createBox(Size(width, height), mater);
 	body->setCategoryBitmask(type);
-	body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::BOSS);
+	body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::BOSS | TYPE::TAI);
 	body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK | TYPE::GROUND | TYPE::BOSS);
 	body->setLinearDamping(0.0f);
 	body->setDynamic(false);
 	Sprite* sprite = nullptr;
 	if(hasImg)
+	{
 		sprite = Sprite::create(imgName);
+	}
 	else
+	{
 		sprite = Sprite::create();
+	}
 	body->setPositionOffset(Point(width/2,height/2));
 	sprite->setTag(type);
 	sprite->setPosition(Point(x , y));
 	sprite->setPhysicsBody(body);
-	//this->addChild(sprite);
+	if (imgName == "banzi.png")
+	{
+		log("banszi");
+		Size size = sprite->getContentSize();
+		body->setPositionOffset(Point(0, 0));
+		sprite->setPosition(Point(x + 10 , y ));
+		body->setGravityEnable(true);
+		body->setDynamic(true);
+		sprite->setTag(10000 + m_nTeeterboardCnt);
+		m_nTeeterboardCnt++;
+	}
+	else if (imgName == "tone.png")
+	{
+		Size size = sprite->getContentSize();
+		body->setPositionOffset(Point(0, 0));
+		sprite->setPosition(Point(x + size.width / 2, y - size.height / 2));
+		body->setGravityEnable(true);
+		body->setDynamic(true);
+		sprite->setTag(100000 + m_nToneCnt++);
+	}
 	return sprite;
 }
 
@@ -344,7 +395,7 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 		//绘制折线
 		auto body = PhysicsBody::createEdgePolygon(points, cnt, mater);
 		body->setCategoryBitmask(type);
-		body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK);
+		body->setCollisionBitmask(type | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::TAI);
 		body->setContactTestBitmask(type | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK);
 		body->setLinearDamping(0.0f);
 		body->setDynamic(dynamic);
@@ -368,7 +419,9 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 			body->setGravityEnable(false);
 		}
 		else
+		{
 			sprite->setPosition(Point(x , y));
+		}
 		sprite->setPhysicsBody(body);
 	//	this->addChild(sprite);
 		return sprite;
@@ -385,6 +438,22 @@ Point MainScene::getTilePosition(std::string groupName, std::string objectName)
 }
 void MainScene::addPhysics()
 {
+	auto objectGroup0 = _tileMap ->objectGroupNamed("tai")->getObjects();
+	for (auto& obj : objectGroup0) //添加跷跷板
+	{
+		ValueMap& dict = obj.asValueMap();
+		auto sprite = makeBox(dict, TYPE::GROUND, "banzi.png", true, 10, 0, 1);
+		this->addChild(sprite);
+	}
+
+	auto objectGroup00 = _tileMap ->objectGroupNamed("tone")->getObjects();
+	for (auto& obj : objectGroup00) //添加石头
+	{
+		ValueMap& dict = obj.asValueMap();
+		auto sprite = makeBox(dict, TYPE::GROUND, "tone.png", true, 10, 0, 10);
+		this->addChild(sprite);
+	}
+
 	auto objectGroup = _tileMap ->objectGroupNamed("ObjectsBox")->getObjects();
 	for (auto& obj : objectGroup) //添加矩形地面
 	{
@@ -392,7 +461,7 @@ void MainScene::addPhysics()
 		auto sprite = makeBox(dict, TYPE::GROUND, "", false, 100, 0, 1);
 		addChild(sprite);
 	}
-	
+
 	auto objectGroup1 = _tileMap ->objectGroupNamed("ObjectsPolygon")->getObjects();
 	for (auto& obj : objectGroup1)  //添加多边形地面
 	{
@@ -421,15 +490,16 @@ void MainScene::addPhysics()
 
 	//添加移动台水平
 	auto objectsHmove = _tileMap ->objectGroupNamed("hMove")->getObjects();
-	for (auto& obj : objectsHmove) 
+	for (auto& obj : objectsHmove)
 	{
 		auto dic= obj.asValueMap();
 		auto sprite = makePolygon(dic, TYPE::PLANK, "tai.png", true, true, 0, 0, 1);
 		Size sz = sprite->getContentSize();
 		Point pos = sprite->getPosition();
-		auto moveBody = MoveBody::create("tai.png", sprite, 100, 2,pos.x - sz.width - 100 , pos.x + sz.width - 100);
+		auto moveBody = MoveBody::create("tai.png", sprite, 100, 2,pos.x - sz.width, pos.x );
 		addChild(moveBody);
 	}
+
 
 	//添加移动台上下
 	auto objectsVmove = _tileMap ->objectGroupNamed("ObjectsSwing")->getObjects();
@@ -473,7 +543,7 @@ void MainScene::addPhysics()
 		sprite->getPhysicsBody()->setCollisionBitmask(0xff);
 		sprite->getPhysicsBody()->setContactTestBitmask(0xff);
 		addChild(sprite);
-		
+
 	}
 
 	auto objectGroupBrick = _tileMap ->objectGroupNamed("Brick")->getObjects();
@@ -493,7 +563,7 @@ void MainScene::addPhysics()
 	box1->setDynamic(false);
 	box1->addShape(PhysicsShapeEdgeBox::create(Size(20, 20), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, Vec2(0, 0)));*/
 	// _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(balanceBoard->getPhysicsBody(), box, balanceBoard->getPosition()));
-	
+
 }
 
 
