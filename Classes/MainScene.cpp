@@ -21,7 +21,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 
 	auto _scene = Scene::createWithPhysics();
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+//	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -49,6 +49,7 @@ bool MainScene::init()
 	//armature->getAnimation()->play("walk");
 	//this->addChild(armature, 1);
 	scheduleUpdate();
+	schedule(schedule_selector(MainScene::updateMonster), 5.0);
 	m_nTeeterboardCnt = 0;
 	m_nToneCnt = 0;
 
@@ -576,6 +577,11 @@ void MainScene::addPhysics()
 		addChild(sprite);
 
 	}
+
+	auto mPoint = Armature::create("monsterPoint");
+	mPoint->setPosition(getTilePosition("monsterPoint",""));
+	mPoint->getAnimation()->play("run");
+	addChild(mPoint, 2);   //Ìí¼Ó³ö¹Öµã
 	/*PhysicsBody* box = PhysicsBody::create();
 	box->setDynamic(false);
 	box->addShape(PhysicsShapeEdgeBox::create(Size(10, 10), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, balanceBoard->getPosition() - Vec2(0, 20)));*/
@@ -586,7 +592,12 @@ void MainScene::addPhysics()
 
 }
 
-
+void MainScene::updateMonster(float dt)
+{
+	auto ememy = Monster::create(hard,rand() % 4);
+	ememy->setPosition(getTilePosition("monsterPoint",""));
+	addChild(ememy);
+}
 void MainScene::setViewPointCenter(Point position) {
 	auto winSize = Director::getInstance()->getWinSize();
 

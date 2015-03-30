@@ -30,6 +30,7 @@ public:
 	// implement the "static create()" method manually
 	CREATE_FUNC(MainScene);
 	void update(float dt);
+	void updateMonster(float dt);
 	void goNextLevel();
 	bool onContactBegin(PhysicsContact& contact);
 	void addBackGround(char *tmxName);
