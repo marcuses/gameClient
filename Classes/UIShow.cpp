@@ -5,26 +5,34 @@ USING_NS_CC;
 bool UIShow::init(){
 	if(!Layer::init())	return false;
 	Size vSize = Director::getInstance()->getVisibleSize();
-	lifeSprite = Sprite::create("UI/life.png");
+	
+	auto lifeSprite = Sprite::create("heroLife.png");
 	addChild(lifeSprite);
-	lifeSprite->setPosition(20,vSize.height-lifeSprite->getContentSize().height);
+	lifeSprite->setPosition(Vec2(120,600));
 
-	//其实3是有问题的0.0
-	curLife = Label::createWithTTF(" x 10","fonts/Marker Felt.ttf",20);
+	curLife = Label::createWithTTF("10","fonts/Marker Felt.ttf",35);
 	addChild(curLife);
-	curLife->setPosition(50,lifeSprite->getPositionY());
+	curLife->setPosition(lifeSprite->getPosition());
 
-	curScore = Label::createWithTTF("0","fonts/Marker Felt.ttf",30);
+	auto heroScore = Sprite::create("heroScore.png");
+	addChild(heroScore);
+	heroScore->setPosition(Vec2(420,600));
+	curScore = Label::createWithTTF("0","fonts/Marker Felt.ttf",35);
 	addChild(curScore);
-	curScore->setPosition(2*vSize.width/3,vSize.height-curScore->getContentSize().height/2);
+	curScore->setPosition(heroScore->getPosition());
+
+	auto heroTime = Sprite::create("heroTime.png");
+	addChild(heroTime);
+	heroTime->setPosition(Vec2(720,600));
+
+	curTime = Label::createWithTTF("0","fonts/Marker Felt.ttf",35);
+	addChild(curTime);
+	curTime->setPosition(heroTime->getPosition());
 	
 	runTime = 0;
-	curTime = Label::createWithTTF("0","fonts/Marker Felt.ttf",30);
-	addChild(curTime);
-	curTime->setPosition(vSize.width/3,vSize.height-curTime->getContentSize().height/2);
-	
+	setCascadeOpacityEnabled(true);
+	setOpacity(GLubyte(255*0.6));
 	scheduleUpdate();
-
 	return true;
 }
 void UIShow::update(float dt){

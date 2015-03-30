@@ -34,7 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if(!glview) {
-		glview = GLViewImpl::create("Loli");
+		glview = GLViewImpl::create("DreamYard");
 		director->setOpenGLView(glview);
 	}
 	glview->setFrameSize(960, 640);
@@ -50,6 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//auto scene = HelloWorld::createScene();
 	srand(time(0)); //seed of rand
 	std::vector<std::string> searchPath; 
+	searchPath.push_back("newUI");
 	searchPath.push_back("StartScene"); 
 	searchPath.push_back("Role"); 
 	searchPath.push_back("GameOver");

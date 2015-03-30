@@ -119,7 +119,7 @@ void Boss::update(float dt)
 	if(fabs(pos2.x - pos1.x) <= 480 ) setSpeed(100);
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	if(_bossType < 2)setScaleX(getDir() == 1 ? -1 : 1);
-	else setScaleX(getDir() == 1 ? 1 : -1);
+	else setScaleX(getDir() == 1 ? -1 : 1);
 	switch(_hard){
 	case 1: AIeasy();break;
 	case 2: AImid();break;

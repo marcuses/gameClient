@@ -35,6 +35,8 @@ public:
 	static int heroLife;
 private:
 	Sprite* _spHit;
+	bool _invincible; //ÊÇ·ñÎÞµÐ
+	int _invincibleTime;
 	int _spHitTime;
 	void possLifeMsg();
 	void updateMoveState();

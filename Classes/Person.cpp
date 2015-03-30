@@ -53,6 +53,7 @@ void Person::addPhysics()
 	auto size = (this->getBoundingBox()).size;
 	log("%lf %lf", size.width, size.height);
 	auto material = PhysicsMaterial(100.0f, 0.01f, 1.0f);
+	if(_type == TYPE::HERO) size.width /= 2;
 	PhysicsBody *body = PhysicsBody::createBox(Size(size.width,size.height),material);
 //	body->addShape(PhysicsShapeBox::create(Size(size.width,size.height),material));
 	body->setCategoryBitmask(_type);

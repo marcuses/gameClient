@@ -9,22 +9,10 @@ public:
 	virtual void onExit() override;
 	CREATE_FUNC(UICtrl);
 private:
-
 	cocos2d::Layer*  playLayer;
-	cocos2d::Sprite* leftButton;
-	cocos2d::Sprite* rightButton;
-	cocos2d::Sprite* jumpButton;
-	cocos2d::Sprite* fireButton;
-	cocos2d::Sprite* stopButton;
-
-	cocos2d::Layer* stopLayer;
-	cocos2d::Sprite* backButton;
-	cocos2d::Sprite* restartButton;
-	cocos2d::Sprite* quitButton;
-	
+	cocos2d::Layer* stopLayer;	
 	void showLayer();
 	void hideLayer();
-
 	cocos2d::EventListenerTouchOneByOne* listener;
 };
 
