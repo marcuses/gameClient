@@ -417,6 +417,17 @@ Sprite* MainScene::makePolygon(ValueMap& dict, TYPE type, const char* imgName, b
 			sprite->setPosition(Point(x + 340, y ));
 			body->setGravityEnable(false);
 		}
+		else if (imgName == "banzi.png")
+		{
+			log("banszi");
+			Size size = sprite->getContentSize();
+			body->setPositionOffset(Point(0, 0));
+			sprite->setPosition(Point(x + 10 , y ));
+			body->setGravityEnable(true);
+			body->setDynamic(true);
+			sprite->setTag(10000 + m_nTeeterboardCnt);
+			m_nTeeterboardCnt++;
+		}
 		else
 		{
 			sprite->setPosition(Point(x , y));
@@ -444,7 +455,15 @@ void MainScene::addPhysics()
 		auto sprite = makeBox(dict, TYPE::GROUND, "banzi.png", true, 10, 0, 1);
 		this->addChild(sprite);
 	}
-
+	/*
+	auto objectGroup0 = _tileMap ->objectGroupNamed("taitai")->getObjects();
+	for (auto& obj : objectGroup0) //添加跷跷板
+	{
+		ValueMap& dict = obj.asValueMap();
+		auto sprite = makeBox(dict, TYPE::GROUND, "banzi.png", true, 10, 0, 1);
+		this->addChild(sprite);
+	}
+	*/
 	auto objectGroup00 = _tileMap ->objectGroupNamed("tone")->getObjects();
 	for (auto& obj : objectGroup00) //添加石头
 	{

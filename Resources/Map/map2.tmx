@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="375" height="43" tilewidth="16" tileheight="16" nextobjectid="113">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="375" height="43" tilewidth="16" tileheight="16" nextobjectid="166">
  <tileset firstgid="1" name="map2" tilewidth="16" tileheight="16">
   <image source="map2.png" width="6000" height="736"/>
  </tileset>
@@ -25,16 +25,47 @@
   <image source="stick.png" width="9" height="127"/>
  </tileset>
  <objectgroup name="ObjectsPolygon">
-  <object id="1" x="3443" y="356">
+  <object id="1" x="3664" y="176">
    <polygon points="0,0 292,-2 289,37 0,36"/>
   </object>
   <object id="2" x="2161" y="600">
    <polygon points="0,0 144,-106 750,-106 748,-78 156,-91 53,-2"/>
   </object>
+  <object id="121" x="2176" y="592" visible="0">
+   <polygon points="0,0 128,-96 160,-96 48,0"/>
+  </object>
+  <object id="122" x="2320" y="512" visible="0">
+   <polygon points="0,0 16,-16 592,-16 592,0 0,0"/>
+  </object>
+  <object id="136" x="576" y="580">
+   <polygon points="0,0 0,16 64,16"/>
+  </object>
+  <object id="138" x="88" y="596">
+   <polygon points="0,0 64,-16 64,0"/>
+  </object>
+  <object id="140" x="759" y="596">
+   <polygon points="0,0 64,-16 64,0"/>
+  </object>
+  <object id="143" x="1241" y="579">
+   <polygon points="0,0 0,16 64,16"/>
+  </object>
+  <object id="144" x="1433" y="595">
+   <polygon points="0,0 64,-16 64,0"/>
+  </object>
+  <object id="146" x="1914" y="581">
+   <polygon points="0,0 0,16 64,16"/>
+  </object>
+  <object id="147" x="3373" y="594">
+   <polygon points="0,0 0,16 64,16"/>
+  </object>
+  <object id="150" x="2953" y="596">
+   <polygon points="0,0 -48,16 0,16"/>
+  </object>
  </objectgroup>
  <objectgroup name="ObjectsBox">
   <object id="61" x="4000" y="592" width="2016" height="96"/>
-  <object id="84" x="0" y="592" width="3600" height="112"/>
+  <object id="84" x="-944" y="592" width="3600" height="112"/>
+  <object id="139" x="2544" y="605" width="1056" height="80"/>
  </objectgroup>
  <objectgroup name="trap">
   <object id="5" x="3598" y="652">
@@ -49,8 +80,8 @@
   <object id="10" x="2870" y="382" width="18" height="232"/>
   <object id="11" x="2860" y="24" width="18" height="140"/>
   <object id="12" x="3180" y="14" width="28" height="164"/>
-  <object id="13" x="3426" y="156" width="44" height="234"/>
-  <object id="14" x="3702" y="164" width="26" height="230"/>
+  <object id="13" x="3664" y="-48" width="44" height="234"/>
+  <object id="14" x="3936" y="-32" width="26" height="230"/>
   <object id="15" x="4054" y="18" width="44" height="182"/>
   <object id="16" x="4762" y="12" width="30" height="186"/>
   <object id="17" x="4006" y="338" width="18" height="296"/>
@@ -61,6 +92,15 @@
   <object id="22" x="5318" y="176" width="20" height="452"/>
   <object id="23" x="5926" y="196" width="24" height="446"/>
   <object id="24" x="3545" y="446" width="19" height="169"/>
+  <object id="151" x="512" y="574" width="16" height="80"/>
+  <object id="152" x="208" y="570" width="16" height="64"/>
+  <object id="153" x="880" y="568" width="16" height="80"/>
+  <object id="154" x="1168" y="562" width="16" height="80"/>
+  <object id="155" x="1552" y="569" width="16" height="80"/>
+  <object id="156" x="1856" y="570" width="16" height="80"/>
+  <object id="157" x="3008" y="599" width="16" height="80"/>
+  <object id="158" x="3296" y="600" width="16" height="80"/>
+  <object id="161" x="2112" y="512" width="16" height="80"/>
  </objectgroup>
  <objectgroup name="Enemy">
   <object id="25" x="3154" y="468" width="22" height="16"/>
@@ -79,13 +119,10 @@
   <object id="38" x="5474" y="333" width="18" height="40"/>
   <object id="39" x="2590" y="173" width="20" height="24"/>
   <object id="105" x="1280" y="32" width="16" height="48"/>
-  <object id="106" x="1200" y="480" width="48" height="48"/>
-  <object id="107" x="528" y="496" width="48" height="32"/>
+  <object id="107" x="528" y="368" width="48" height="32"/>
   <object id="108" x="1072" y="192" width="48" height="48"/>
   <object id="109" x="1840" y="192" width="48" height="48"/>
-  <object id="110" x="1840" y="496" width="32" height="32"/>
-  <object id="111" x="1552" y="544" width="64" height="48"/>
-  <object id="112" x="880" y="544" width="64" height="48"/>
+  <object id="111" x="1696" y="320" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="ObjectsSwing">
   <object id="40" name="BalanceBoard" x="4072" y="174">
@@ -97,11 +134,11 @@
   <object id="41" x="2456" y="264">
    <polygon points="0,0 275,2 275,19 0,19"/>
   </object>
-  <object id="89" x="896" y="240">
-   <polygon points="0,0 256,0 256,16 0,16"/>
-  </object>
   <object id="103" x="1731" y="240">
    <polygon points="0,0 256,0 256,16 0,16"/>
+  </object>
+  <object id="164" x="704" y="240">
+   <polygon points="0,0 160,0 160,16 0,16"/>
   </object>
  </objectgroup>
  <objectgroup name="heroPos">
@@ -154,17 +191,24 @@
   <object id="80" x="352" y="528" width="416" height="16"/>
   <object id="91" x="1024" y="528" width="416" height="16"/>
   <object id="92" x="1696" y="528" width="416" height="16"/>
+  <object id="125" x="3152" y="544" width="416" height="16"/>
  </objectgroup>
  <layer name="layer3" width="375" height="43">
   <data encoding="base64" compression="zlib">
-   eJzt1MkNgDAAA8HUnl65zxJwA0j5AWJG2r9fLgUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAP+tqKX0a0lifXnPPToB2U/5nTktaX/xFdgK02/I/ezrS+eIvshMAAAAAAAAAAAC+7QIafTND
+   eJzt1TkKwDAMBEC/3X/NfT4hqg2GdDHODGy/jbQpAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBnQ05pjEyROX/dpk5PgPeW+D9rZIvsDf8iPSnZUag74ibOyBW5G74PPSnZUYD+2FEAAAAAAAAA6NsD015EWQ==
   </data>
  </layer>
  <objectgroup name="tone">
   <object id="102" x="1248" y="80" width="112" height="96"/>
   <object id="104" x="2144" y="80" width="112" height="96"/>
+  <object id="128" x="3424" y="48" width="112" height="96"/>
  </objectgroup>
  <objectgroup name="stick" visible="0">
   <object id="100" x="1510" y="16" width="9" height="192"/>
+ </objectgroup>
+ <objectgroup name="taitai" visible="0">
+  <object id="115" x="336" y="544">
+   <polygon points="0,0 16,-16 432,-16 448,0"/>
+  </object>
  </objectgroup>
 </map>
