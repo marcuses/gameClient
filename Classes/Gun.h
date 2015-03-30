@@ -14,7 +14,7 @@ public:
 	void updateBullet(float dt);
 	void addRunAnimation();
 	void update(float dt);
-	void beHit() override;
+	void beHit(Vec2 dir) override;
 	void removeThis(float dt);
 	void AIeasy();
 	void AImid();

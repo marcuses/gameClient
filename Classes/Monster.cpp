@@ -124,9 +124,9 @@ void Monster::AIhard(){
 	//bullet6->setPosition(this->getPosition());
 	//getParent()->addChild(bullet6, 2);
 }
-void Monster::beHit()
+void Monster::beHit(Vec2 dir)
 {
-	Person::beHit();
+	Person::beHit(dir);
 	if(_curLife < 0) return;
 	SimpleAudioEngine::getInstance()->playEffect("hit.mp3");
 	_progress->setProgress(_curLife * 1.0 / _maxLife * 100);

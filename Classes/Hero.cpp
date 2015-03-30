@@ -29,6 +29,13 @@ void Hero::onEnter()
 	idle();
 	addObserver();
 	possLifeMsg();
+	_spHit = Sprite::create("hitBlode.png");
+	addChild(_spHit, 1);
+	_spHit->setVisible(false);
+	_spHit->setPosition(Point(30,30));
+	_spHitTime = 0;
+	_isDead = false;
+	_spHit->setScale(0.25);
 }
 
 void Hero::onExit()
@@ -47,10 +54,12 @@ void Hero::possLifeMsg(){
 	sprintf(s," x %d",getLife());
 	NotificationCenter::getInstance()->postNotification(showHeroLife,String::create(s));
 }
-void Hero::beHit() 
+void Hero::beHit(Vec2 dir) 
 {
-	Person::beHit();
+	Person::beHit(dir);
 	heroLife = _curLife;
+	_spHit->setVisible(true);
+	_spHitTime = 0;
 	possLifeMsg();
 	if(_isDead)
 	{
@@ -131,6 +140,13 @@ void Hero::update(float dt)
 		ef->setScaleX(getDir() == 1 ? 1 : -1);
 		getParent()->addChild(ef);
 	}
+
+	if(_spHit->isVisible())
+	{
+		_spHitTime++;
+		if(_spHitTime >= 10) _spHit->setVisible(false);
+	}
+
 	bulletRate-=dt;
 	updateMoveState();	//ĞÎÌ¬¸üĞÂ
 	if(_moveState&1){

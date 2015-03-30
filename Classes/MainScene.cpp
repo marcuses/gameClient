@@ -24,7 +24,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 
 	auto _scene = Scene::createWithPhysics();
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+//	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -209,7 +209,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteB;
 		auto bullet = (Bullet*)spriteA;
-		monster->beHit();
+		monster->beHit(bullet->getPhysicsBody()->getVelocity());
 		removeChild(bullet);
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
@@ -217,8 +217,8 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		auto monster = (Monster*)spriteA;
 		auto bullet = (Bullet*)spriteB;
-		removeChild(bullet); //
-		monster->beHit();
+		monster->beHit(bullet->getPhysicsBody()->getVelocity());
+		removeChild(bullet); 
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::BRICK)
@@ -254,65 +254,64 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		&& spriteB && spriteB->getTag() == TYPE::TRAP)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->beHit();
+		_hero->beHit(Vec2(0,0));
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::TRAP)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
 		_hero = (Hero*)spriteB;
-		_hero->beHit();
+		_hero->beHit(Vec2(0,0));
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::MONSTER)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->beHit();
+		_hero->beHit(Vec2(0,0));
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::MONSTER)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
 		_hero = (Hero*)spriteB;
-		_hero->beHit();
+		_hero->beHit(Vec2(0,0));
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::BOSS)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->beHit();
+		_hero->beHit(Vec2(0,0));
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BOSS)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
 		_hero = (Hero*)spriteB;
-		_hero->beHit();
+		_hero->beHit(Vec2(0,0));
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::HERO)
 		&& spriteB && spriteB->getTag() == TYPE::BULLETENEMY)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->beHit();
+		_hero->beHit(spriteB->getPhysicsBody()->getVelocity());
 		removeChild(spriteB);
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BULLETENEMY)
 		&& spriteB && spriteB->getTag() == TYPE::HERO)
 	{
-		removeChild(spriteA);
+		
 		_hero = (Hero*)spriteB;
-		_hero->beHit();
+		_hero->beHit(spriteA->getPhysicsBody()->getVelocity());
+		removeChild(spriteA);
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BULLET)
 		&& spriteB && spriteB->getTag() == TYPE::BOSSWEAKNESS)
 	{
+		_boss->beHit(spriteA->getPhysicsBody()->getVelocity());
 		removeChild(spriteA);
-	//	((Boss*)spriteB->getParent())->beHit();
-		_boss->beHit();
 	}
 	else if((spriteA && spriteA->getTag() == TYPE::BOSSWEAKNESS)
 		&& spriteB && spriteB->getTag() == TYPE::BULLET)
 	{
+		_boss->beHit(spriteB->getPhysicsBody()->getVelocity());
 		removeChild(spriteB);
-	//	((Boss*)spriteA->getParent())->beHit();
-		_boss->beHit();
 	}
 	return true;
 }
@@ -367,7 +366,9 @@ Sprite* MainScene::makeBox(ValueMap& dict, TYPE type, const char* imgName, bool 
 		sprite->setPosition(Point(x + size.width / 2, y - size.height / 2));
 		body->setGravityEnable(true);
 		body->setDynamic(true);
+
 		sprite->setTag(100000 + m_nToneCnt++);
+		
 	}
 	return sprite;
 }

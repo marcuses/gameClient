@@ -72,7 +72,7 @@ void Bullet::addAction()
 }
 void Bullet::del()
 {
-	removeFromParentAndCleanup(this);
+	removeFromParentAndCleanup(true);
 }
 void Bullet::update(float dt)
 {

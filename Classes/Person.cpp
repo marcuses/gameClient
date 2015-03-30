@@ -32,9 +32,10 @@ void Person::onEnter()
 int Person::getLife(){
 	return _curLife;
 }
-void Person::beHit()
+void Person::beHit(Vec2 dir)
 {
 	if(_isDead) return;
+	getPhysicsBody()->setVelocity(dir * 0.5);
 	_curLife--;
 	if(_curLife <= 0)
 	{

@@ -94,10 +94,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet10/bullet100.png",
 		"bullet10/bullet100.plist","bullet10/bullet10.ExportJson");
 	//auto scene = StartScene::createScene();
-	//auto scene = LogInScene::createScene();
+	auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
 	//auto scene = NewLogIn::createScene();
-	auto scene = MainScene::createScene();
+	//auto scene = MainScene::createScene();
 	//auto scene = Splash::createScene(); 
 
 	// run

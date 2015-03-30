@@ -28,7 +28,7 @@ public:
 	TYPE getType();
 	int getDir();
 	void setDir(int dir);
-	virtual void beHit();
+	virtual void beHit(Vec2 dir);
 	void deadAnimation();
 	void changeDir(); // 改变方向
 	int getLife();
