@@ -56,9 +56,9 @@ void Gun::addRunAnimation()
 {
 
 }
-void Gun::beHit()
+void Gun::beHit(Vec2 dir)
 {
-	Person::beHit();
+	Person::beHit(Vec2(0,0));
 	if(_curLife < 0) return;
 	SimpleAudioEngine::getInstance()->playEffect("hit.mp3");
 	_spHit->setVisible(true);

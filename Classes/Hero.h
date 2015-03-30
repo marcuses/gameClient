@@ -28,12 +28,14 @@ public:
 	void shoot(Object * object);
 	void runAnimation();
 	void dead();
-	void beHit() override;
+	void beHit(Vec2 dir) override;
 	bool getBuff(){ return hasBuff; }
 	void setBuff(){ hasBuff = true; }
 	void setJump(bool isJump){ _isJump = isJump;}
 	static int heroLife;
 private:
+	Sprite* _spHit;
+	int _spHitTime;
 	void possLifeMsg();
 	void updateMoveState();
 	int _moveState;

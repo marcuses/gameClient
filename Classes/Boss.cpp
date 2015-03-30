@@ -83,9 +83,9 @@ void Boss::addRunAnimation()
 	else _armAnimation->play("run");
 }
 
-void Boss::beHit()
+void Boss::beHit(Vec2 dir)
 {
-	Person::beHit();
+	Person::beHit(dir);
 	SimpleAudioEngine::getInstance()->playEffect("explode.wav");
 	_spHit->setVisible(true);
 	_progress->setProgress(_curLife * 1.0 / _maxLife * 100);

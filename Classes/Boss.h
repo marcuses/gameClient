@@ -15,7 +15,7 @@ public:
 	//void deadAnimation();
 	void update(float dt);
 	void shoot(Object * object);
-	void beHit() override;
+	void beHit(Vec2 dir) override;
 	void AIeasy();
 	void AImid();
 	void AIhard();
