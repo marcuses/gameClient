@@ -10,7 +10,7 @@ public:
 	void logIn();
     CREATE_FUNC(LogInScene);
 private:
-	void logInSuccess();
+	void logInSuccess(bool isTraveler);
 	void logInFail();
 	cocos2d::Label* hintMsg;
 	MyTextFieldTTF* TextFieldPID;

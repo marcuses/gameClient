@@ -1,4 +1,5 @@
 #pragma  once
+#include <vector>
 const float BULLETRate = 0.3;
 
 const static enum TYPE
@@ -34,6 +35,9 @@ const static char showHeroLife[] = "ShowHeroLife";
 const static char strQuickMove[] = "quickMove";
 const static char showScore[]= "ShowScore";
 
+static std::string heroID;
+static std::string heroPSW;
+static bool isTraveler;
 static int   heroScore;
 static float rankScore;
 

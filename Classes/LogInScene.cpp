@@ -2,6 +2,7 @@
 #include "StartScene.h"
 #include "RegisterScene.h"
 #include "socketClient.h"
+#include "Headfile.h"
 USING_NS_CC;
 
 Scene* LogInScene::createScene(){
@@ -60,7 +61,7 @@ void LogInScene::onEnter(){
 			logIn();
 		}else if(rectFLOG.containsPoint(touch->getLocation()) ){
 			log("FastLogIn");
-			logInSuccess();
+			logInSuccess(true);
 		}else if( rectREG.containsPoint(touch->getLocation()) ){
 			log("Register");
 			Director::getInstance()->replaceScene(RegisterScene::createScene());
@@ -78,12 +79,13 @@ void LogInScene::onExit(){
 }
 void LogInScene::logIn(){
 	socketClient test;
-	if(test.LoginSendData(TextFieldPID->getString(),TextFieldPSW->getString(),2)) logInSuccess();
+	if(test.LoginSendData(TextFieldPID->getString(),TextFieldPSW->getString(),2)) logInSuccess(false);
 	else	logInFail();
 }
-void LogInScene::logInSuccess(){
-	log(TextFieldPID->getString().c_str());
-	log(TextFieldPSW->getString().c_str());
+void LogInScene::logInSuccess(bool _isTraveler){
+	isTraveler = _isTraveler;
+	heroID = TextFieldPID->getString();
+	heroPSW = TextFieldPSW->getString();
 	auto scene = StartScene::createScene();
 	Director::getInstance()->replaceScene(scene);
 }
