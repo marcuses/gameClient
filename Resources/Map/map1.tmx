@@ -73,8 +73,8 @@
   <object x="4116" y="308">
    <polygon points="0,0 275,2 275,19 0,19"/>
   </object>
-  <object x="1309" y="270">
-   <polygon points="0,0 238,3 239,26 -1,19"/>
+  <object x="1387" y="247">
+   <polygon points="0,0 275,2 275,19 0,19"/>
   </object>
  </objectgroup>
  <objectgroup name="heroPos" width="0" height="0">
@@ -118,5 +118,12 @@
  <objectgroup name="monsterPoint" width="375" height="44">
   <object x="5502" y="240" width="18" height="15"/>
   <object x="3383" y="507"/>
+ </objectgroup>
+ <objectgroup name="buff" width="375" height="44">
+  <object x="1616" y="149" width="18" height="19"/>
+  <object x="3921" y="119" width="19" height="15"/>
+ </objectgroup>
+ <objectgroup name="dynamicTrap" width="375" height="44">
+  <object x="376" y="166" width="20" height="19"/>
  </objectgroup>
 </map>

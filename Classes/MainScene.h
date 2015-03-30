@@ -31,6 +31,7 @@ public:
 	CREATE_FUNC(MainScene);
 	void update(float dt);
 	void updateMonster(float dt);
+	void updateDynamicTrap(float dt);
 	void goNextLevel();
 	bool onContactBegin(PhysicsContact& contact);
 	void addBackGround(char *tmxName);
@@ -56,6 +57,7 @@ private:
 	Hero* _hero;
 	Boss* _boss;
 	float nowTime;
+	int _trapId;
 	//UICtrl* uiCtrl;
 	//UIShow* uiShow;
 	//static Scene* _scene;

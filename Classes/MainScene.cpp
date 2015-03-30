@@ -10,6 +10,8 @@
 #include "NextScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "addJoint.h"
+#include "Buff.h"
+#include "dynamicTrap.h"
 using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
@@ -50,6 +52,7 @@ bool MainScene::init()
 	//this->addChild(armature, 1);
 	scheduleUpdate();
 	schedule(schedule_selector(MainScene::updateMonster), 5.0);
+	schedule(schedule_selector(MainScene::updateDynamicTrap), 0.3);
 	m_nTeeterboardCnt = 0;
 	m_nToneCnt = 0;
 
@@ -79,7 +82,7 @@ void MainScene::onEnter()
 	_door->setPosition(getTilePosition("door", "door"));
 	addChild(_door, 1);
 	_door->setVisible(false);
-	auto size = Director::getInstance()->getWinSize();
+	
 
 	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
@@ -87,6 +90,7 @@ void MainScene::onEnter()
 	addListener();
 	addObserver();
 
+	_trapId = 0;
 	auto add = AddJoint::create();
 	for (int nIndex = 0; nIndex < m_nTeeterboardCnt; nIndex++)
 	{
@@ -136,6 +140,22 @@ void MainScene::addObserver()
 	//NotificationCenter::getInstance()->addObserver(this, callfuncO_selector(MainScene::enemyShoot), strEnemyShoot, NULL);
 }
 
+
+void MainScene::updateDynamicTrap(float dt)
+{
+	Point pos = getTilePosition("dynamicTrap", "");
+	_trapId = (_trapId + 1) % 10;
+	auto objectTrap = _tileMap ->objectGroupNamed("dynamicTrap")->getObjects();
+	for (auto& obj : objectTrap) //添加刺
+	{
+		auto dict = obj.asValueMap();
+		float x = dict["x"].asFloat();
+		float y = dict["y"].asFloat();
+		auto dyTrap = dynamicTrap::create();
+		addChild(dyTrap, 2);
+		dyTrap->setPosition(pos + Point(_trapId * 50, 0));
+	}
+}
 void MainScene::doorVisiable(Object * object)
 {
 	_door->setVisible(true);
@@ -313,6 +333,22 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_boss->beHit(spriteB->getPhysicsBody()->getVelocity());
 		removeChild(spriteB);
+	}
+
+	else if ((spriteA && spriteA->getTag() == TYPE::HERO)
+		&& spriteB && spriteB->getTag() == TYPE::BUFF)
+	{
+		_hero = (Hero*)spriteA;
+		_hero->setBuff(true);
+		removeChild(spriteB);
+	}
+
+	else if((spriteB && spriteB->getTag() == TYPE::HERO)
+		&& spriteA && spriteA->getTag() == TYPE::BUFF)
+	{
+		_hero = (Hero*)spriteB;
+		_hero->setBuff(true);
+		removeChild(spriteA);
 	}
 	return true;
 }
@@ -590,16 +626,28 @@ void MainScene::addPhysics()
 		addChild(mPoint, 2); 
 	}
 
+	auto objectBuff = _tileMap ->objectGroupNamed("buff")->getObjects();
+	for (auto& obj : objectBuff) //添加buff点
+	{
+		auto dict = obj.asValueMap();
+		float x = dict["x"].asFloat();
+		float y = dict["y"].asFloat();
+		auto buff = Buff::create();
+		buff->setPosition(Point(x,y));
+		addChild(buff, 2); 
+	}
+
 }
 
 void MainScene::updateMonster(float dt)
 {
 	auto objectMonsterPoint = _tileMap ->objectGroupNamed("monsterPoint")->getObjects();
-	for (auto& obj : objectMonsterPoint) //添加出怪点
+	for (auto& obj : objectMonsterPoint) //出怪
 	{
 		auto dict = obj.asValueMap();
 		float x = dict["x"].asFloat();
 		float y = dict["y"].asFloat();
+		if(fabs(x - _hero->getPositionX()) > 960) continue;
 		auto ememy = Monster::create(hard,rand() % 4);
 		ememy->setPosition(Point(x,y));
 		addChild(ememy);
