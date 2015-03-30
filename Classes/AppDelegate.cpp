@@ -94,6 +94,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		"bullet5/bullet50.plist","bullet5/bullet5.ExportJson");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("bullet10/bullet100.png",
 		"bullet10/bullet100.plist","bullet10/bullet10.ExportJson");
+	ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterPoint/monsterPoint0.png",
+		"monsterPoint/monsterPoint0.plist","monsterPoint/monsterPoint.ExportJson");
 	//auto scene = StartScene::createScene();
 	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
