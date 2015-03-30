@@ -34,7 +34,8 @@ const static char showHeroLife[] = "ShowHeroLife";
 const static char strQuickMove[] = "quickMove";
 const static char showScore[]= "ShowScore";
 
-static int heroScore;
+static int   heroScore;
+static float rankScore;
 
 struct Monster_data
 {
