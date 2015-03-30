@@ -8,7 +8,9 @@ bool Hero::init()
 	_isJump = false;
 	_leftDown  = false;
 	_rightDown = false;
+	_invincible = false;
 	_moveState = 0;
+	_invincibleTime = 0;
 	bulletRate = 0;
 	_isQuickMove = false;
 	_quickMoveTime = 5;
@@ -56,6 +58,7 @@ void Hero::possLifeMsg(){
 }
 void Hero::beHit(Vec2 dir) 
 {
+	if(_invincible) return;
 	Person::beHit(dir);
 	heroLife = _curLife;
 	_spHit->setVisible(true);
@@ -65,6 +68,8 @@ void Hero::beHit(Vec2 dir)
 	{
 		dead();
 	}
+	_invincible = true;
+	_invincibleTime = 90;
 }
 void Hero::leftButtonDown(Object * object){
 	setDir(-1);
@@ -130,6 +135,11 @@ void Hero::addObserver()
 }
 void Hero::update(float dt)
 {
+	if(_spHit->isVisible())
+	{
+		_spHitTime++;
+		if(_spHitTime >= 10) _spHit->setVisible(false);
+	}
 	if(_isDead) return;
 	_tolTime ++;
 	//log("%d",_tolTime);
@@ -141,10 +151,19 @@ void Hero::update(float dt)
 		getParent()->addChild(ef);
 	}
 
-	if(_spHit->isVisible())
+	if(_invincible)
 	{
-		_spHitTime++;
-		if(_spHitTime >= 10) _spHit->setVisible(false);
+		_invincibleTime--;
+		
+		if(_invincibleTime % 10 == 0)
+		{
+			this->setVisible(!this->isVisible());
+		}
+		if(_invincibleTime < 0)
+		{
+			_invincible = false;
+			setVisible(true);
+		}
 	}
 
 	bulletRate-=dt;

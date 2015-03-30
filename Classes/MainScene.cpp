@@ -2,16 +2,14 @@
 #include "SimpleAudioEngine.h"
 #include "buttonSkill.h"
 #include "Headfile.h"
-#include"Gun.h"
+#include "Gun.h"
 #include <vector>
 #include <string>
 #include "Monster.h"
 #include "WinScene.h"
 #include "NextScene.h"
-#include"cocostudio/CocoStudio.h"
+#include "cocostudio/CocoStudio.h"
 #include "addJoint.h"
-
-
 using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
@@ -24,7 +22,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 
 	auto _scene = Scene::createWithPhysics();
-//	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
