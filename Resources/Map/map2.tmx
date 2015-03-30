@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="375" height="43" tilewidth="16" tileheight="16" nextobjectid="105">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="375" height="43" tilewidth="16" tileheight="16" nextobjectid="113">
  <tileset firstgid="1" name="map2" tilewidth="16" tileheight="16">
   <image source="map2.png" width="6000" height="736"/>
  </tileset>
@@ -78,6 +78,14 @@
   <object id="37" x="5613" y="376" width="14" height="22"/>
   <object id="38" x="5474" y="333" width="18" height="40"/>
   <object id="39" x="2590" y="173" width="20" height="24"/>
+  <object id="105" x="1280" y="32" width="16" height="48"/>
+  <object id="106" x="1200" y="480" width="48" height="48"/>
+  <object id="107" x="528" y="496" width="48" height="32"/>
+  <object id="108" x="1072" y="192" width="48" height="48"/>
+  <object id="109" x="1840" y="192" width="48" height="48"/>
+  <object id="110" x="1840" y="496" width="32" height="32"/>
+  <object id="111" x="1552" y="544" width="64" height="48"/>
+  <object id="112" x="880" y="544" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="ObjectsSwing">
   <object id="40" name="BalanceBoard" x="4072" y="174">
