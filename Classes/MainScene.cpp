@@ -14,7 +14,6 @@ using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
-int MainScene::score = 0;
 int MainScene::level = 2;
 int MainScene::hard = 1;
 Scene* MainScene::createScene()
@@ -52,6 +51,7 @@ bool MainScene::init()
 	scheduleUpdate();
 	m_nTeeterboardCnt = 0;
 	m_nToneCnt = 0;
+
 	return true;
 }
 
@@ -109,6 +109,7 @@ void MainScene::onExit()
 void MainScene::update(float dt)
 {
 	//uiShow->setLife(_hero->getLife());
+	nowTime += dt;
 	setViewPointCenter(_hero->getPosition());
 	for (int i = 0; i < 3; ++i)
 	{
@@ -142,6 +143,7 @@ void MainScene::goNextLevel()
 {
 	unscheduleUpdate();
 	level ++;
+	rankScore += heroScore / int(nowTime+1);
 	if(level > 3)
 	{
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1.0f, WinScene::createScene()));

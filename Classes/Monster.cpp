@@ -94,10 +94,6 @@ void Monster::AImid(){
 	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType, false);
 	bullet1->setPosition(this->getPosition());
 	getParent()->addChild(bullet1, 2);
-
-	auto bullet2 = Bullet::create(BULLETENEMY, Vec2(-getDir(), 0), 250, _monsterType, false);
-	bullet2->setPosition(this->getPosition());
-	getParent()->addChild(bullet2, 2);
 }
 void Monster::AIhard(){
 	auto bullet1 = Bullet::create(BULLETENEMY, Vec2(getDir(), 0), 250, _monsterType, false);
@@ -154,7 +150,7 @@ void Monster::removeThis(float dt)
 void Monster::update(float dt)
 {
 	if(_isDead) return;
-	if(_hard == 3&&hitArea()){
+	if((_hard == 3||_hard == 2)&&hitArea()){
 		getPhysicsBody()->setCollisionBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS | TYPE::PLANK);
 		getPhysicsBody()->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO  | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS);
 		float tx = getParent()->getChildByTag(TYPE::HERO)->getPositionX() - getPositionX();
