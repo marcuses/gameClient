@@ -68,7 +68,7 @@ bool AddJoint::addJoint(Scene* _scene, Node* sp1, Node* sp2)
     box1->setDynamic(false);
 	node1->setPosition(node2->getPosition() + Vec2(0, node2->getContentSize().height/2 + 5));
     this->addChild(node1);
-	box1->addShape(PhysicsShapeEdgeBox::create(Size(width+10, height+10), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, Vec2(0, 0)));
+	box1->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, Vec2(0, 0)));
 
 	PhysicsJointDistance* jointOne = PhysicsJointDistance::construct(box1, box2, Point(0,0), Point(0,node2->getContentSize().height/2));
 	_scene->getPhysicsWorld()->addJoint(jointOne);
