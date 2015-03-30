@@ -578,25 +578,32 @@ void MainScene::addPhysics()
 
 	}
 
-	auto mPoint = Armature::create("monsterPoint");
-	mPoint->setPosition(getTilePosition("monsterPoint",""));
-	mPoint->getAnimation()->play("run");
-	addChild(mPoint, 2);   //添加出怪点
-	/*PhysicsBody* box = PhysicsBody::create();
-	box->setDynamic(false);
-	box->addShape(PhysicsShapeEdgeBox::create(Size(10, 10), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, balanceBoard->getPosition() - Vec2(0, 20)));*/
-	/*PhysicsBody* box1 = PhysicsBody::create();
-	box1->setDynamic(false);
-	box1->addShape(PhysicsShapeEdgeBox::create(Size(20, 20), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, Vec2(0, 0)));*/
-	// _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(balanceBoard->getPhysicsBody(), box, balanceBoard->getPosition()));
+	auto objectMonsterPoint = _tileMap ->objectGroupNamed("monsterPoint")->getObjects();
+	for (auto& obj : objectMonsterPoint) //添加出怪点
+	{
+		auto dict = obj.asValueMap();
+		float x = dict["x"].asFloat();
+		float y = dict["y"].asFloat();
+		auto mPoint = Armature::create("monsterPoint");
+		mPoint->setPosition(Point(x,y));
+		mPoint->getAnimation()->play("run");
+		addChild(mPoint, 2); 
+	}
 
 }
 
 void MainScene::updateMonster(float dt)
 {
-	auto ememy = Monster::create(hard,rand() % 4);
-	ememy->setPosition(getTilePosition("monsterPoint",""));
-	addChild(ememy);
+	auto objectMonsterPoint = _tileMap ->objectGroupNamed("monsterPoint")->getObjects();
+	for (auto& obj : objectMonsterPoint) //添加出怪点
+	{
+		auto dict = obj.asValueMap();
+		float x = dict["x"].asFloat();
+		float y = dict["y"].asFloat();
+		auto ememy = Monster::create(hard,rand() % 4);
+		ememy->setPosition(Point(x,y));
+		addChild(ememy);
+	}
 }
 void MainScene::setViewPointCenter(Point position) {
 	auto winSize = Director::getInstance()->getWinSize();
