@@ -32,10 +32,15 @@ void UICtrl::onEnter(){
 	rightButton->setAnchorPoint(Vec2(0,0));
 	playLayer->addChild(rightButton);
 
-	auto moveButton = Sprite::create("moveButton.png");
+	moveButton = Sprite::create("moveButton2.png");
 	moveButton->setPosition(Vec2(780,0));
 	moveButton->setAnchorPoint(Vec2(1,0));
 	playLayer->addChild(moveButton);
+
+	NotificationCenter::getInstance()->addObserver(this, 
+		callfuncO_selector(UICtrl::showBuff), strShowBuff, NULL);
+	NotificationCenter::getInstance()->addObserver(this, 
+		callfuncO_selector(UICtrl::hideBuff), strHideBuff, NULL);
 
 	auto hitButton = Sprite::create("hitButton.png");
 	hitButton->setPosition(Vec2(870,0));
@@ -102,6 +107,7 @@ void UICtrl::onEnter(){
 }
 void UICtrl::onExit(){
 	_eventDispatcher->removeEventListener(listener);
+	NotificationCenter::getInstance()->removeAllObservers(this);
 	Layer::onExit();
 }
 void UICtrl::showLayer(){
@@ -113,4 +119,12 @@ void UICtrl::hideLayer(){
 	stopLayer->setVisible(false);
 	playLayer->setVisible(true);
 	Director::getInstance()->resume();
+}
+void UICtrl::showBuff(Object* obj)
+{
+	moveButton->setSpriteFrame(SpriteFrame::create("moveButton.png", Rect(0,0,80,80)) );
+}
+void UICtrl::hideBuff(Object* obj)
+{
+	moveButton->setSpriteFrame(SpriteFrame::create("moveButton2.png", Rect(0,0,80,80)) );
 }
