@@ -28,6 +28,7 @@ bool dynamicTrap::init(const char *imgname)
 	body->setCollisionBitmask(0);
 	body->setContactTestBitmask(TYPE::TRAP | TYPE::HERO);
 	body->setDynamic(true);
+	if(imgname == "fireTrap") body->setDynamic(false);
 	body->setGravityEnable(true);
 	body->setRotationEnable(false);
 	this->setPhysicsBody(body);
@@ -41,4 +42,6 @@ void dynamicTrap::update(float dt)
 	{
 		removeFromParentAndCleanup(true);
 	}
+
+//	if()
 }

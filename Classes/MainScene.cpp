@@ -23,7 +23,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 
 	auto _scene = Scene::createWithPhysics();
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+//	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -151,7 +151,10 @@ void MainScene::updateDynamicTrap(float dt)
 		auto dict = obj.asValueMap();
 		float x = dict["x"].asFloat();
 		float y = dict["y"].asFloat();
-		auto dyTrap = dynamicTrap::create("ci.png");
+		char txt[100];
+		if(level == 3) sprintf(txt, "3-ci.png");
+		else sprintf(txt, "ci.png");
+		auto dyTrap = dynamicTrap::create(txt);
 		addChild(dyTrap, 2);
 		dyTrap->setPosition(pos + Point(_trapId * 50, 0));
 	}
@@ -639,6 +642,16 @@ void MainScene::addPhysics()
 		addChild(buff, 2); 
 	}
 
+	auto objectFire = _tileMap ->objectGroupNamed("fire")->getObjects();
+	for (auto& obj : objectFire) //Ìí¼Ó»ðÇò
+	{
+		auto dict = obj.asValueMap();
+		float x = dict["x"].asFloat();
+		float y = dict["y"].asFloat();
+		auto fire = dynamicTrap::create("fireTrap.png");
+		fire->setPosition(Point(x,y));
+		addChild(fire, 2); 
+	}
 }
 
 void MainScene::updateMonster(float dt)
