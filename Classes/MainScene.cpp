@@ -16,7 +16,7 @@ using namespace cocostudio;
 using namespace std;
 USING_NS_CC;
 using namespace CocosDenshion;
-int MainScene::level = 2;
+int MainScene::level = 3;
 int MainScene::hard = 1;
 Scene* MainScene::createScene()
 {
