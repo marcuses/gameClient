@@ -17,6 +17,7 @@ bool dynamicTrap::init()
 	body->setGravityEnable(true);
 	body->setRotationEnable(false);
 	this->setPhysicsBody(body);
+	scheduleUpdate();
 	return true;
 }
 
