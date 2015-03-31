@@ -36,6 +36,8 @@ const static char strQuickMove[] = "quickMove";
 const static char showScore[]= "ShowScore";
 const static char strShowBuff[] = "showBuff";
 const static char strHideBuff[] = "hideBuff";
+const static char strDieShow[] = "dieShow";
+
 static std::string heroID;
 static std::string heroPSW;
 static bool isTraveler;

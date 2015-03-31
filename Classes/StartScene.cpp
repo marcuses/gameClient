@@ -3,7 +3,8 @@
 #include "MainScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIButton.h"
-
+#include "socketClient.h"
+#include <vector>
 USING_NS_CC;
 using namespace cocostudio;
 
@@ -64,5 +65,16 @@ bool StartScene::init(){
 		aboutButton->setVisible(true);
 	});
 
+	socketClient st;
+	std::vector<NetPacket_Score* > scoreVec;
+	st.GetScoreRankList(scoreVec);
+	int  n = scoreVec.size();
+	char ss[30];
+	for(int i=0;i<n;++i){
+		sprintf(ss,"%d     %s     %d",i+1,scoreVec[i]->strUserName,scoreVec[i]->nScore);
+		auto tmp =  Label::createWithTTF(ss,"fonts/Marker Felt.ttf",15);
+		tmp->setPosition(vSize.width/2,vSize.height - (i+1)*30);
+		addChild(tmp);
+	}
 	return true;
 }
