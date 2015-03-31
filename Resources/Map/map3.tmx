@@ -38,7 +38,7 @@
   </object>
  </objectgroup>
  <objectgroup name="heroPos">
-  <object id="12" name="heroPos" x="10427" y="276" width="13" height="12"/>
+  <object id="12" name="heroPos" x="287" y="320" width="13" height="12"/>
  </objectgroup>
  <objectgroup name="bossPos">
   <object id="13" name="bossPos" x="10621" y="306" width="16" height="13"/>
@@ -144,4 +144,5 @@
  </objectgroup>
  <objectgroup name="tai"/>
  <objectgroup name="tone"/>
+ <objectgroup name="monsterPoint"/>
 </map>
