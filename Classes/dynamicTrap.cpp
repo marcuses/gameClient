@@ -1,8 +1,22 @@
 #include"dynamicTrap.h"
 #include "Headfile.h"
-bool dynamicTrap::init()
+
+dynamicTrap* dynamicTrap::create(const char* imgname){
+
+	dynamicTrap* ret = new dynamicTrap();  
+
+
+	if(ret&&ret->init(imgname)){  
+		ret->autorelease();  
+		return ret;  
+	}  
+
+	CC_SAFE_DELETE(ret);//°²È«É¾³ý  
+	return nullptr;  
+}  
+bool dynamicTrap::init(const char *imgname)
 {
-	if (!Sprite::initWithFile("ci.png")) {
+	if (!Sprite::initWithFile(imgname)) {
 		return false;
 	}
 	this->setTag(TYPE::TRAP);

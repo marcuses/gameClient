@@ -151,7 +151,7 @@ void MainScene::updateDynamicTrap(float dt)
 		auto dict = obj.asValueMap();
 		float x = dict["x"].asFloat();
 		float y = dict["y"].asFloat();
-		auto dyTrap = dynamicTrap::create();
+		auto dyTrap = dynamicTrap::create("ci.png");
 		addChild(dyTrap, 2);
 		dyTrap->setPosition(pos + Point(_trapId * 50, 0));
 	}
