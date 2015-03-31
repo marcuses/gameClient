@@ -227,4 +227,5 @@
  <objectgroup name="dynamicTrap">
   <object id="92" x="4085" y="228" width="15" height="16"/>
  </objectgroup>
+ <objectgroup name="fire"/>
 </map>
