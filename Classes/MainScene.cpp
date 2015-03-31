@@ -340,6 +340,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_hero = (Hero*)spriteA;
 		_hero->setBuff(true);
+		NotificationCenter::getInstance()->postNotification(strShowBuff);
 		removeChild(spriteB);
 	}
 
@@ -348,6 +349,7 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 	{
 		_hero = (Hero*)spriteB;
 		_hero->setBuff(true);
+		NotificationCenter::getInstance()->postNotification(strShowBuff);
 		removeChild(spriteA);
 	}
 	return true;

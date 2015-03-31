@@ -152,6 +152,7 @@ void Hero::update(float dt)
 		getParent()->addChild(ef);
 	}
 
+	
 	if(_invincible)
 	{
 		_invincibleTime--;
@@ -181,12 +182,15 @@ void Hero::quickMove(Object * object)
 	setSpeed(getSpeed() * 3);
 	_isQuickMove = true;
 	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 3);
+	NotificationCenter::getInstance()->postNotification(strHideBuff);
 }
 
 void Hero::quickMoveEnd(float dt)
 {
 	setSpeed(getSpeed() / 3);
 	_isQuickMove = false;
+	
+
 }
 void Hero::dead()
 {
