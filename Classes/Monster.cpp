@@ -31,6 +31,7 @@ void Monster::onEnter()
 {
 	Person::onEnter();
 	//addRunAnimation();
+	if(_monsterType == 2) this->getPhysicsBody()->setGravityEnable(false);
 	auto size = getContentSize();
 	_progress = Progress::create("small-enemy-progress-bg.png","small-enemy-progress-fill.png");
 	_progress->setScaleY(0.6);

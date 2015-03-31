@@ -72,6 +72,12 @@ void Hero::beHit(Vec2 dir)
 	_invincible = true;
 	_invincibleTime = 90;
 }
+void Hero::addLife()
+{
+	_curLife ++;
+	heroLife = _curLife;
+	possLifeMsg();
+}
 void Hero::leftButtonDown(Object * object){
 	setDir(-1);
 	_leftDown = true;
@@ -179,15 +185,15 @@ void Hero::quickMove(Object * object)
 {
 	if(_isQuickMove || !_hasBuff) return;
 	_hasBuff = false;
-	setSpeed(getSpeed() * 3);
+	setSpeed(getSpeed() * 2.5);
 	_isQuickMove = true;
-	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 3);
+	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 1.5);
 	NotificationCenter::getInstance()->postNotification(strHideBuff);
 }
 
 void Hero::quickMoveEnd(float dt)
 {
-	setSpeed(getSpeed() / 3);
+	setSpeed(getSpeed() / 2.5);
 	_isQuickMove = false;
 	
 

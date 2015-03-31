@@ -144,19 +144,25 @@ void MainScene::addObserver()
 void MainScene::updateDynamicTrap(float dt)
 {
 	_trapId = (_trapId + 1) % 10;
-	auto objectTrap = _tileMap ->objectGroupNamed("dynamicTrap")->getObjects();
-	for (auto& obj : objectTrap) //添加刺
+	char txt[100];
+	for(int i = 1;i <= hard; i++)
 	{
-		auto dict = obj.asValueMap();
-		float x = dict["x"].asFloat();
-		float y = dict["y"].asFloat();
-		char txt[100];
-		if(level == 3) sprintf(txt, "3-ci.png");
-		else sprintf(txt, "ci.png");
-		auto dyTrap = dynamicTrap::create(txt);
-		addChild(dyTrap, 2);
-		dyTrap->setPosition(Point(x,y) + Point(_trapId * 50, 0));
+		sprintf(txt,"dynamicTrap%d",i);
+		auto objectTrap = _tileMap ->objectGroupNamed(txt)->getObjects();
+		for (auto& obj : objectTrap) //添加刺
+		{
+			auto dict = obj.asValueMap();
+			float x = dict["x"].asFloat();
+			float y = dict["y"].asFloat();
+			char txt[100];
+			if(level == 3) sprintf(txt, "3-ci.png");
+			else sprintf(txt, "ci.png");
+			auto dyTrap = dynamicTrap::create(txt);
+			addChild(dyTrap, 2);
+			dyTrap->setPosition(Point(x,y) + Point(_trapId * 50, 0));
+		}
 	}
+	
 }
 void MainScene::doorVisiable(Object * object)
 {
@@ -341,8 +347,16 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		&& spriteB && spriteB->getTag() == TYPE::BUFF)
 	{
 		_hero = (Hero*)spriteA;
-		_hero->setBuff(true);
-		NotificationCenter::getInstance()->postNotification(strShowBuff);
+		auto buff = (Buff*)spriteB;
+		if(buff->getType() == 1)
+		{
+			_hero->setBuff(true);
+			NotificationCenter::getInstance()->postNotification(strShowBuff);
+		}
+		else
+		{
+			_hero->addLife();
+		}
 		removeChild(spriteB);
 	}
 
@@ -350,6 +364,16 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		&& spriteA && spriteA->getTag() == TYPE::BUFF)
 	{
 		_hero = (Hero*)spriteB;
+		auto buff = (Buff*)spriteA;
+		if(buff->getType() == 1)
+		{
+			_hero->setBuff(true);
+			NotificationCenter::getInstance()->postNotification(strShowBuff);
+		}
+		else
+		{
+			_hero->addLife();
+		}
 		_hero->setBuff(true);
 		NotificationCenter::getInstance()->postNotification(strShowBuff);
 		removeChild(spriteA);
@@ -573,18 +597,21 @@ void MainScene::addPhysics()
 		auto moveBody = MoveBody::create("BalanceBoard.png", sprite, 100, 1,pos.y  , pos.y + 200);
 		addChild(moveBody);
 	}
-	auto objectGroupEnemy = _tileMap ->objectGroupNamed("Enemy")->getObjects();
-	for (auto& obj : objectGroupEnemy) //添加小怪
+	for(int i = 1;i <= 4; i++)
 	{
-		auto dic= obj.asValueMap();
-		float x = dic["x"].asFloat();
-		float y = dic["y"].asFloat();
-		auto ememy = Monster::create(hard,rand() % 4);
-		ememy->setPosition(x, y);
-		addChild(ememy);
+		char txt[100];
+		sprintf(txt, "Enemy%d", i);
+		auto objectGroupEnemy = _tileMap ->objectGroupNamed(txt)->getObjects();
+		for (auto& obj : objectGroupEnemy) //添加小怪
+		{
+			auto dic= obj.asValueMap();
+			float x = dic["x"].asFloat();
+			float y = dic["y"].asFloat();
+			auto ememy = Monster::create(hard,i - 1);
+			ememy->setPosition(x, y);
+			addChild(ememy);
+		}
 	}
-
-
 	auto objectGroupsEnemy = _tileMap ->objectGroupNamed("sEnemy")->getObjects();
 	for (auto& obj : objectGroupsEnemy) //添加炮台
 	{
@@ -630,16 +657,22 @@ void MainScene::addPhysics()
 		addChild(mPoint, 2); 
 	}
 
-	auto objectBuff = _tileMap ->objectGroupNamed("buff")->getObjects();
-	for (auto& obj : objectBuff) //添加buff点
+	for(int i = 1;i <= 2; i++)
 	{
-		auto dict = obj.asValueMap();
-		float x = dict["x"].asFloat();
-		float y = dict["y"].asFloat();
-		auto buff = Buff::create();
-		buff->setPosition(Point(x,y));
-		addChild(buff, 2); 
+		char txt[100];
+		sprintf(txt, "buff%d", i);
+		auto objectBuff = _tileMap ->objectGroupNamed(txt)->getObjects();
+		for (auto& obj : objectBuff) //添加buff点
+		{
+			auto dict = obj.asValueMap();
+			float x = dict["x"].asFloat();
+			float y = dict["y"].asFloat();
+			auto buff = Buff::create(i);
+			buff->setPosition(Point(x,y));
+			addChild(buff, 2); 
+		}
 	}
+	
 	if(level == 3)
 	{
 		auto objectFire = _tileMap ->objectGroupNamed("fire")->getObjects();
