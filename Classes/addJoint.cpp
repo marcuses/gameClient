@@ -82,11 +82,11 @@ bool AddJoint::addJoint(Scene* _scene, Node* sp1, Node* sp2)
 	PhysicsJointDistance* jointTwo = PhysicsJointDistance::construct(sp1->getPhysicsBody(), box2, Point(0,sp1->getContentSize().height/2), Point(0,-node2->getContentSize().height/2));
 	_scene->getPhysicsWorld()->addJoint(jointTwo);
 
-	PhysicsJointDistance* jointThree = PhysicsJointDistance::construct(sp1->getPhysicsBody(), box1, Point(0, 0), Point(0,0));
-	_scene->getPhysicsWorld()->addJoint(jointThree);
+	//PhysicsJointDistance* jointThree = PhysicsJointDistance::construct(sp1->getPhysicsBody(), box1, Point(0, 0), Point(0,0));
+	//_scene->getPhysicsWorld()->addJoint(jointThree);
 
-	PhysicsJointDistance* jointFour = PhysicsJointDistance::construct(sp1->getPhysicsBody(), box1, Point(0, sp1->getContentSize().height/2), Point(0,0));
-	_scene->getPhysicsWorld()->addJoint(jointFour);
+	///PhysicsJointDistance* jointFour = PhysicsJointDistance::construct(sp1->getPhysicsBody(), box1, Point(0, sp1->getContentSize().height/2), Point(0,0));
+	///_scene->getPhysicsWorld()->addJoint(jointFour);
 
 	/*PhysicsJointDistance* joinTwo = PhysicsJointDistance::construct(sp1->getPhysicsBody(), box1, Point(0,-sp1->getContentSize().height/2), Point(0,0));
 	getScene()->getPhysicsWorld()->addJoint(joinTwo);

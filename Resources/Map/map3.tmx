@@ -145,4 +145,6 @@
  <objectgroup name="tai"/>
  <objectgroup name="tone"/>
  <objectgroup name="monsterPoint"/>
+ <objectgroup name="buff"/>
+ <objectgroup name="dynamicTrap"/>
 </map>
