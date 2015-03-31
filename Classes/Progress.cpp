@@ -12,6 +12,7 @@ bool Progress::init(const char* background, const char* fillname)
 	fill->setBarChangeRate(Point(1.0, 0));
 	fill->setPosition(this->getContentSize()/2);
 	fill->setPercentage(100);
+	
 	return true;
 }
 
