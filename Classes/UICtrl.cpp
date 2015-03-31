@@ -107,15 +107,16 @@ void UICtrl::onEnter(){
 	listener->setSwallowTouches(true);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
 
-
 	dieLayer = Layer::create();
 	addChild(dieLayer);
 	dieLayer->setVisible(false);
 
 	auto dieSprite = Sprite::create("die.png");
+	dieSprite->setPosition(vSize.width/2,vSize.height/2+60);
 	dieLayer->addChild(dieSprite);
 	
 	ui::Button* restart = ui::Button::create("continue.png");
+	restart->setPosition(Vec2(vSize.width/2,vSize.height/2-60));
 	restart->addClickEventListener([=](Ref* pSender){
 		Hero::heroLife = 10;
 		heroScore = 0;
