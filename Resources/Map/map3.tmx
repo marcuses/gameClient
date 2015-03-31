@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="349" height="24" tilewidth="32" tileheight="32" nextobjectid="75">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="349" height="24" tilewidth="32" tileheight="32" nextobjectid="76">
  <tileset firstgid="1" name="map3" tilewidth="32" tileheight="32">
   <image source="map3.png" width="11168" height="768"/>
  </tileset>
@@ -146,5 +146,7 @@
  <objectgroup name="tone"/>
  <objectgroup name="monsterPoint"/>
  <objectgroup name="buff"/>
- <objectgroup name="dynamicTrap"/>
+ <objectgroup name="dynamicTrap">
+  <object id="75" x="416" y="384" width="32" height="32"/>
+ </objectgroup>
 </map>
