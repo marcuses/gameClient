@@ -54,10 +54,6 @@
   <object x="8608" y="140" width="26" height="28"/>
   <object x="7295" y="397" width="32" height="24"/>
   <object x="7711" y="242" width="36" height="28"/>
-  <object x="5054" y="590" width="10" height="15"/>
-  <object x="3702" y="592" width="18" height="14"/>
-  <object x="4598" y="587" width="15" height="13"/>
-  <object x="2971" y="599" width="13" height="11"/>
   <object x="5097" y="419" width="16" height="17"/>
   <object x="4826" y="411" width="14" height="11"/>
   <object x="3665" y="407" width="11" height="11"/>
@@ -79,10 +75,10 @@
   <object x="1861" y="430" width="9" height="245"/>
   <object x="2859" y="422" width="6" height="252"/>
   <object x="3465" y="89" width="14" height="614"/>
-  <object x="3615" y="72" width="13" height="266"/>
-  <object x="4049" y="79" width="14" height="250"/>
-  <object x="4614" y="73" width="21" height="261"/>
-  <object x="4320" y="81" width="11" height="255"/>
+  <object x="3609" y="67" width="13" height="266"/>
+  <object x="4050" y="94" width="14" height="250"/>
+  <object x="4608" y="92" width="21" height="261"/>
+  <object x="4330" y="96" width="11" height="255"/>
   <object x="5161" y="143" width="13" height="345"/>
   <object x="7015" y="348" width="14" height="333"/>
   <object x="6158" y="345" width="17" height="328"/>
@@ -103,9 +99,6 @@
   </object>
   <object x="2550" y="572">
    <polygon points="0,0 0,91 12,6 5,90"/>
-  </object>
-  <object x="2911" y="482">
-   <polygon points="0,0 -3,184 15,-6 11,186"/>
   </object>
  </objectgroup>
  <objectgroup name="ObjectsSwing" width="0" height="0">
@@ -145,7 +138,10 @@
  <objectgroup name="tai" width="0" height="0"/>
  <objectgroup name="tone" width="0" height="0"/>
  <objectgroup name="monsterPoint" width="0" height="0"/>
- <objectgroup name="buff" width="0" height="0"/>
+ <objectgroup name="buff" width="0" height="0">
+  <object x="4154" y="387" width="16" height="15"/>
+  <object x="8579" y="376" width="22" height="34"/>
+ </objectgroup>
  <objectgroup name="dynamicTrap" width="0" height="0">
   <object x="416" y="384" width="32" height="32"/>
   <object x="1461" y="239" width="21" height="24"/>
@@ -153,6 +149,21 @@
  </objectgroup>
  <objectgroup name="fire" width="349" height="24">
   <object x="3656" y="846" height="1"/>
-  <object x="678" y="227" width="21" height="28"/>
+  <object x="4099" y="122" width="21" height="28"/>
+  <object x="4065" y="127" height="1"/>
+  <object x="3982" y="126"/>
+  <object x="3898" y="124"/>
+  <object x="3823" y="129"/>
+  <object x="3739" y="129"/>
+  <object x="3667" y="132"/>
+  <object x="4222" y="128"/>
+  <object x="4308" y="128"/>
+  <object x="4400" y="124"/>
+  <object x="4540" y="122"/>
+  <object x="4641" y="113"/>
+  <object x="5275" y="90"/>
+  <object x="5389" y="92"/>
+  <object x="7564" y="101"/>
+  <object x="7679" y="102"/>
  </objectgroup>
 </map>
