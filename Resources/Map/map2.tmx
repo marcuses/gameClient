@@ -214,4 +214,11 @@
   <object id="91" x="1088" y="272" width="14" height="14"/>
   <object id="95" x="3056" y="320" width="32" height="16"/>
  </objectgroup>
+ <objectgroup name="buff" width="375" height="43">
+  <object x="1865" y="66" width="16" height="14"/>
+  <object x="3819" y="244" width="14" height="14"/>
+ </objectgroup>
+ <objectgroup name="dynamicTrap" width="375" height="43">
+  <object x="4085" y="228" width="15" height="16"/>
+ </objectgroup>
 </map>

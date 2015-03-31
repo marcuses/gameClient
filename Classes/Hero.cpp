@@ -10,6 +10,7 @@ bool Hero::init()
 	_rightDown = false;
 	_invincible = false;
 	_moveState = 0;
+	_hasBuff = false;
 	_invincibleTime = 0;
 	bulletRate = 0;
 	_isQuickMove = false;
@@ -175,7 +176,8 @@ void Hero::update(float dt)
 
 void Hero::quickMove(Object * object)
 {
-	if(_isQuickMove) return;
+	if(_isQuickMove || !_hasBuff) return;
+	_hasBuff = false;
 	setSpeed(getSpeed() * 3);
 	_isQuickMove = true;
 	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 3);

@@ -29,9 +29,9 @@ public:
 	void runAnimation();
 	void dead();
 	void beHit(Vec2 dir) override;
-	bool getBuff(){ return hasBuff; }
-	void setBuff(){ hasBuff = true; }
-	void setJump(bool isJump){ _isJump = isJump;}
+	inline bool getBuff(){ return _hasBuff; }
+	inline void setBuff(bool hasBuff){ _hasBuff = hasBuff; }
+	inline void setJump(bool isJump){ _isJump = isJump;}
 	static int heroLife;
 private:
 	Sprite* _spHit;
@@ -49,7 +49,7 @@ private:
 	bool _leftDown;
 	bool _rightDown;
 	bool _isJump;
-	bool hasBuff;
+	bool _hasBuff;
 	Animation* runAni;
 	EventListenerKeyboard* _listen_key;
 };

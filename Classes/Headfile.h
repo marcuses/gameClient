@@ -16,8 +16,8 @@ const static enum TYPE
 	BOSSWEAKNESS = 1 << 8,
 	BULLETENEMY = 1 << 9,
 	PLANK = 1 << 10,
-	TAI = 1 << 11
-
+	TAI = 1 << 11,
+	BUFF = 1 << 12
 };
 
 const static char strLeftButtonDown[] = "leftButtonDown";
