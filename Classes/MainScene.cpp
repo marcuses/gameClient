@@ -52,7 +52,7 @@ bool MainScene::init()
 	//this->addChild(armature, 1);
 	scheduleUpdate();
 	schedule(schedule_selector(MainScene::updateMonster), 5.0);
-	schedule(schedule_selector(MainScene::updateDynamicTrap), 0.3);
+	schedule(schedule_selector(MainScene::updateDynamicTrap), 0.4);
 	m_nTeeterboardCnt = 0;
 	m_nToneCnt = 0;
 

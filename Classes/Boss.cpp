@@ -32,7 +32,7 @@ bool Boss::init(int bossType, int mhard)
 		this->setTag(TYPE::MONSTER);
 		setType(TYPE::MONSTER);
 	}
-	Person::init(1 * _hard);
+	Person::init((bossType + 3) * _hard);
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
