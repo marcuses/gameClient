@@ -23,7 +23,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 
 	auto _scene = Scene::createWithPhysics();
-//	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -156,9 +156,10 @@ void MainScene::updateDynamicTrap(float dt)
 		else sprintf(txt, "ci.png");
 		auto dyTrap = dynamicTrap::create(txt);
 		addChild(dyTrap, 2);
-		dyTrap->setPosition(pos + Point(_trapId * 50, 0));
+		dyTrap->setPosition(Point(x, y) + Point(_trapId * 50, 0));
 	}
 }
+
 void MainScene::doorVisiable(Object * object)
 {
 	_door->setVisible(true);
@@ -492,6 +493,30 @@ Point MainScene::getTilePosition(std::string groupName, std::string objectName)
 }
 void MainScene::addPhysics()
 {
+
+	auto objectGroupBall = _tileMap ->objectGroupNamed("ball")->getObjects();
+	for (auto& obj : objectGroupBall) //Ìí¼ÓõÎõÎ°å
+	{
+		ValueMap& dict = obj.asValueMap();
+		auto mater = PhysicsMaterial(10000, 1, 2);
+		float x = dict.at("x").asFloat();
+		float y = dict.at("y").asFloat();
+		float width = dict.at("width").asFloat();
+		auto body = PhysicsBody::createCircle(width/2.0, mater);
+		body->setCategoryBitmask(TYPE::GROUND);
+		body->setCollisionBitmask(TYPE::GROUND | TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::GROUND | TYPE::TAI);
+		body->setContactTestBitmask(TYPE::GROUND | TYPE::HERO | TYPE::MONSTER | TYPE::BRICK);
+		body->setLinearDamping(0.0f);
+		body->setGravityEnable(true);
+		body->setDynamic(true);
+		Sprite* sprite = nullptr;
+		sprite = Sprite::create();
+		sprite->setPhysicsBody(body);
+		sprite->setPosition(Point(x ,y));
+		this->addChild(sprite);
+		log("ball");
+	}
+
 	auto objectGroup0 = _tileMap ->objectGroupNamed("tai")->getObjects();
 	for (auto& obj : objectGroup0) //Ìí¼ÓõÎõÎ°å
 	{
