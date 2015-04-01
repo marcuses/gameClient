@@ -6,8 +6,8 @@ public:
 	std::string heroID;
 	std::string heroPSW;
 	bool isTraveler;
-	int   heroScore;
-	float rankScore;
+	int heroScore;
+	int rankScore;
 private:
 	static ShareData* shareData;
 };

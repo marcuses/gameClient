@@ -55,7 +55,7 @@ bool MainScene::init()
 	schedule(schedule_selector(MainScene::updateDynamicTrap), 0.4);
 	m_nTeeterboardCnt = 0;
 	m_nToneCnt = 0;
-
+	nowTime = 0;
 	return true;
 }
 
