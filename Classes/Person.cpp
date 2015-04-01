@@ -59,13 +59,17 @@ void Person::addPhysics()
 	body->setCategoryBitmask(_type);
 	if(_type == TYPE::MONSTER) 
 	{
-		body->setCollisionBitmask(TYPE::MONSTER  | TYPE::BRICK | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS | TYPE::PLANK);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | TYPE::TANGH | TYPE::BULLET | TYPE::BOSS);
+		body->setCollisionBitmask(TYPE::MONSTER  | TYPE::BRICK | TYPE::GROUND | 
+			TYPE::TANGH | TYPE::BULLET | TYPE::BOSS | TYPE::PLANK);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | 
+			TYPE::TANGH | TYPE::BULLET | TYPE::BOSS);
 	}
 	else if(_type == TYPE::HERO)
 	{
 		body->setCollisionBitmask( TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::PLANK);
-		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS | TYPE::BULLETENEMY | TYPE::PLANK | TYPE::BUFF);
+		body->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::GROUND | 
+			TYPE::TANGH | TYPE::BULLET | TYPE::TRAP | TYPE::BOSS |
+			TYPE::BULLETENEMY | TYPE::PLANK | TYPE::BUFF);
 	}
 	else if(_type == TYPE::BOSS)
 	{
