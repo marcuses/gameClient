@@ -45,7 +45,7 @@ bool StartScene::init(){
 	rating->setAnchorPoint(Vec2(0,1));
 	addChild(rating,10);
 
-	auto info = Label::createWithTTF("rank      \tuser       \tscore","fonts/Marker Felt.ttf",30);
+	auto info = Label::createWithTTF("rank     \tscore       \tuser","fonts/Marker Felt.ttf",30);
 	info->setColor(Color3B(176,196,222));
 	info->setPosition(5,vSize.height-160);
 	//userName->setPosition(200,200);
@@ -57,7 +57,7 @@ bool StartScene::init(){
 	int  n = scoreVec.size();
 	char ss[30];
 	for(int i=0;i<n;++i){
-		sprintf(ss,"%d      \t %s       \t %d",i+1,scoreVec[i]->strUserName,scoreVec[i]->nScore);
+		sprintf(ss,"%d      \t%6d\t       \t%s",i+1,scoreVec[i]->nScore,scoreVec[i]->strUserName);
 		auto tmp =  Label::createWithTTF(ss,"fonts/Marker Felt.ttf",30);
 		tmp->setAlignment(TextHAlignment::LEFT);
 		tmp->setAnchorPoint(Vec2(0,0));
