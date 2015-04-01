@@ -198,7 +198,6 @@
   </object>
  </objectgroup>
  <objectgroup name="monsterPoint" width="0" height="0">
-  <object x="466" y="291" width="13" height="8"/>
   <object x="313" y="807" width="100" height="2"/>
   <object x="1099" y="284" width="10" height="10"/>
   <object x="3089" y="290" width="13" height="15"/>
