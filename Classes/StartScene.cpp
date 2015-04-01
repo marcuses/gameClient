@@ -33,24 +33,27 @@ bool StartScene::init(){
 	addChild(userName,10);
 	char userString[30];
 	if(!ShareData::getInstance()->isTraveler){
-		sprintf(userString,"Welcome to %s",ShareData::getInstance()->heroID.c_str());
+		sprintf(userString,"Welcome   %s",ShareData::getInstance()->heroID.c_str());
 		log(userString);
 		userName->setString(userString);
 	}
+	
+	auto rankLayer = Layer::create();
+	addChild(rankLayer,2);
 
 	auto rating = Label::createWithTTF("Rating","fonts/Marker Felt.ttf",40);
 	rating->setColor(Color3B(255,0,255));
 	rating->setPosition(50,vSize.height-100);
 	//userName->setPosition(200,200);
 	rating->setAnchorPoint(Vec2(0,1));
-	addChild(rating,10);
+	rankLayer->addChild(rating);
 
 	auto info = Label::createWithTTF("rank     \tscore       \tuser","fonts/Marker Felt.ttf",30);
 	info->setColor(Color3B(176,196,222));
 	info->setPosition(5,vSize.height-160);
 	//userName->setPosition(200,200);
 	info->setAnchorPoint(Vec2(0,1));
-	addChild(info,10);
+	rankLayer->addChild(info);
 	socketClient st;
 	std::vector<NetPacket_Score* > scoreVec;
 	st.GetScoreRankList(scoreVec);
@@ -63,7 +66,7 @@ bool StartScene::init(){
 		tmp->setAnchorPoint(Vec2(0,0));
 		tmp->setPosition(20,vSize.height-200 - (i+1)*30);
 		tmp->setColor(Color3B(210,180,140));
-		addChild(tmp,10);
+		rankLayer->addChild(tmp);
 	}
 	auto node = CSLoader::createNode("StartScene.csb");
 	addChild(node);
