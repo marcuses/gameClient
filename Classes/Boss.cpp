@@ -92,9 +92,9 @@ void Boss::beHit(Vec2 dir)
 	_spHitTime = 0;
 	if(_isDead)
 	{
-		heroScore += 1000*_hard;
+		ShareData::getInstance()->heroScore += 1000*_hard;
 		char s[10];
-		sprintf(s,"%d",heroScore);
+		sprintf(s,"%d",ShareData::getInstance()->heroScore);
 		NotificationCenter::getInstance()->postNotification(showScore,String::create(s));
 		getParent()->removeChild(this, true);
 		NotificationCenter::getInstance()->postNotification(strWin);

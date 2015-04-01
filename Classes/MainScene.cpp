@@ -172,7 +172,7 @@ void MainScene::goNextLevel()
 {
 	unscheduleUpdate();
 	level ++;
-	rankScore += heroScore / int(nowTime+1);
+	ShareData::getInstance()->rankScore += ShareData::getInstance()->heroScore / int(nowTime+1);
 	if(level > 3)
 	{
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1.0f, WinScene::createScene()));

@@ -131,9 +131,9 @@ void Monster::beHit(Vec2 dir)
 	_spHitTime = 0;
 	if(_isDead)
 	{
-		heroScore += 100*_monsterType*_hard;
+		ShareData::getInstance()->heroScore += 100*_monsterType*_hard;
 		char s[10];
-		sprintf(s,"%d",heroScore);
+		sprintf(s,"%d",ShareData::getInstance()->heroScore);
 		NotificationCenter::getInstance()->postNotification(showScore,String::create(s));
 		_armAnimation->play("dead");
 		getPhysicsBody()->setCategoryBitmask(0);

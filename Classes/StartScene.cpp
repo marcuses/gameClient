@@ -4,6 +4,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIButton.h"
 #include "socketClient.h"
+#include "Headfile.h"
 #include <vector>
 USING_NS_CC;
 using namespace cocostudio;
@@ -19,15 +20,26 @@ bool StartScene::init(){
 	if ( !Layer::init() )	return false;
 
 	Hero::heroLife = 10;
-	heroScore = 0;
-	rankScore = 0;
+	ShareData::getInstance()->heroScore = 0;
+	ShareData::getInstance()->rankScore = 0;
 
 	Size vSize = Director::getInstance()->getVisibleSize();
-	auto userName = Label::createWithTTF("123u","fonts/Marker Felt.ttf",20);
+
+	auto userName = Label::createWithTTF("aaaa","fonts/Marker Felt.ttf",40);
+	userName->setColor(Color3B(255,255,0));
 	userName->setPosition(0,vSize.height);
+	//userName->setPosition(200,200);
 	userName->setAnchorPoint(Vec2(0,1));
 	addChild(userName,10);
-
+	char userString[30];
+	log("11111111111111111111111111111111111111111111111111111111");
+	log(ShareData::getInstance()->heroID.c_str());
+	log("11111111111111111111111111111111111111111111111111111111");
+	if(!ShareData::getInstance()->isTraveler){
+		sprintf(userString,"Welcome to %s",ShareData::getInstance()->heroID.c_str());
+		log(userString);
+		userName->setString(userString);
+	}
 	auto node = CSLoader::createNode("StartScene.csb");
 	addChild(node);
 	
@@ -71,9 +83,11 @@ bool StartScene::init(){
 	int  n = scoreVec.size();
 	char ss[30];
 	for(int i=0;i<n;++i){
-		sprintf(ss,"%d     %s     %d",i+1,scoreVec[i]->strUserName,scoreVec[i]->nScore);
-		auto tmp =  Label::createWithTTF(ss,"fonts/Marker Felt.ttf",15);
-		tmp->setPosition(vSize.width/2,vSize.height - (i+1)*30);
+		sprintf(ss,"%d     \t%s        \t%d",i+1,scoreVec[i]->strUserName,scoreVec[i]->nScore);
+		auto tmp =  Label::createWithTTF(ss,"fonts/Marker Felt.ttf",30);
+		tmp->setAlignment(TextHAlignment::LEFT);
+		tmp->setAnchorPoint(Vec2(0,0));
+		tmp->setPosition(vSize.width/3,vSize.height - (i+1)*30);
 		addChild(tmp);
 	}
 	return true;

@@ -70,7 +70,7 @@ void UICtrl::onEnter(){
 	auto restartButton = dynamic_cast<ui::Button*>(node->getChildByName("restartButton"));
 	restartButton->addClickEventListener([=](Ref* pSender){
 		Hero::heroLife = 10;
-		heroScore = 0;
+		ShareData::getInstance()->heroScore = 0;
 		Director::getInstance()->replaceScene(MainScene::createScene());
 		Director::getInstance()->resume();
 	});
@@ -119,7 +119,7 @@ void UICtrl::onEnter(){
 	restart->setPosition(Vec2(vSize.width/2,vSize.height/2-60));
 	restart->addClickEventListener([=](Ref* pSender){
 		Hero::heroLife = 10;
-		heroScore = 0;
+		ShareData::getInstance()->heroScore = 0;
 		Director::getInstance()->replaceScene(MainScene::createScene());
 		Director::getInstance()->resume();
 	});
