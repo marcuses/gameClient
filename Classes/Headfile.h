@@ -1,5 +1,6 @@
 #pragma  once
 #include <vector>
+#include "ShareData.h"
 const float BULLETRate = 0.3;
 
 const static enum TYPE
@@ -36,12 +37,7 @@ const static char strQuickMove[] = "quickMove";
 const static char showScore[]= "ShowScore";
 const static char strShowBuff[] = "showBuff";
 const static char strHideBuff[] = "hideBuff";
-static std::string heroID;
-static std::string heroPSW;
-static bool isTraveler;
-static int   heroScore;
-static float rankScore;
-
+const static char strDieShow[] = "dieShow";
 struct Monster_data
 {
 	Monster_data(float x = 0, float y = 0, float marmScale = 1)

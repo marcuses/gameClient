@@ -101,7 +101,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//auto scene = Standing::createScene();
 	//auto scene = NewLogIn::createScene();
 	//auto scene = MainScene::createScene();
+<<<<<<< HEAD
 	//auto scene = Splash::createScene(); 
+=======
+	auto scene = Splash::createScene(); 
+>>>>>>> 9c9cc4d7fd2578301ecd1a2c03ccb6fa88b327a8
 
 	// run
 	director->runWithScene(scene);

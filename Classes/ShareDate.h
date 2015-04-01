@@ -1,0 +1,2 @@
+#ifndef __SHAREDAT
+#endif

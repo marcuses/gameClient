@@ -1,8 +1,24 @@
 #include"Buff.h"
 #include "Headfile.h"
-bool Buff::init()
+Buff* Buff::create(int type){
+
+	Buff* ret = new Buff();  
+
+
+	if(ret&&ret->init(type)){  
+		ret->autorelease();  
+		return ret;  
+	}  
+
+	CC_SAFE_DELETE(ret);//°²È«É¾³ý  
+	return nullptr;  
+}  
+bool Buff::init(int type)
 {
-	if (!Sprite::initWithFile("buff.png")) {
+	char txt[100];
+	_type = type;
+	sprintf(txt, "buff%d.png", type);
+	if (!Sprite::initWithFile(txt)) {
 		return false;
 	}
 	this->setTag(TYPE::BUFF);

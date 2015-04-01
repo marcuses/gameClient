@@ -28,8 +28,9 @@ bool NextScene::init()
 	auto mNextBtn = dynamic_cast<ui::Button*>(node->getChildByName("Button_Next"));
 	mNextBtn->addClickEventListener([&](Ref* sender)
 	{
-		Director::getInstance()->replaceScene(TransitionFadeTR::create(2.0f, MainScene::createScene()));
-		Director::getInstance()->resume();
+	//	Director::getInstance()->replaceScene(TransitionFadeTR::create(2.0f, MainScene::createScene()));
+	//	Director::getInstance()->resume();
+		Director::getInstance()->replaceScene(MainScene::createScene());
 	});
 	return true;
 }

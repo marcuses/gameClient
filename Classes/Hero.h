@@ -32,6 +32,7 @@ public:
 	inline bool getBuff(){ return _hasBuff; }
 	inline void setBuff(bool hasBuff){ _hasBuff = hasBuff; }
 	inline void setJump(bool isJump){ _isJump = isJump;}
+	void addLife();
 	static int heroLife;
 private:
 	Sprite* _spHit;

@@ -10,10 +10,14 @@ public:
 	CREATE_FUNC(UICtrl);
 private:
 	cocos2d::Layer*  playLayer;
-	cocos2d::Layer* stopLayer;	
+	cocos2d::Layer*  stopLayer;	
 	cocos2d::Sprite* moveButton;
+
+	cocos2d::Layer*  dieLayer;
+
 	void showLayer();
 	void hideLayer();
+	void dieShow(cocos2d::Object* obj);
 	void showBuff(cocos2d::Object* obj);
 	void hideBuff(cocos2d::Object* obj);
 	

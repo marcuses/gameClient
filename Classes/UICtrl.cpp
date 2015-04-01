@@ -41,6 +41,8 @@ void UICtrl::onEnter(){
 		callfuncO_selector(UICtrl::showBuff), strShowBuff, NULL);
 	NotificationCenter::getInstance()->addObserver(this, 
 		callfuncO_selector(UICtrl::hideBuff), strHideBuff, NULL);
+	NotificationCenter::getInstance()->addObserver(this, 
+		callfuncO_selector(UICtrl::dieShow), strDieShow, NULL);
 
 	auto hitButton = Sprite::create("hitButton.png");
 	hitButton->setPosition(Vec2(870,0));
@@ -68,7 +70,7 @@ void UICtrl::onEnter(){
 	auto restartButton = dynamic_cast<ui::Button*>(node->getChildByName("restartButton"));
 	restartButton->addClickEventListener([=](Ref* pSender){
 		Hero::heroLife = 10;
-		heroScore = 0;
+		ShareData::getInstance()->heroScore = 0;
 		Director::getInstance()->replaceScene(MainScene::createScene());
 		Director::getInstance()->resume();
 	});
@@ -104,6 +106,24 @@ void UICtrl::onEnter(){
 	};
 	listener->setSwallowTouches(true);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener,this);
+
+	dieLayer = Layer::create();
+	addChild(dieLayer);
+	dieLayer->setVisible(false);
+
+	auto dieSprite = Sprite::create("die.png");
+	dieSprite->setPosition(vSize.width/2,vSize.height/2+60);
+	dieLayer->addChild(dieSprite);
+	
+	ui::Button* restart = ui::Button::create("continue.png");
+	restart->setPosition(Vec2(vSize.width/2,vSize.height/2-60));
+	restart->addClickEventListener([=](Ref* pSender){
+		Hero::heroLife = 10;
+		ShareData::getInstance()->heroScore = 0;
+		Director::getInstance()->replaceScene(MainScene::createScene());
+		Director::getInstance()->resume();
+	});
+	dieLayer->addChild(restart);
 }
 void UICtrl::onExit(){
 	_eventDispatcher->removeEventListener(listener);
@@ -119,6 +139,12 @@ void UICtrl::hideLayer(){
 	stopLayer->setVisible(false);
 	playLayer->setVisible(true);
 	Director::getInstance()->resume();
+}
+void UICtrl::dieShow(cocos2d::Object* obj){
+	stopLayer->setVisible(false);
+	playLayer->setVisible(false);
+	dieLayer->setVisible(true);
+	Director::getInstance()->pause();
 }
 void UICtrl::showBuff(Object* obj)
 {

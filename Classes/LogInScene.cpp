@@ -13,6 +13,7 @@ Scene* LogInScene::createScene(){
 }
 void LogInScene::onEnter(){
 	Layer::onEnter();
+	ShareData::getInstance()->isTraveler = true;
 	Size vSize  = Director::getInstance()->getVisibleSize();
 	auto bgSprite = Sprite::create("login.png");
 	float rateX = vSize.width/bgSprite->getContentSize().width;
@@ -83,9 +84,10 @@ void LogInScene::logIn(){
 	else	logInFail();
 }
 void LogInScene::logInSuccess(bool _isTraveler){
-	isTraveler = _isTraveler;
-	heroID = TextFieldPID->getString();
-	heroPSW = TextFieldPSW->getString();
+	ShareData::getInstance()->isTraveler = _isTraveler;
+	ShareData::getInstance()->heroID = TextFieldPID->getString();
+	ShareData::getInstance()->heroPSW = TextFieldPSW->getString();
+	log(ShareData::getInstance()->heroID.c_str());
 	auto scene = StartScene::createScene();
 	Director::getInstance()->replaceScene(scene);
 }

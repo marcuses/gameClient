@@ -32,7 +32,7 @@ bool WinScene::init()
 	addChild(node);
 	
 	socketClient test;
-	if(!isTraveler)	test.LoginSendData(heroID,heroPSW,SCORE_CODE,rankScore);
+	if(!ShareData::getInstance()->isTraveler)	test.LoginSendData(ShareData::getInstance()->heroID,ShareData::getInstance()->heroPSW,SCORE_CODE,ShareData::getInstance()->rankScore);
 
 	auto mBackBtn = dynamic_cast<ui::Button*>(node->getChildByName("Button_Back"));
 	mBackBtn->addClickEventListener([&](Ref* sender)

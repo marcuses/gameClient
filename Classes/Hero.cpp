@@ -54,7 +54,7 @@ void Hero::idle()
 }
 void Hero::possLifeMsg(){
 	char s[10];
-	sprintf(s," x %d",getLife());
+	sprintf(s,"%d",getLife());
 	NotificationCenter::getInstance()->postNotification(showHeroLife,String::create(s));
 }
 void Hero::beHit(Vec2 dir) 
@@ -71,6 +71,12 @@ void Hero::beHit(Vec2 dir)
 	}
 	_invincible = true;
 	_invincibleTime = 90;
+}
+void Hero::addLife()
+{
+	_curLife ++;
+	heroLife = _curLife;
+	possLifeMsg();
 }
 void Hero::leftButtonDown(Object * object){
 	setDir(-1);
@@ -179,15 +185,15 @@ void Hero::quickMove(Object * object)
 {
 	if(_isQuickMove || !_hasBuff) return;
 	_hasBuff = false;
-	setSpeed(getSpeed() * 3);
+	setSpeed(getSpeed() * 2.5);
 	_isQuickMove = true;
-	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 3);
+	scheduleOnce(schedule_selector(Hero::quickMoveEnd), 1.5);
 	NotificationCenter::getInstance()->postNotification(strHideBuff);
 }
 
 void Hero::quickMoveEnd(float dt)
 {
-	setSpeed(getSpeed() / 3);
+	setSpeed(getSpeed() / 2.5);
 	_isQuickMove = false;
 	
 
@@ -199,6 +205,7 @@ void Hero::dead()
 	_isDead = true;
 	_eventDispatcher->removeEventListener(_listen_key);
 	setSpriteFrame(SpriteFrame::create("player_2.png", Rect(0, 0, 63, 63)));
+	NotificationCenter::getInstance()->postNotification(strDieShow);
 }
 void Hero::updateMoveState(){
 	
