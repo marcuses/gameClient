@@ -158,11 +158,7 @@ void Hero::update(float dt)
 		getParent()->addChild(ef);
 	}
 
-	if(getPositionY() <= -20) 
-	{
-		dead();
-		return;
-	}
+	
 	if(_invincible)
 	{
 		_invincibleTime--;
@@ -188,8 +184,6 @@ void Hero::update(float dt)
 void Hero::quickMove(Object * object)
 {
 	if(_isQuickMove || !_hasBuff) return;
-	_invincible = true;
-	_invincibleTime = 150;
 	_hasBuff = false;
 	setSpeed(getSpeed() * 2.5);
 	_isQuickMove = true;
@@ -201,9 +195,8 @@ void Hero::quickMoveEnd(float dt)
 {
 	setSpeed(getSpeed() / 2.5);
 	_isQuickMove = false;
-	_invincible = false;
-	setVisible(true);
-	_invincibleTime = 0;
+	
+
 }
 void Hero::dead()
 {

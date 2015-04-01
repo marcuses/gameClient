@@ -173,7 +173,9 @@ void MainScene::goNextLevel()
 {
 	unscheduleUpdate();
 	level ++;
-	ShareData::getInstance()->rankScore += ShareData::getInstance()->heroScore / int(nowTime+1) / int(nowTime+1);
+	ShareData::getInstance()->rankScore += ShareData::getInstance()->heroScore / int(nowTime+1);
+	
+	log("MainScene  %d",ShareData::getInstance()->rankScore);
 	if(level > 3)
 	{
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1.0f, WinScene::createScene()));
@@ -375,6 +377,8 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		{
 			_hero->addLife();
 		}
+		_hero->setBuff(true);
+		NotificationCenter::getInstance()->postNotification(strShowBuff);
 		removeChild(spriteA);
 	}
 	return true;
@@ -558,8 +562,7 @@ void MainScene::addPhysics()
 	for (auto& obj : objectGroup00) //Ìí¼ÓÊ¯Í·
 	{
 		ValueMap& dict = obj.asValueMap();
-		auto sprite = makeBox(dict, TYPE::GROUND, "tone.png", true, 100, 0, 1);
-		sprite->getPhysicsBody()->setLinearDamping(0.5);
+		auto sprite = makeBox(dict, TYPE::GROUND, "tone.png", true, 10, 0, 10);
 		this->addChild(sprite);
 	}
 

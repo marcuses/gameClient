@@ -126,17 +126,8 @@ void Boss::update(float dt)
 	case 3: AIhard();break;
 	default:break;
 	}
-	if(_bossType == 1)
-	{
-		_spWeak->setPosition(Vec2(260, 410) );
-		_spHit->setPosition(Vec2(260, 410) );
-	}
-	else
-	{
-		_spWeak->setPosition(Vec2(0, 0) );
-		_spHit->setPosition(Vec2(0, 0) );
-	}
-	
+	_spWeak->setPosition(Vec2(260, 410) );
+	_spHit->setPosition(Vec2(260, 410) );
 	if(_spHit->isVisible())
 	{
 		_spHitTime++;

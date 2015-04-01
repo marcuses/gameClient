@@ -22,7 +22,6 @@ bool StartScene::init(){
 	Hero::heroLife = 10;
 	ShareData::getInstance()->heroScore = 0;
 	ShareData::getInstance()->rankScore = 0;
-
 	Size vSize = Director::getInstance()->getVisibleSize();
 
 	auto userName = Label::createWithTTF("","fonts/Marker Felt.ttf",40);
