@@ -23,7 +23,7 @@ Scene* MainScene::createScene()
 	// 'scene' is an autorelease object
 
 	auto _scene = Scene::createWithPhysics();
-	_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//_scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 'layer' is an autorelease object
 	auto layer = MainScene::create();
@@ -143,7 +143,6 @@ void MainScene::addObserver()
 
 void MainScene::updateDynamicTrap(float dt)
 {
-	Point pos = getTilePosition("dynamicTrap", "");
 	_trapId = (_trapId + 1) % 10;
 	auto objectTrap = _tileMap ->objectGroupNamed("dynamicTrap")->getObjects();
 	for (auto& obj : objectTrap) //Ìí¼Ó´Ì
@@ -156,7 +155,7 @@ void MainScene::updateDynamicTrap(float dt)
 		else sprintf(txt, "ci.png");
 		auto dyTrap = dynamicTrap::create(txt);
 		addChild(dyTrap, 2);
-		dyTrap->setPosition(Point(x, y) + Point(_trapId * 50, 0));
+		dyTrap->setPosition(Point(x,y) + Point(_trapId * 50, 0));
 	}
 }
 
@@ -494,7 +493,7 @@ Point MainScene::getTilePosition(std::string groupName, std::string objectName)
 void MainScene::addPhysics()
 {
 
-	auto objectGroupBall = _tileMap ->objectGroupNamed("ball")->getObjects();
+	/*auto objectGroupBall = _tileMap ->objectGroupNamed("ball")->getObjects();
 	for (auto& obj : objectGroupBall) //Ìí¼ÓõÎõÎ°å
 	{
 		ValueMap& dict = obj.asValueMap();
@@ -515,7 +514,7 @@ void MainScene::addPhysics()
 		sprite->setPosition(Point(x ,y));
 		this->addChild(sprite);
 		log("ball");
-	}
+	}*/
 
 	auto objectGroup0 = _tileMap ->objectGroupNamed("tai")->getObjects();
 	for (auto& obj : objectGroup0) //Ìí¼ÓõÎõÎ°å
@@ -666,17 +665,20 @@ void MainScene::addPhysics()
 		buff->setPosition(Point(x,y));
 		addChild(buff, 2); 
 	}
-
-	auto objectFire = _tileMap ->objectGroupNamed("fire")->getObjects();
-	for (auto& obj : objectFire) //Ìí¼Ó»ðÇò
+	if(level == 3)
 	{
-		auto dict = obj.asValueMap();
-		float x = dict["x"].asFloat();
-		float y = dict["y"].asFloat();
-		auto fire = dynamicTrap::create("fireTrap.png");
-		fire->setPosition(Point(x,y));
-		addChild(fire, 2); 
+		auto objectFire = _tileMap ->objectGroupNamed("fire")->getObjects();
+		for (auto& obj : objectFire) //Ìí¼Ó»ðÇò
+		{
+			auto dict = obj.asValueMap();
+			float x = dict["x"].asFloat();
+			float y = dict["y"].asFloat();
+			auto fire = dynamicTrap::create("fireTrap.png");
+			fire->setPosition(Point(x,y));
+			addChild(fire, 2); 
+		}
 	}
+	
 }
 
 void MainScene::updateMonster(float dt)

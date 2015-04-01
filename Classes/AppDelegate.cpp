@@ -97,10 +97,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterPoint/monsterPoint0.png",
 		"monsterPoint/monsterPoint0.plist","monsterPoint/monsterPoint.ExportJson");
 	//auto scene = StartScene::createScene();
-	//auto scene = LogInScene::createScene();
+	auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
 	//auto scene = NewLogIn::createScene();
-	auto scene = MainScene::createScene();
+	//auto scene = MainScene::createScene();
 	//auto scene = Splash::createScene(); 
 
 	// run
