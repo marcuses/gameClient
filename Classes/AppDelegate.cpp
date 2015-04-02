@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	glview->setDesignResolutionSize(960, 640, ResolutionPolicy::SHOW_ALL);
 	
 	// turn on display FPS
-	director->setDisplayStats(true);
+//	director->setDisplayStats(true);
 
 	// set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0 / 60);
@@ -63,10 +63,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	searchPath.push_back("Bullet");
 	searchPath.push_back("monster1Animation");
 	searchPath.push_back("sEffect");
+	searchPath.push_back("music");
 	CCFileUtils::getInstance()->setSearchPaths(searchPath); 
 	SimpleAudioEngine::getInstance()->preloadEffect("explode.wav");
 	SimpleAudioEngine::getInstance()->preloadEffect("hit.mp3");
-	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background1.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background2.mp3");
+	SimpleAudioEngine::getInstance()->preloadBackgroundMusic("background3.mp3");
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("image/ui.plist","image/ui.pvr.ccz");
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("Monster1Animation/NewAnimation0.png",
 		"Monster1Animation/NewAnimation0.plist","Monster1Animation/NewAnimation.ExportJson");
@@ -97,15 +100,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	ArmatureDataManager::getInstance()->addArmatureFileInfo("monsterPoint/monsterPoint0.png",
 		"monsterPoint/monsterPoint0.plist","monsterPoint/monsterPoint.ExportJson");
 	//auto scene = StartScene::createScene();
-	auto scene = LogInScene::createScene();
+	//auto scene = LogInScene::createScene();
 	//auto scene = Standing::createScene();
 	//auto scene = NewLogIn::createScene();
 	//auto scene = MainScene::createScene();
-<<<<<<< HEAD
 	//auto scene = Splash::createScene(); 
-=======
 	auto scene = Splash::createScene(); 
->>>>>>> 9c9cc4d7fd2578301ecd1a2c03ccb6fa88b327a8
 
 	// run
 	director->runWithScene(scene);

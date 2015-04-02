@@ -83,8 +83,10 @@ void MainScene::onEnter()
 	addChild(_door, 1);
 	_door->setVisible(false);
 	
-
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
+	char music[100];
+	sprintf(music, "background%d.mp3", level);
+	SimpleAudioEngine::getInstance()->playBackgroundMusic(music,true);
+	SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
 	getScene()->getPhysicsWorld()->setAutoStep(false);
 	addPhysics();
 	addListener();
@@ -377,8 +379,6 @@ bool MainScene::onContactBegin(PhysicsContact& contact)
 		{
 			_hero->addLife();
 		}
-		_hero->setBuff(true);
-		NotificationCenter::getInstance()->postNotification(strShowBuff);
 		removeChild(spriteA);
 	}
 	return true;
@@ -562,7 +562,7 @@ void MainScene::addPhysics()
 	for (auto& obj : objectGroup00) //Ìí¼ÓÊ¯Í·
 	{
 		ValueMap& dict = obj.asValueMap();
-		auto sprite = makeBox(dict, TYPE::GROUND, "tone.png", true, 10, 0, 10);
+		auto sprite = makeBox(dict, TYPE::GROUND, "tone.png", true, 50, 0, 1);
 		this->addChild(sprite);
 	}
 
