@@ -144,7 +144,7 @@
   </object>
  </objectgroup>
  <objectgroup name="heroPos" width="0" height="0">
-  <object name="heroPos" x="4975" y="162" width="64" height="48"/>
+  <object name="heroPos" x="123" y="253" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="bossPos" width="0" height="0">
   <object name="bossPos" x="5614" y="94" width="26" height="22"/>
@@ -201,6 +201,7 @@
   <object x="313" y="807" width="100" height="2"/>
   <object x="1099" y="284" width="10" height="10"/>
   <object x="3089" y="290" width="13" height="15"/>
+  <object x="5765" y="431"/>
  </objectgroup>
  <objectgroup name="buff1" width="0" height="0">
   <object x="1865" y="66" width="16" height="14"/>
@@ -208,13 +209,12 @@
  </objectgroup>
  <objectgroup name="buff2" width="0" height="0">
   <object x="4117" y="465"/>
-  <object x="4175" y="459"/>
-  <object x="4294" y="461"/>
   <object x="4345" y="460"/>
-  <object x="4397" y="461"/>
   <object x="4453" y="462"/>
-  <object x="4503" y="462"/>
   <object x="4233" y="458"/>
+  <object x="737" y="103"/>
+  <object x="1677" y="101"/>
+  <object x="3866" y="72"/>
  </objectgroup>
  <objectgroup name="dynamicTrap1" width="0" height="0">
   <object x="4085" y="228" width="15" height="16"/>

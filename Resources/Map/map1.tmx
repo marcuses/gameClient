@@ -122,15 +122,11 @@
  </objectgroup>
  <objectgroup name="buff2" width="375" height="44">
   <object x="2508" y="544" width="16" height="15"/>
-  <object x="4652" y="460" width="15" height="13"/>
-  <object x="4720" y="459" width="11" height="7"/>
   <object x="4771" y="457" width="12" height="8"/>
-  <object x="4830" y="450"/>
   <object x="4906" y="457"/>
-  <object x="4962" y="461"/>
   <object x="5025" y="461"/>
-  <object x="5095" y="461"/>
   <object x="5143" y="460"/>
+  <object x="1461" y="168"/>
  </objectgroup>
  <objectgroup name="dynamicTrap1" width="0" height="0">
   <object x="376" y="166" width="20" height="19"/>

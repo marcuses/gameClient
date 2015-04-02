@@ -38,10 +38,10 @@
   </object>
  </objectgroup>
  <objectgroup name="heroPos" width="0" height="0">
-  <object name="heroPos" x="9467" y="286" width="13" height="12"/>
+  <object name="heroPos" x="132" y="566" width="13" height="12"/>
  </objectgroup>
  <objectgroup name="bossPos" width="0" height="0">
-  <object name="bossPos" x="10621" y="306" width="16" height="13"/>
+  <object name="bossPos" x="10961" y="451" width="16" height="13"/>
  </objectgroup>
  <objectgroup name="Brick" width="0" height="0">
   <object x="1081" y="97" width="19" height="489"/>
@@ -117,13 +117,14 @@
   </object>
  </objectgroup>
  <objectgroup name="sEnemy" width="0" height="0">
-  <object x="10788" y="304" width="15" height="17"/>
-  <object x="10894" y="379" width="8" height="16"/>
+  <object x="10717" y="255" width="10" height="13"/>
+  <object x="10757" y="552" width="12" height="18"/>
+  <object x="10832" y="554" width="5" height="12"/>
  </objectgroup>
  <objectgroup name="tai" width="0" height="0"/>
  <objectgroup name="tone" width="0" height="0"/>
  <objectgroup name="monsterPoint" width="0" height="0">
-  <object x="10823" y="398"/>
+  <object x="10838" y="281"/>
   <object x="6446" y="218"/>
   <object x="192" y="389"/>
  </objectgroup>
@@ -137,8 +138,6 @@
   <object x="8450" y="173"/>
   <object x="8508" y="173"/>
   <object x="8413" y="402"/>
-  <object x="8466" y="405"/>
-  <object x="8531" y="408"/>
   <object x="9912" y="237"/>
   <object x="10049" y="242"/>
   <object x="10258" y="247"/>
@@ -202,7 +201,7 @@
   <object x="3781" y="198" width="16" height="10"/>
   <object x="4141" y="226" width="13" height="4"/>
   <object x="4425" y="220" width="11" height="11"/>
-  <object x="10823" y="551" width="17" height="16"/>
+  <object x="10628" y="576" width="17" height="16"/>
   <object x="6828" y="540"/>
   <object x="6425" y="517"/>
  </objectgroup>
