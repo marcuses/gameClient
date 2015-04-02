@@ -146,10 +146,8 @@
  </objectgroup>
  <objectgroup name="dynamicTrap2" width="375" height="44">
   <object x="2421" y="57" width="11" height="11"/>
-  <object x="4186" y="16" width="11" height="12"/>
  </objectgroup>
  <objectgroup name="dynamicTrap3" width="375" height="44">
-  <object x="2997" y="25" width="11" height="11"/>
-  <object x="4855" y="23" width="17" height="11"/>
+  <object x="4183" y="24" width="17" height="11"/>
  </objectgroup>
 </map>
