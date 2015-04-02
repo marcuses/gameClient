@@ -117,6 +117,7 @@ void MainScene::update(float dt)
 {
 	//uiShow->setLife(_hero->getLife());
 	nowTime += dt;
+	log("%f",nowTime);
 	setViewPointCenter(_hero->getPosition());
 	for (int i = 0; i < 3; ++i)
 	{
@@ -176,7 +177,7 @@ void MainScene::goNextLevel()
 	unscheduleUpdate();
 	level ++;
 	ShareData::getInstance()->rankScore += level*200+ShareData::getInstance()->heroScore / int(nowTime+1) * hard*hard;
-	
+	ShareData::getInstance()->heroScore = 0;
 	log("MainScene  %d",ShareData::getInstance()->rankScore);
 	if(level > 3)
 	{
