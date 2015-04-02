@@ -123,6 +123,7 @@ void UICtrl::onEnter(){
 		ShareData::getInstance()->rankScore = 0;
 		MainScene::level = 1;
 		Director::getInstance()->replaceScene(MainScene::createScene());
+		SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 		Director::getInstance()->resume();
 	});
 	dieLayer->addChild(restart);
@@ -148,6 +149,7 @@ void UICtrl::dieShow(cocos2d::Object* obj){
 	stopLayer->setVisible(false);
 	playLayer->setVisible(false);
 	dieLayer->setVisible(true);
+	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 	Director::getInstance()->pause();
 }
 void UICtrl::showBuff(Object* obj)
