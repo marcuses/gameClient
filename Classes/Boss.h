@@ -20,6 +20,7 @@ public:
 	void AImid();
 	void AIhard();
 private:
+
 	Sprite* _spHit;
 	Progress* _progress;
 	int _spHitTime;

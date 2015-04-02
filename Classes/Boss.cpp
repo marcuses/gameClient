@@ -33,6 +33,7 @@ bool Boss::init(int bossType, int mhard)
 		setType(TYPE::MONSTER);
 	}
 	Person::init((bossType + 3) * _hard);
+
 	setSpeed(0);
 	setDir(-1);
 	_time = 0;
@@ -123,7 +124,9 @@ void Boss::update(float dt)
 	if(_isDead) return;
 	Point pos1 = this->getParent()->getChildByTag(TYPE::HERO)->getPosition();
 	Point pos2 = this->getPosition();
-	if(fabs(pos2.x - pos1.x) <= 480 ) setSpeed(100);
+	if(fabs(pos2.x - pos1.x) <= 480 ){
+		setSpeed(75 + 25 * _bossType);
+	}
 	getPhysicsBody()->setVelocity(Vec2(getDir() * getSpeed(), getPhysicsBody()->getVelocity().y));
 	if(_bossType < 2)setScaleX(getDir() == 1 ? -1 : 1);
 	else setScaleX(getDir() == 1 ? -1 : 1);

@@ -39,14 +39,15 @@ bool AddJoint::addJoint(Scene* _scene, Node* sp1)
 {
 	Vec2 offset = sp1->getPosition();
 	Node* node = Node::create();
-    PhysicsBody* box = PhysicsBody::create();
-    node->setPhysicsBody(box);
-    box->setDynamic(false);
-    node->setPosition(Point::ZERO);
-    this->addChild(node);
-    int width = 0, height = 0;
-	box->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, offset-Vec2(0, 20)));
-                    
+	PhysicsBody* box = PhysicsBody::create();
+	auto mater = PhysicsMaterial(100, 0, 1);
+	box->addShape(PhysicsShapeEdgeBox::create(Size(0, 0), mater, 1, offset-Vec2(0, 20)));
+	box->setDynamic(false);
+	box->setCollisionBitmask(0);  
+	box->setCategoryBitmask(0);   
+	node->setPhysicsBody(box);
+	node->setPosition(Point::ZERO);
+	this->addChild(node);
 	_scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
 	return true;
 }
@@ -68,12 +69,12 @@ bool AddJoint::addJoint(Scene* _scene, Node* sp1, Node* sp2)
 
 	auto node1 = Sprite::create();
     PhysicsBody* box1 = PhysicsBody::create();
+	box1->addShape(PhysicsShapeBox::create(Size(width, height), mater));
     box1->setDynamic(false);
 	box1->setCollisionBitmask(0);
 	box1->setCategoryBitmask(0);
 	node1->setPosition(node2->getPosition() + Vec2(0, node2->getContentSize().height/2 + 5));
     this->addChild(node1);
-	box1->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, Vec2(0, 0)));
 	node1->setPhysicsBody(box1);
 
 	PhysicsJointDistance* jointOne = PhysicsJointDistance::construct(box1, box2, Point(0,0), Point(0,node2->getContentSize().height/2));

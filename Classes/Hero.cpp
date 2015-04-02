@@ -158,6 +158,11 @@ void Hero::update(float dt)
 		getParent()->addChild(ef);
 	}
 
+	if(this->getPositionY() < -10)
+	{
+		dead();
+		return;
+	}
 	
 	if(_invincible)
 	{
