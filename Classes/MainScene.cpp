@@ -176,7 +176,7 @@ void MainScene::goNextLevel()
 {
 	unscheduleUpdate();
 	level ++;
-	ShareData::getInstance()->rankScore += level*200+ShareData::getInstance()->heroScore / int(nowTime+1) * hard*hard;
+	ShareData::getInstance()->rankScore += ( level*100 + ShareData::getInstance()->heroScore / int(nowTime+1) )* hard*hard;
 	ShareData::getInstance()->heroScore = 0;
 	log("MainScene  %d",ShareData::getInstance()->rankScore);
 	if(level > 3)
