@@ -45,6 +45,13 @@ bool Boss::init(int bossType, int mhard)
 void Boss::onEnter()
 {
 	Person::onEnter();
+	if(_bossType > 1)
+	{
+		this->getPhysicsBody()->setContactTestBitmask(TYPE::MONSTER | TYPE::HERO | TYPE::BRICK | 
+			TYPE::TANGH  | TYPE::BOSS);
+		this->getPhysicsBody()->setCollisionBitmask(TYPE::MONSTER  | TYPE::BRICK | TYPE::GROUND | 
+			TYPE::TANGH  | TYPE::BOSS | TYPE::PLANK);
+	}
 	auto body = PhysicsBody::createCircle(36, PhysicsMaterial(0, 0, 0));
 	body->setCategoryBitmask(TYPE::BOSSWEAKNESS);
 	body->setCollisionBitmask(TYPE::BOSSWEAKNESS | TYPE::BULLET);
@@ -133,8 +140,9 @@ void Boss::update(float dt)
 	}
 	else
 	{
-		_spWeak->setPosition(Vec2(0, 0) );
-		_spHit->setPosition(Vec2(0, 0) );
+		auto size = this->getContentSize();
+		_spWeak->setPosition(Vec2(size.width/2, size.height/2) );
+		_spHit->setPosition(Vec2(size.width/2, size.height/2) );
 	}
 	if(_spHit->isVisible())
 	{
