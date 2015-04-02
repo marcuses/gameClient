@@ -120,6 +120,8 @@ void UICtrl::onEnter(){
 	restart->addClickEventListener([=](Ref* pSender){
 		Hero::heroLife = 10;
 		ShareData::getInstance()->heroScore = 0;
+		ShareData::getInstance()->rankScore = 0;
+		MainScene::level = 1;
 		Director::getInstance()->replaceScene(MainScene::createScene());
 		Director::getInstance()->resume();
 	});
@@ -133,11 +135,13 @@ void UICtrl::onExit(){
 void UICtrl::showLayer(){
 	stopLayer->setVisible(true);
 	playLayer->setVisible(false);
+	SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 	Director::getInstance()->pause();
 }
 void UICtrl::hideLayer(){
 	stopLayer->setVisible(false);
 	playLayer->setVisible(true);
+	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 	Director::getInstance()->resume();
 }
 void UICtrl::dieShow(cocos2d::Object* obj){
