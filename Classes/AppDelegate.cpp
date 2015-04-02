@@ -5,6 +5,7 @@
 #include "Splash.h"
 #include "StartScene.h"
 #include "Standing.h"
+#include "WinScene.h"
 #include <vector>
 #include "SimpleAudioEngine.h"
 using namespace CocosDenshion;
@@ -106,7 +107,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//auto scene = MainScene::createScene();
 	//auto scene = Splash::createScene(); 
 	auto scene = Splash::createScene(); 
-
+	//auto scene = WinScene::createScene();
+	
 	// run
 	director->runWithScene(scene);
 	return true;

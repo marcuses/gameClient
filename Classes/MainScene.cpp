@@ -167,7 +167,6 @@ void MainScene::updateDynamicTrap(float dt)
 	}
 	
 }
-
 void MainScene::doorVisiable(Object * object)
 {
 	_door->setVisible(true);

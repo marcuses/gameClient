@@ -32,8 +32,16 @@ bool WinScene::init()
 	addChild(node);
 	
 	socketClient test;
-	log("WinScene  %d",ShareData::getInstance()->rankScore);
 	if(!ShareData::getInstance()->isTraveler)	test.LoginSendData(ShareData::getInstance()->heroID,ShareData::getInstance()->heroPSW,SCORE_CODE,ShareData::getInstance()->rankScore);
+	
+	char ss[10];
+	sprintf(ss,"%d",ShareData::getInstance()->rankScore);
+	auto tmp =  Label::createWithTTF(ss,"fonts/Marker Felt.ttf",50);
+	tmp->setPosition(642,536);
+	tmp->setColor(Color3B(238,174,238));
+
+	addChild(tmp);
+
 	auto mBackBtn = dynamic_cast<ui::Button*>(node->getChildByName("Button_Back"));
 	mBackBtn->addClickEventListener([&](Ref* sender)
 	{
